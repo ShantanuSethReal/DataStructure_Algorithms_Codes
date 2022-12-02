@@ -1,5 +1,6 @@
 public class RecursionStriver {
 //**********************************Printing Subsequences************************************************************* */
+    class Solution{
     public static void main(String[] args) {
         int arr[]={3,1,2};
         ArrayList<ArrayList<Integer>> ds=new ArrayList<>();
@@ -17,8 +18,10 @@ public class RecursionStriver {
             ans.remove(ans.size()-1);
             printSubsequences(arr,ind+1,n,ds,ans);
         }
+    }
 //*********************************Printing Subsequences whose sum is K************************************************ */
-public static void main(String[] args) {
+    class Solution{
+    public static void main(String[] args) {
     int arr[]={1,2,1};
     int sum=2;
     ArrayList<ArrayList<Integer>> ds=new ArrayList<>();
@@ -41,11 +44,13 @@ public static void main(String[] args) {
         s+=arr[ind];
         PrintSubsequencesWhoseSumisK(arr,ind+1,n,ds,ans,s,sum);
         ans.remove(ans.size()-1);
-        s-=arr[ind];
+        s-=arr[ind;
         PrintSubsequencesWhoseSumisK(arr,ind+1,n,ds,ans,s,sum);
     }
+}
 //*********************************Printing Subsequences whose sum is K(Only One Subsequence)****************************/
-public static void main(String[] args) {
+class Solution{
+    public static void main(String[] args) {
     int arr[]={1,2,1};
     int sum=2;
     ArrayList<ArrayList<Integer>> ds=new ArrayList<>();
@@ -74,7 +79,9 @@ public static void main(String[] args) {
         {return true;}
         return false;
     }
+}
 //*********************************Printing Subsequences whose sum is K(Only Count)**************************************/
+class Solution{    
 public static void main(String[] args) {
     int arr[]={1,2,1};
     int sum=2;
@@ -102,6 +109,7 @@ public static void main(String[] args) {
         int r=PrintSubsequencesWhoseSumisK(arr,ind+1,n,ds,ans,s,sum);
         return l+r;
     }
+}
 //*********************************Combination Sum I(Any number of Chances)*********************************************/
 //**********************************Pick and Not Pick Concept********************************************************* */
 class Solution {
@@ -153,7 +161,7 @@ class Solution {
         findCombinations(0,candidates,target,ans,new ArrayList<>());
         return ans;
     }
-
+}
 
 //********************************Subset Sum I*************************************************************************/
 class Solution{
@@ -191,31 +199,172 @@ class Solution {
         }
     }
 }
-//************************************Kth Permutation Sequence******************************************************* */
-class Solution {
-    public String getPermutation(int n, int k) {
-        int fact=1;
-        List<Integer> numbers=new ArrayList<>();
-        for(int i=1;i<n;i++){
-            fact=fact*i;
-            numbers.add(i);
+
+//**********************************************N Queen Problem************************************************************** */
+       class Solution{
+        public static List<List<String>> solveNQueens(int n){
+            char[][] board = new char[n][n];
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < n; j++)
+                    board[i][j] = '.';
+            List<List<String>> res=new ArrayList<List<String>>();
+            dfs(0,board,res);
+            return res;
         }
-        numbers.add(n);
-        String ans="";
-        k=k-1;
-        while(true){
-            ans=ans+numbers.get(k/fact);
-            numbers.remove(k/fact);
-            if(numbers.size()==0){
-                break;
+        static boolean validate(char[][] board, int row, int col) {
+            int duprow=row;
+            int dupcol=col;
+            while(row>=0&&col>=0){
+                if(board[row][col]=='Q') return false;
+                row--;
+                col--;
             }
-            k=k%fact;
-            fact=fact/numbers.size();
+            row=duprow;
+            col=dupcol;
+            while(col>=0){
+                if(board[row][col]=='Q') return false;
+                col--;
+            }
+            row=duprow;
+            col=dupcol;
+            while(col>=0&&row<board.length) {
+                if(board[row][col]=='Q') return false;
+                col--;
+                row++;
+            }
+            return true;
         }
-        return ans;
+        
+        static void dfs(int col, char[][] board, List<List<String>> res) {
+            if(col==board.length){
+                res.add(construct(board));
+                return;
+            }
+    
+            for (int row=0;row<board.length;row++) {
+                if (validate(board,row,col)) {
+                    board[row][col]='Q';
+                    dfs(col+1,board,res);
+                    board[row][col]='.';
+                }
+            }
+        }
+        static List<String> construct(char[][] board){
+            List<String> res = new LinkedList < String > ();
+            for (int i=0;i<board.length;i++) {
+                String s=new String(board[i]);
+                res.add(s);
+            }
+            return res;
+        }
+    }
+//*******************************Sudoku Solver************************************************************** */
+        class Solution {
+            public void solveSudoku(char[][] board) {
+                solveSudokuUtil(board);
+            }
+            public boolean solveSudokuUtil(char board[][]){
+                for(int i=0;i<9;i++){
+                    for(int j=0;j<9;j++){
+                        if(board[i][j]=='.'){
+                            for(char c='1';c<='9';c++){
+                                if(isValid(board,i,j,c)){
+                                    board[i][j]=c;
+                                    if(solveSudokuUtil(board)==true){
+                                        return true;
+                                    }
+                                    else
+                                    board[i][j]='.';
+                                }
+                            }
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+            public boolean isValid(char board[][],int row,int col,char ch){
+                for(int i=0;i<9;i++){
+                    if(board[row][i]==ch){
+                        return false;
+                    }
+                    if(board[i][col]==ch){
+                        return false;
+                    }
+                    if(board[3*(row/3)+(i/3)][3*(col/3)+i%3]==ch){
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+ //******************************M-Coloring Graph Problem****************************************************** */
+class solve {
+    public boolean graphColoring(boolean graph[][], int m, int n) {
+        int color[]=new int[n];
+        for(int i=0;i<n;i++) 
+        {
+            color[i] = 0;
+        }
+        if(graphColoringUtil(graph,m,color,0,n)==false){
+            return false;
+        }
+        return true;
+    }
+    boolean graphColoringUtil(boolean graph[][],int m,int color[],int ind,int n){
+        if(ind==n) 
+        {return true;}
+        for(int c=1;c<=m;c++){
+            if(isSafe(ind,graph,color,c,n)){
+                color[ind]=c;
+                if(graphColoringUtil(graph,m,color,ind+1,n) == true)
+                    return true;
+                color[ind]=0;
+            }
+        }
+        return false;
+    }
+    boolean isSafe(int ind,boolean graph[][],int color[],int c,int n){
+        for (int i=0;i<n;i++)
+            if(graph[ind][i]&&c==color[i])
+            {return false;}
+        return true;
     }
 }
-//*********************************Rat in a Maze********************************************************************* */
+//******************Palindrome Partioning***************************************************************************** */
+class Solution {
+    public List<List<String>> partition(String s) {
+        List<List<String>> res=new ArrayList<>();
+        List<String> path=new ArrayList<>();
+        solve(0,s,path,res);
+        return res;
+    }
+    public void solve(int index,String s,List<String> path,List<List<String>> res){
+        if(index==s.length()){
+            res.add(new ArrayList<>(path));
+            return;
+        }
+        for(int i=index;i<s.length();i++){
+            if(isPal(s,index,i)){
+                path.add(s.substring(index,i+1));
+                solve(i+1,s,path,res);
+                path.remove(path.size()-1);
+            }
+        }
+    }
+    public boolean isPal(String s,int start,int end){
+        while(start<=end){
+            if(s.charAt(start)!=s.charAt(end)){
+                return false;
+            }
+            start++;
+            end--;
+        }
+        return true;
+    }
+}
+    }
+    //*********************************Rat in a Maze********************************************************************* */
 class Solution {
     public static void solve(int i,int j,int[][] m,int vis[][],ArrayList<String> ans,String move,int n){
         if((i==n-1)&&(j==n-1)){
@@ -258,7 +407,8 @@ class Solution {
         }
         return ans;
     }
-    //************Code 2*********Rat in a Maze*************************************************************************** */
+}
+//************Code 2*********Rat in a Maze*************************************************************************** */
     class Solution {
         public static void solve(int i,int j,int[][] m,int vis[][],ArrayList<String> ans,String move,int n,int dx[],int dy[]){
             if((i==n-1)&&(j==n-1)){
@@ -296,138 +446,27 @@ class Solution {
             return ans;
         }
         }
-        //**********************************************N Queen Problem************************************************************** */
-        public static List<List<String>> solveNQueens(int n){
-            char[][] board = new char[n][n];
-            for (int i = 0; i < n; i++)
-                for (int j = 0; j < n; j++)
-                    board[i][j] = '.';
-            List<List<String>> res=new ArrayList<List<String>>();
-            dfs(0,board,res);
-            return res;
+//************************************Kth Permutation Sequence******************************************************* */
+class Solution {
+    public String getPermutation(int n, int k) {
+        int fact=1;
+        List<Integer> numbers=new ArrayList<>();
+        for(int i=1;i<n;i++){
+            fact=fact*i;
+            numbers.add(i);
         }
-    
-        static boolean validate(char[][] board, int row, int col) {
-            int duprow=row;
-            int dupcol=col;
-            while(row>=0&&col>=0){
-                if(board[row][col]=='Q') return false;
-                row--;
-                col--;
+        numbers.add(n);
+        String ans="";
+        k=k-1;
+        while(true){
+            ans=ans+numbers.get(k/fact);
+            numbers.remove(k/fact);
+            if(numbers.size()==0){
+                break;
             }
-            row=duprow;
-            col=dupcol;
-            while(col>=0){
-                if(board[row][col]=='Q') return false;
-                col--;
-            }
-            row=duprow;
-            col=dupcol;
-            while(col>=0&&row<board.length) {
-                if(board[row][col]=='Q') return false;
-                col--;
-                row++;
-            }
-            return true;
+            k=k%fact;
+            fact=fact/numbers.size();
         }
-    
-        static void dfs(int col, char[][] board, List<List<String>> res) {
-            if(col==board.length){
-                res.add(construct(board));
-                return;
-            }
-    
-            for (int row=0;row<board.length;row++) {
-                if (validate(board,row,col)) {
-                    board[row][col]='Q';
-                    dfs(col+1,board,res);
-                    board[row][col]='.';
-                }
-            }
-        }
-        static List<String> construct(char[][] board){
-            List<String> res = new LinkedList < String > ();
-            for (int i=0;i<board.length;i++) {
-                String s=new String(board[i]);
-                res.add(s);
-            }
-            return res;
-        }
-        //*******************************Sudoku Solver************************************************************** */
-        class Solution {
-            public void solveSudoku(char[][] board) {
-                solveSudokuUtil(board);
-            }
-            public boolean solveSudokuUtil(char board[][]){
-                for(int i=0;i<9;i++){
-                    for(int j=0;j<9;j++){
-                        if(board[i][j]=='.'){
-                            for(char c='1';c<='9';c++){
-                                if(isValid(board,i,j,c)){
-                                    board[i][j]=c;
-                                    if(solveSudokuUtil(board)==true){
-                                        return true;
-                                    }
-                                    else
-                                    board[i][j]='.';
-                                }
-                            }
-                            return false;
-                        }
-                    }
-                }
-                return true;
-            }
-            public boolean isValid(char board[][],int row,int col,char ch){
-                for(int i=0;i<9;i++){
-                    if(board[row][i]==ch){
-                        return false;
-                    }
-                    if(board[i][col]==ch){
-                        return false;
-                    }
-                    if(board[3*(row/3)+(i/3)][3*(col/3)+i%3]==ch){
-                        return false;
-                    }
-                }
-                return true;
-            }
-        }
-        //******************************M-Coloring Graph Problem****************************************************** */
-
-class solve {
-    // Function to determine if graph can be coloured with at most M colours
-    // such
-    // that no two adjacent vertices of graph are coloured with same colour.
-    public boolean graphColoring(boolean graph[][], int m, int n) {
-        int color[]=new int[n];
-        for(int i=0;i<n;i++) 
-        {
-            color[i] = 0;
-        }
-        if(graphColoringUtil(graph,m,color,0,n)==false){
-            return false;
-        }
-        return true;
-    }
-    boolean graphColoringUtil(boolean graph[][],int m,int color[],int ind,int n){
-        if(ind==n) 
-        {return true;}
-        for(int c=1;c<=m;c++){
-            if(isSafe(ind,graph,color,c,n)){
-                color[ind]=c;
-                if(graphColoringUtil(graph,m,color,ind+1,n) == true)
-                    return true;
-                color[ind]=0;
-            }
-        }
-        return false;
-    }
-    boolean isSafe(int ind,boolean graph[][],int color[],int c,int n){
-        for (int i=0;i<n;i++)
-            if(graph[ind][i]&&c==color[i])
-            {return false;}
-        return true;
+        return ans;
     }
 }
-    }
