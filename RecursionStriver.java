@@ -296,5 +296,138 @@ class Solution {
             return ans;
         }
         }
-        //************************************************************************************************************** */
+        //**********************************************N Queen Problem************************************************************** */
+        public static List<List<String>> solveNQueens(int n){
+            char[][] board = new char[n][n];
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < n; j++)
+                    board[i][j] = '.';
+            List<List<String>> res=new ArrayList<List<String>>();
+            dfs(0,board,res);
+            return res;
+        }
+    
+        static boolean validate(char[][] board, int row, int col) {
+            int duprow=row;
+            int dupcol=col;
+            while(row>=0&&col>=0){
+                if(board[row][col]=='Q') return false;
+                row--;
+                col--;
+            }
+            row=duprow;
+            col=dupcol;
+            while(col>=0){
+                if(board[row][col]=='Q') return false;
+                col--;
+            }
+            row=duprow;
+            col=dupcol;
+            while(col>=0&&row<board.length) {
+                if(board[row][col]=='Q') return false;
+                col--;
+                row++;
+            }
+            return true;
+        }
+    
+        static void dfs(int col, char[][] board, List<List<String>> res) {
+            if(col==board.length){
+                res.add(construct(board));
+                return;
+            }
+    
+            for (int row=0;row<board.length;row++) {
+                if (validate(board,row,col)) {
+                    board[row][col]='Q';
+                    dfs(col+1,board,res);
+                    board[row][col]='.';
+                }
+            }
+        }
+        static List<String> construct(char[][] board){
+            List<String> res = new LinkedList < String > ();
+            for (int i=0;i<board.length;i++) {
+                String s=new String(board[i]);
+                res.add(s);
+            }
+            return res;
+        }
+        //*******************************Sudoku Solver************************************************************** */
+        class Solution {
+            public void solveSudoku(char[][] board) {
+                solveSudokuUtil(board);
+            }
+            public boolean solveSudokuUtil(char board[][]){
+                for(int i=0;i<9;i++){
+                    for(int j=0;j<9;j++){
+                        if(board[i][j]=='.'){
+                            for(char c='1';c<='9';c++){
+                                if(isValid(board,i,j,c)){
+                                    board[i][j]=c;
+                                    if(solveSudokuUtil(board)==true){
+                                        return true;
+                                    }
+                                    else
+                                    board[i][j]='.';
+                                }
+                            }
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+            public boolean isValid(char board[][],int row,int col,char ch){
+                for(int i=0;i<9;i++){
+                    if(board[row][i]==ch){
+                        return false;
+                    }
+                    if(board[i][col]==ch){
+                        return false;
+                    }
+                    if(board[3*(row/3)+(i/3)][3*(col/3)+i%3]==ch){
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+        //******************************M-Coloring Graph Problem****************************************************** */
+
+class solve {
+    // Function to determine if graph can be coloured with at most M colours
+    // such
+    // that no two adjacent vertices of graph are coloured with same colour.
+    public boolean graphColoring(boolean graph[][], int m, int n) {
+        int color[]=new int[n];
+        for(int i=0;i<n;i++) 
+        {
+            color[i] = 0;
+        }
+        if(graphColoringUtil(graph,m,color,0,n)==false){
+            return false;
+        }
+        return true;
+    }
+    boolean graphColoringUtil(boolean graph[][],int m,int color[],int ind,int n){
+        if(ind==n) 
+        {return true;}
+        for(int c=1;c<=m;c++){
+            if(isSafe(ind,graph,color,c,n)){
+                color[ind]=c;
+                if(graphColoringUtil(graph,m,color,ind+1,n) == true)
+                    return true;
+                color[ind]=0;
+            }
+        }
+        return false;
+    }
+    boolean isSafe(int ind,boolean graph[][],int color[],int c,int n){
+        for (int i=0;i<n;i++)
+            if(graph[ind][i]&&c==color[i])
+            {return false;}
+        return true;
+    }
 }
+    }
