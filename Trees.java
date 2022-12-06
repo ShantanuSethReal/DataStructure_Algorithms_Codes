@@ -133,7 +133,6 @@ public class Trees {
         return ans;
     }
     //**************************LEFT VIEW***********************************************************************
-    
     class Tree
     {
     ArrayList<Integer> leftView(Node root)
@@ -175,8 +174,7 @@ public class Trees {
                 }
                 if(t.right!=null){
                     queue.add(t.right);
-                }
-                
+                }   
             }
         }
         return ans;
@@ -207,11 +205,8 @@ class Solution {
 //**************************TOP VIEW**********************************************************************
 class Solution
 {
-    //Function to return a list of nodes visible from the top view 
-    //from left to right in Binary Tree.
     static ArrayList<Integer> topView(Node root)
     {
-        // add your code
         ArrayList<Integer> ans=new ArrayList<Integer>();
         Queue<Pair> q=new ArrayDeque<>();
         Map<Integer,Integer> map=new TreeMap<>();
@@ -250,11 +245,8 @@ class Solution
 //**************************BOTTOM VIEW**********************************************************************
 class Solution
 {
-    //Function to return a list containing the bottom view of the given tree.
     public ArrayList <Integer> bottomView(Node root)
-        // Code here
         {
-        // add your code
         ArrayList<Integer> ans=new ArrayList<Integer>();
         Queue<Pair> q=new ArrayDeque<>();
         Map<Integer,Integer> map=new TreeMap<>();
