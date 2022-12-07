@@ -281,3 +281,44 @@ class Solution
         }
     }
 }
+//******************Vertical Order Traversal*************************************** */
+class Solution {
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        {
+        Queue<Pair> q=new ArrayDeque<>();
+        Map<Integer,ArrayList<Integer>> map=new TreeMap<>();
+        List<List<Integer>> wrapList=new ArrayList<>();
+        q.add(new Pair(0,root));
+        while(!q.isEmpty()){
+            Pair curr=q.poll();
+            if(map.containsKey(curr.hd)){
+                map.get(curr.hd).add(curr.node.val);
+            }
+            else{
+                ArrayList<Integer> temp=new ArrayList<>();
+                temp.add(curr.node.val);
+                map.put(curr.hd,temp);
+            }
+            if(curr.node.left!=null){
+             q.add(new Pair(curr.hd-1,curr.node.left));   
+            }
+            if(curr.node.right!=null){
+             q.add(new Pair(curr.hd+1,curr.node.right));   
+            }
+        }
+        for(Map.Entry<Integer,ArrayList<Integer>> entry: map.entrySet()){
+            wrapList.add(entry.getValue());
+        }
+        return wrapList;
+        }
+    }
+    
+    class Pair{
+        int hd;
+        TreeNode node;
+        public Pair(int h,TreeNode n){
+            this.hd=h;
+            this.node=n;
+        }
+    }
+    }
