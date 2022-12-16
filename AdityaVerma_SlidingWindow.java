@@ -1,19 +1,37 @@
 public class SlidingWindow {
-    //*********************************Maximum Sum of SubArray of Size K***************************/
+    //***********************************Base Code***************************************************************** */
+    class Solution{
+        public SlidingWindow(){
+            int i=0,j=0;
+            while(j<size){
+                sum=sum+arr[j];
+                if(j-i+1<K){
+                    j++;
+                }
+                else if(j-i+1==K){
+                    max=Math.max(sum,max);
+                    sum=sum-arr[i];
+                    i++;
+                    j++;
+                }
+            }
+        }
+    }
+    //***************************Maximum Sum of SubArray of Size K*******************************************************/
     class Solution{
         static long maximumSumSubarray(int K, ArrayList<Integer> Arr,int N){
             // code here
             int start=0,end=0;
-            long Max_Sum=Integer.MIN_VALUE;
-            long Current_Sum=0;
+            long max_Sum=Integer.MIN_VALUE;
+            long current_Sum=0;
             while(end<N){
-                Current_Sum+=Arr.get(end);
+                current_Sum+=Arr.get(end);
                 if(end-start+1<K){
                     end++;
                 }
                 else if(end-start+1==K){
-                    Max_Sum=Math.max(Current_Sum,Max_Sum);
-                    Current_Sum-=Arr.get(start);
+                    max_Sum=Math.max(current_Sum,max_Sum);
+                    current_Sum-=Arr.get(start);
                     start++;
                     end++;
                 }
@@ -21,7 +39,7 @@ public class SlidingWindow {
             return Max_Sum;
         }
     }
-    //************************First Negative Integer in Window of Size K*************************** */
+    //***************************First Negative Integer in Window of Size K********************************************** */
     class Compute {
     
         public long[] printFirstNegativeInteger(long A[], int N, int K)
@@ -37,13 +55,15 @@ public class SlidingWindow {
                     j++;
                 }
                 else if(j-i+1==K){
-                    if(q.size()!=0)
+                    if(q.size()!=0){
                     res[i]=q.peekFirst();
+                    }
                     else
-                    res[i]=0;
+                    {res[i]=0;
                     if(A[i]<0){
                         q.removeFirst();
                     }
+                }
                     i++;
                     j++;
                 }
@@ -51,7 +71,7 @@ public class SlidingWindow {
             return res;
         }
     }
-    //***************Count number of anagrams in a string****************************** */
+    //**************************Count number of anagrams in a string************************************************** */
     class Solution {
         int search(String pat, String txt) {
             // code here
@@ -95,6 +115,71 @@ public class SlidingWindow {
             }
             return ans;
         }
+    }
+    //**************************Maximum of all SubArrays of Size K***************************************************** */
+    class Solution{
+        public int[] maxSlidingWindow(int[] nums, int k){
+        int ans[]=new int[nums.length-k+1];
+        Deque<Integer> q=new LinkedList<>();
+        
+        int i = 0,j=0;
+        while(j < nums.length){
+            // calculation
+            if(q.size()==0){
+                q.add(nums[j]);
+            }
+            else{
+                while(q.size()>0&&q.peekLast()<nums[j]){
+                    q.removeLast();
+                }
+                q.add(nums[j]);
+            }
+            // now move j pointer
+            if(j-i+1<k) 
+            {j++;}
+            // if we hit the window size
+            else if(j-i+1==k){
+                // answer -> calculation;
+                ans[i]=q.peek();
+                // slide the window
+                // calculation
+                if(nums[i]==q.peek()){
+                    q.removeFirst();
+                }
+                // now slide the pointer
+                i++;
+                j++;
+            }
+        }
+        return ans;
+        }
+    }
+    //**************************Largest SubArray of Sum K************************************************************** */
+    class Solution{
+        public static int lenOfLongSubarr (int A[], int N, int K) {
+            //Complete the function
+            int i=0,j=0;
+            int sum=0,len=Integer.MIN_VALUE;
+            while(j<N){
+                sum=sum+A[j];
+                if(sum<K){
+                    j++;
+                }
+                else if(sum==K){
+                    len=Math.max(len,j-i+1);
+                    j++;
+                }
+                else if(sum>K){
+                    while(sum>K){
+                        sum=sum-A[i];
+                        i++;
+                    }
+                j++;
+                }
+            }
+            return len;
+        }
+    
     }
     //**************************Longest Substring with K unique characters********************** */
     class Solution {
@@ -168,5 +253,48 @@ public class SlidingWindow {
                 return ans;
         }
     }
+    //************************Pick Toys**************************************************** */
     //***********************Minimum Window Substring************************************* */
+    //**L-Longer String S Shorter String*************************************************** */
+    class Solution {
+        public String minWindow(String L,String S) {
+            HashMap<Character,Integer> map=new HashMap<>();
+            for(int k=0;k<S.length();k++){
+                map.put(S.charAt(k),map.getOrDefault(S.charAt(k),0)+1);
+            }
+            int min=Integer.MAX_VALUE;
+            String res=""; 
+            int count=map.size();
+            int i=0,j=0;
+            while(j<L.length()){
+                if(map.get(L.charAt(j))!=null){
+                map.put(L.charAt(j),map.get(L.charAt(j))-1);
+                if(map.get(L.charAt(j))==0)
+                    count--;
+                }
+                 if(count>0){
+                     j++;
+                 }       
+                 else{
+                    if(count==0){
+                       while(count==0){
+                            if(min>j-i+1){
+                             res=L.substring(i,j+1);
+                             min=Math.min(min,j-i+1);
+                            }
+                         
+                            if(map.get(L.charAt(i))!=null){
+                            map.put(L.charAt(i),map.get(L.charAt(i))+1);
+                            if(map.get(L.charAt(i))==1)
+                                  count++;
+                                }
+                          i++;
+                       }
+                       j++;
+                    } 
+                 }
+            }
+            return res;
+        }
+        }
 }
