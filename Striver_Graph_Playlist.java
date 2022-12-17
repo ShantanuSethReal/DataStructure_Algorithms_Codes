@@ -39,16 +39,16 @@ public class Striver_Graph_Playlist {
             return cnt;
     }
     }
-    //*******************Number of Islands****************************** */
-    class Pair{
-        int row;
-        int col;
-        Pair(int _row,int _col){
-        this.row=_row;
-        this.col=_col;
-        }
-    }
+    //*******************Number of Islands****************************** */  
     class Solution {
+        class Pair{
+            int row;
+            int col;
+            Pair(int _row,int _col){
+            this.row=_row;
+            this.col=_col;
+            }
+        }
     public void bfs(int i,int j,char [][]grid,boolean [][]visited,int n,int m){
         visited[i][j]=true;
         Queue<Pair> q=new LinkedList<>();
@@ -475,18 +475,57 @@ public class Striver_Graph_Playlist {
     }
 }
     //*****************Find Eventual States DFs*************************************************************** */
-    //*****************Print Shortest Path Djikstra************************************************************* */
 
-class Pair{
-    int first;
-    int second;
-    Pair(int _first,int _second){
-        this.first=_first;
-        this.second=_second;
+    //*****************Djikstra's Shortest Path Algorithm******************************************************* */ 
+    class Solution
+    {
+        class Pair{
+            int distance;
+            int node;
+            Pair(int _dis,int _node){
+                this.distance=_dis;
+                this.node=_node;
+            }
+        }
+        //Function to find the shortest distance of all the vertices
+        //from the source vertex S.
+        static int[] dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int S)
+        {
+            // Write your code here
+            PriorityQueue<Pair> pq=new PriorityQueue<Pair>((x,y)->x.distance-y.distance);
+            int distance[]=new int[V];
+            for(int i=0;i<V;i++){
+                distance[i]=(int)(1e9);
+            }
+            distance[S]=0;
+            pq.add(new Pair(0,S));
+            while(pq.size()!=0){
+                int dis=pq.peek().distance;
+                int node=pq.peek().node;
+                pq.remove();
+                for(int i=0;i<adj.get(node).size();i++){
+                    int edgeW=adj.get(node).get(i).get(1);
+                    int adjNode=adj.get(node).get(i).get(0);
+                    
+                    if(dis+edgeW<distance[adjNode]){
+                        distance[adjNode]=dis+edgeW;
+                        pq.add(new Pair(dis+edgeW,adjNode));
+                    }
+                }
+            }
+            return distance;
+        }
     }
-}
-class Solution {
-
+    //*****************Print Shortest Path Djikstra************************************************************* */
+    class Solution {
+    class Pair{
+        int first;
+        int second;
+        Pair(int _first,int _second){
+            this.first=_first;
+            this.second=_second;
+        }
+    }
 public static List<Integer> shortestPath(int n, int m, int edges[][]) {
     // code here
     ArrayList<ArrayList<Pair>> adj=new ArrayList<>();
@@ -538,5 +577,37 @@ public static List<Integer> shortestPath(int n, int m, int edges[][]) {
     return path;
 }
 }
+//********************Bellman Ford - Negative Cycle |Base Code************************************************ */
+class Solution {
+    static int[] bellman_ford(int V, ArrayList<ArrayList<Integer>> edges, int S) {
+        // Write your code here
+        int[] distance=new int[V];
+        for(int i=0;i<V;i++){
+            distance[i]=(int)(1e8);
+        }
+        distance[S]=0;
 
+        for(int i=0;i<V-1;i++) {
+            for(ArrayList<Integer> it: edges){
+                int u=it.get(0);
+                int v=it.get(1);
+                int wt=it.get(2);
+                if(distance[u]!=(int)(1e8)&&distance[u]+wt<distance[v]){
+                    distance[v]=distance[u]+wt;
+                }
+            }
+        }
+        for(ArrayList<Integer> it: edges){
+                int u=it.get(0);
+                int v=it.get(1);
+                int wt=it.get(2);
+                if(distance[u]!=(int)(1e8)&&distance[u]+wt<distance[v]){
+                    int temp[]=new int[1];
+                    temp[0]=-1;
+                    return temp;
+                    }
+                }
+        return distance;
+    }
+}
 }
