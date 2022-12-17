@@ -578,7 +578,7 @@ public static List<Integer> shortestPath(int n, int m, int edges[][]) {
 }
 }
 //********************Bellman Ford - Negative Cycle |Base Code************************************************ */
-class Solution {
+    class Solution {
     static int[] bellman_ford(int V, ArrayList<ArrayList<Integer>> edges, int S) {
         // Write your code here
         int[] distance=new int[V];
@@ -609,5 +609,263 @@ class Solution {
                 }
         return distance;
     }
+}
+    //********************Shortest Distance in a Binary Maze******************* */
+    class Solution {
+        class Tuple{
+            int dis;
+            int x;
+            int y;
+            Tuple(int _dis,int _x,int _y){
+                this.dis=_dis;
+                this.x=_x;
+                this.y=_y;
+            }
+        }
+        int shortestPath(int[][] grid, int[] source, int[] destination) {
+            if(source[0]==destination[0]&&source[1]==destination[1]){
+                return 0;
+            }
+            int sx=source[0],sy=source[1],Dx=destination[0],Dy=destination[1];
+            int n=grid.length;
+            int m=grid[0].length;
+            int distance[][]=new int[n][m];
+            for(int i=0;i<n;i++){
+                for(int j=0;j<m;j++){
+                    distance[i][j]=(int)(1e8);
+                }
+            }
+            distance[sx][sy]=0;
+            int dx[]={-1,0,1,0};
+            int dy[]={0,1,0,-1};
+            Queue<Tuple> q=new LinkedList<>();
+            q.add(new Tuple(0,sx,sy));
+            while(!q.isEmpty()){
+                int d=q.peek().dis;
+                int xc=q.peek().x;
+                int yc=q.peek().y;
+                q.remove();
+                for(int i=0;i<4;i++){
+                    int nr=xc+dx[i];
+                    int nc=yc+dy[i];
+                    if(nr>=0&&nr<n&&nc>=0&&nc<m&&grid[nr][nc]==1&&d+1<distance[nr][nc]){
+                        distance[nr][nc]=d+1;
+                        if(nr==Dx&&nc==Dy){
+                            return d+1;
+                        }
+                        else{
+                        q.add(new Tuple(d+1,nr,nc));
+                        }
+                    }
+                }
+            }
+            return -1;
+        }
+    }
+    //*********************Path with Minimum Effort*************************************** */
+    class Solution {
+        class Tuple{
+               int dis;
+               int x;
+               int y;
+               Tuple(int _dis,int _x,int _y){
+                   this.dis=_dis;
+                   this.x=_x;
+                   this.y=_y;
+               }
+       }
+       int MinimumEffort(int heights[][]) {
+           PriorityQueue<Tuple> pq=new PriorityQueue<Tuple>((x,y)->x.dis-y.dis);
+               int n=heights.length;
+               int m=heights[0].length;
+               int distance[][]=new int[n][m];
+               for(int i=0;i<n;i++){
+                   for(int j=0;j<m;j++){
+                       distance[i][j]=(int)(1e9);
+                   }
+               }
+               distance[0][0]=0;
+               int dx[]={-1,0,1,0};
+               int dy[]={0,1,0,-1};
+               pq.add(new Tuple(0,0,0));
+               while(!pq.isEmpty()){
+                   Tuple it=pq.peek();
+                   pq.remove();
+                   int diff=it.dis;
+                   int xc=it.x;
+                   int yc=it.y;
+                   if(xc==n-1&&yc==m-1){
+                       return diff;
+                   }
+                   
+                   for(int i=0;i<4;i++){
+                       int nr=xc+dx[i];
+                       int nc=yc+dy[i];
+                       if(nr>=0&&nr<n&&nc>=0&&nc<m){
+                           int newEffort=Math.max(diff,Math.abs(heights[nr][nc]-heights[xc][yc]));
+                           if(newEffort<distance[nr][nc]){
+                               distance[nr][nc]=newEffort;
+                               pq.add(new Tuple(newEffort,nr,nc));
+                           }
+                       }
+                   }
+               } 
+               return 0;                    
+               }
+   }
+   //*******************Cheapest Flights with at most K stops************************************* */
+    class Solution {
+    class Pair{
+        int first;
+        int second;
+        Pair(int _first,int _second){
+            this.first=_first;
+            this.second=_second;
+        }
+    }
+    class Tuple{
+        int first;
+        int second;
+        int third;
+        Tuple(int _first,int _second,int _third){
+            this.first=_first;
+            this.second=_second;
+            this.third=_third;
+        }
+    }
+    public int CheapestFLight(int n,int flights[][],int src,int dst,int k) {
+        // Code here
+        ArrayList<ArrayList<Pair>> adj=new ArrayList<>();
+        for(int i=0;i<n;i++){
+            adj.add(new ArrayList<>());
+        }
+        int m=flights.length;
+        for(int i=0;i<m;i++){
+            adj.get(flights[i][0]).add(new Pair(flights[i][1],flights[i][2]));
+        }
+        int dist[]=new int[n];
+        for(int i=0;i<n;i++){
+            dist[i]=(int)(1e9);
+        }
+        dist[src]=0;
+        Queue<Tuple> q=new LinkedList<>();
+        q.add(new Tuple(0,src,0));
+        while(!q.isEmpty()){
+            Tuple it=q.peek();
+            q.remove();
+            int stops=it.first;
+            int node=it.second;
+            int cost=it.third;
+            if(stops>k){
+                continue;
+            }
+            for(Pair iter: adj.get(node)){
+                int adjNode=iter.first;
+                int edgeW=iter.second;
+                
+                if(cost+edgeW<dist[adjNode]){
+                    dist[adjNode]=cost+edgeW;
+                    q.add(new Tuple(stops+1,adjNode,cost+edgeW));
+                }
+            }
+        }
+        if(dist[dst]==(int)(1e9)){
+            return -1;
+        }
+        return dist[dst];
+    }
+}
+    //***********************Minimum multiplication to reach end*************** */
+    class Solution {
+        class Pair{
+            int first;
+            int second;
+            Pair(int _first,int _second){
+                this.first=_first;
+                this.second=_second;
+            }
+        }
+        int minimumMultiplications(int[] arr, int start, int end) {
+            Queue<Pair> q=new LinkedList<>();
+            q.add(new Pair(start,0));
+            int mod=100000;
+            int dist[]=new int[mod];
+            for(int i=0;i<mod;i++){
+                dist[i]=(int)(1e9);
+            }
+            dist[start]=0;
+            while(!q.isEmpty()){
+                Pair it=q.peek();
+                int num=it.first;
+                int steps=it.second;
+                q.remove();
+                for(Integer i: arr){
+                    int fin=(num*i)%mod;
+                    if(steps+1<dist[fin]){
+                        dist[fin]=steps+1;
+                        if(fin==end){
+                            return steps+1;
+                        }
+                        q.add(new Pair(fin,steps+1));
+                    }
+                }
+            }
+            return -1;
+            }
+    }
+    //*****************Count Paths************************************************ */  
+    class Solution {
+    class Pair{
+        int first;
+        int second;
+        Pair(int _first,int _second){
+            this.first=_first;
+            this.second=_second;
+        }
+    }
+static int countPaths(int n, List<List<Integer>> roads) {
+    // Your code here
+    ArrayList<ArrayList<Pair>> adj=new ArrayList<>();
+    for(int i=0;i<n;i++){
+        adj.add(new ArrayList<>());
+    }
+    int m=roads.size();
+    for(int i=0;i<m;i++){
+        adj.get(roads.get(i).get(0)).add(new Pair(roads.get(i).get(1),roads.get(i).get(2)));
+        adj.get(roads.get(i).get(1)).add(new Pair(roads.get(i).get(0),roads.get(i).get(2)));
+    }
+    PriorityQueue<Pair> pq=new PriorityQueue<Pair>((x,y)->x.first-y.first);
+    int dist[]=new int[n];
+    int ways[]=new int[n];
+    for(int i=0;i<n;i++){
+        dist[i]=(int)(1e9);
+        ways[i]=0;
+    }
+    dist[0]=0;
+    ways[0]=1;
+    int mod=(int)(1e9+7);
+    pq.add(new Pair(0,0));
+        while(!pq.isEmpty()){
+        Pair it=pq.peek();
+        int dis=it.first;
+        int node=it.second;
+        pq.remove();
+        for(Pair iter: adj.get(node)){
+            int adjNode=iter.first;
+            int edgeW=iter.second;
+            
+            if(dis+edgeW<dist[adjNode]){
+                dist[adjNode]=dis+edgeW;
+                pq.add(new Pair(dis+edgeW,adjNode));
+                ways[adjNode]=ways[node];
+            }
+            else if(dis+edgeW==dist[adjNode]){
+                ways[adjNode]=(ways[node]+ways[adjNode])%mod;
+        }
+    }
+    
+}
+return ways[n-1]%mod;
+}
 }
 }
