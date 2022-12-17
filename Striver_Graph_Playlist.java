@@ -92,7 +92,6 @@ public class Striver_Graph_Playlist {
             return cnt;
     }
 }
-
     //*******************Flood Fill************************************* */
     class Solution{
         public void dfs(int sr,int sc,int [][]ans,int [][]image,int []dx,int []dy,int iniColor,int newColor,int n,int m){
@@ -182,7 +181,7 @@ public class Striver_Graph_Playlist {
     }
 }
     //******************Distance of nearest cell having 1|0/1 Matrix|******** */
-    class Solution{
+    class Solution  {
     class Tuple{
         int row;
         int col;
@@ -232,4 +231,312 @@ public class Striver_Graph_Playlist {
         return distance;
     }
 }
+    //****************Replace 'O' with 'X'*********************************** */
+    class Solution{
+        static void dfs(int row,int col,char [][]a,boolean [][]visited,int []dx,int []dy,int n,int m){
+            visited[row][col]=true;
+            
+            for(int i=0;i<4;i++){
+                    int nr=row+dx[i];
+                    int nc=col+dy[i];
+                    if(nr>=0&&nr<n&&nc>=0&&nc<m&&visited[nr][nc]==false&&a[nr][nc]=='O'){
+                        dfs(nr,nc,a,visited,dx,dy,n,m);
+                    }
+                }
+        }
+        static char[][] fill(int n, int m, char a[][])
+        {
+            // code here
+            int dx[]={-1,0,1,0};
+            int dy[]={0,1,0,-1};
+            
+            boolean visited[][]=new boolean[n][m];
+            for(int i=0;i<n;i++){
+                for(int j=0;j<m;j++){
+                    visited[i][j]=false;
+                }
+            }
+            
+            for(int j=0;j<m;j++){
+                if(visited[0][j]==false&&a[0][j]=='O'){
+                    dfs(0,j,a,visited,dx,dy,n,m);
+                }
+                 if(visited[n-1][j]==false&&a[n-1][j]=='O'){
+                    dfs(n-1,j,a,visited,dx,dy,n,m);
+                }
+            }
+            for(int i=0;i<n;i++){
+                if(visited[i][0]==false&&a[i][0]=='O'){
+                    dfs(i,0,a,visited,dx,dy,n,m);
+                }
+                 if(visited[i][m-1]==false&&a[i][m-1]=='O'){
+                    dfs(i,m-1,a,visited,dx,dy,n,m);
+                }
+            }
+            
+            for(int i=0;i<n;i++){
+                for(int j=0;j<m;j++){
+                    if(visited[i][j]==false&&a[i][j]=='O'){
+                    a[i][j]='X';
+                    }
+                }
+            }
+            return a;
+            
+        }
+    }
+    //*******************Number of Enclaves*************************** */
+    class Solution {
+        class Pair{
+            int row;
+            int col;
+            Pair(int _row,int _col){
+            this.row=_row;
+            this.col=_col;
+            }
+        }
+        int numberOfEnclaves(int[][] grid) {
+            Queue<Pair> q=new LinkedList<>();
+            int n=grid.length;
+            int m=grid[0].length;
+            boolean visited[][]=new boolean[n][m];
+            for(int i=0;i<n;i++){
+                for(int j=0;j<m;j++){
+                 visited[i][j]=false;
+                }
+            }
+            
+            for(int i=0;i<n;i++){
+                for(int j=0;j<m;j++){
+                    if(i==0||i==n-1||j==0||j==m-1){
+                        if(grid[i][j]==1)
+                        {
+                            q.add(new Pair(i,j));
+                            visited[i][j]=true;
+                        }
+                    }
+                }
+            }
+                
+            int dx[]={-1,0,1,0};
+            int dy[]={0,1,0,-1};
+            
+            while(!q.isEmpty()){
+                int r=q.peek().row;
+                int c=q.peek().col;
+                q.remove();
+                for(int i=0;i<4;i++){
+                    int nr=r+dx[i];
+                    int nc=c+dy[i];
+                    if(nr>=0&&nr<n&&nc>=0&&nc<m&&grid[nr][nc]==1&&visited[nr][nc]==false){
+                         {
+                            visited[nr][nc]=true;
+                            q.add(new Pair(nr,nc));
+                         }
+                    }
+                }
+            }
+            
+            int cnt=0;
+            for(int i=0;i<n;i++){
+                for(int j=0;j<m;j++){
+                 if(visited[i][j]==false&&grid[i][j]==1){
+                     cnt++;
+                    }
+                }
+                
+            }
+            return cnt;
+    }
+    }
+    //*****************Number of Distinct Islands****************************Constructive+DFS**************** */
+    class Solution {
+        class Pair{
+            int row;
+            int col;
+            Pair(int _row,int _col){
+            this.row=_row;
+            this.col=_col;
+            }
+        }
+        public void dfs(int row,int col,int [][]grid,boolean [][]visited,int []dx,int []dy,ArrayList<String> res,int sr,int sc,int n,int m){
+                visited[row][col]=true;
+                res.add(toString(row-sr,col-sc));
+                
+                for(int i=0;i<4;i++){
+                    int nr=row+dx[i];
+                    int nc=col+dy[i];
+                    if(nr>=0&&nr<n&&nc>=0&&nc<m&&visited[nr][nc]==false&&grid[nr][nc]==1){
+                          dfs(nr,nc,grid,visited,dx,dy,res,sr,sc,n,m);
+                    }
+                }
+            }
+            public String toString(int r,int c){
+                return Integer.toString(r)+" "+Integer.toString(c);
+            }
+        int countDistinctIslands(int[][] grid) {
+            // Your Code here
+                int n=grid.length;
+                int m=grid[0].length;
+                boolean visited[][]=new boolean[n][m];
+                for(int i=0;i<n;i++){
+                    for(int j=0;j<m;j++){
+                        visited[i][j]=false;
+                    }
+                }
+                int dx[]={-1,0,1,0};
+                int dy[]={0,1,0,-1};
+                HashSet<ArrayList<String>> hs=new HashSet<>();
+                for(int i=0;i<n;i++){
+                    for(int j=0;j<m;j++){
+                        if(visited[i][j]==false && grid[i][j]==1){
+                        ArrayList<String> res=new ArrayList<>();
+                        dfs(i,j,grid,visited,dx,dy,res,i,j,n,m);
+                        hs.add(res);
+                    }
+                }
+            }
+            return hs.size();
+        }
+    }
+    //*****************Bipartite Graph******BFS************************************************************** */
+    class Solution
+{
+    public boolean check(int start,int V,ArrayList<ArrayList<Integer>> adj,int []color){
+        Queue<Integer> q=new LinkedList<>();
+        q.add(start);
+        color[start]=0;
+        while(!q.isEmpty()){
+            int node=q.peek();
+            q.remove();
+            
+            for(Integer it: adj.get(node)){
+                if(color[it]==-1){
+                    color[it]=1-color[node];
+                    q.add(it);
+                }
+                else if(color[it]==color[node]){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public boolean isBipartite(int V, ArrayList<ArrayList<Integer>>adj)
+    {
+        // Code here
+        int color[]=new int[V];
+        for(int i=0;i<V;i++)
+        {
+            color[i]=-1;
+        }
+        for(int i=0;i<V;i++){
+            if(color[i]==-1){
+                if(check(i,V,adj,color)==false){
+                return false;
+                }
+            }
+        }
+        return true;
+    }
+}
+    //*****************Bipartite Graph******DFS************************************************************** */
+    class Solution{
+    public boolean check(int start,int c,ArrayList<ArrayList<Integer>> adj,int []color){
+        color[start]=c;
+        for(Integer it: adj.get(start)){
+            if(color[it]==-1){
+                if(check(it,1-c,adj,color)==false){
+                    return false;
+                    }
+                }
+            else if(color[it]==color[start]){
+                    return false;
+                }
+            }
+        return true;
+    }
+    public boolean isBipartite(int V, ArrayList<ArrayList<Integer>>adj)
+    {
+        // Code here
+        int color[]=new int[V];
+        for(int i=0;i<V;i++)
+        {
+            color[i]=-1;
+        }
+        for(int i=0;i<V;i++){
+            if(color[i]==-1){
+                if(check(i,0,adj,color)==false){
+                return false;
+                }
+            }
+        }
+        return true;
+    }
+}
+    //*****************Find Eventual States DFs*************************************************************** */
+    //*****************Print Shortest Path Djikstra************************************************************* */
+
+class Pair{
+    int first;
+    int second;
+    Pair(int _first,int _second){
+        this.first=_first;
+        this.second=_second;
+    }
+}
+class Solution {
+
+public static List<Integer> shortestPath(int n, int m, int edges[][]) {
+    // code here
+    ArrayList<ArrayList<Pair>> adj=new ArrayList<>();
+    for(int i=0;i<=n;i++){
+        adj.add(new ArrayList<>());
+    }
+    for(int i=0;i<m;i++){
+        adj.get(edges[i][0]).add(new Pair(edges[i][1],edges[i][2]));
+        adj.get(edges[i][1]).add(new Pair(edges[i][0],edges[i][2]));
+    }
+    PriorityQueue<Pair> pq=new PriorityQueue<Pair>((x,y)->x.first-y.first);
+    int distance[]=new int[n+1];
+    int parent[]=new int[n+1];
+    for(int i=1;i<=n;i++){
+        distance[i]=(int)(1e9);
+        parent[i]=i;
+    }
+    distance[1]=0;
+    pq.add(new Pair(0,1));
+    while(pq.size()!=0){
+        Pair it=pq.peek();
+        int dis=it.first;
+        int node=it.second;
+        pq.remove();
+        
+        for(Pair iter: adj.get(node)){
+            int adjNode=iter.first;
+            int edgeWeight=iter.second;
+            if(dis+edgeWeight<distance[adjNode]){
+                distance[adjNode]=dis+edgeWeight;
+                pq.add(new Pair(dis+edgeWeight,adjNode));
+                parent[adjNode]=node;
+            }
+        }
+    }
+       
+    List<Integer> path=new ArrayList<>();
+    if(distance[n]==1e9){
+        path.add(-1);
+        return path;
+    }
+    int node=n;
+    while(parent[node]!=node){
+        path.add(node);
+        node=parent[node];
+    }
+    path.add(1);
+    Collections.reverse(path);
+    return path;
+}
+}
+
 }
