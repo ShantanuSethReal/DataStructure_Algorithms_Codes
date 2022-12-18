@@ -118,7 +118,7 @@ public class Striver_Graph_Playlist {
         }
     }
     //*******************Rotten Oranges**********************************/
-   class Solution{
+    class Solution{
     class Pair{
         int rows;
         int cols;
