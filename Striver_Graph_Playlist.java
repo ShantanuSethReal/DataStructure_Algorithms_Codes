@@ -1,5 +1,53 @@
 public class Striver_Graph_Playlist {
-    //*******************Number of Provinces**************************** */
+    class Striver{
+    //******************G5-Breadth First Search************************************************** */
+     class Solution{
+        public ArrayList<Integer> bfsOfGraph(int V,ArrayList<ArrayList<Integer>> adj){
+        ArrayList<Integer> bfs=new ArrayList<>();
+        boolean vis[]=new boolean[V];
+        for(int i=0;i<V;i++){
+            vis[i]=false;
+        }
+        Queue<Integer> q=new LinkedList<>();
+        q.add(src);
+        vis[src]=true;
+        while(!q.isEmpty()){
+            Integer node=q.poll();
+            bfs.add(node);
+            for(Integer it: adj.get(node)){
+                if(vis[it]==false){
+                    vis[it]=true;
+                    q.add(it);
+                }
+            }
+        }
+        return bfs;
+    }
+    }
+        //**************G6-Depth First Search************************************************** */
+    class Solution{    
+        public void dfs(int node,boolean vis[],ArrayList<ArrayList<Integer>> adj, ArrayList<Integer> dfs){
+            vis[node]=true;
+            dfs.add(node);
+            for(Integer it: adj.get(node))
+            {
+                if(vis[it]==false){
+                    dfs(it,vis,adj,dfs);
+                }
+            }
+        }
+        public ArrayList<Integer> dfsOfGraph(int V,ArrayList<ArrayList<Integer>> adj){
+        ArrayList<Integer> dfs=new ArrayList<>();
+        boolean vis[]=new boolean[V];
+        for(int i=0;i<V;i++){
+            vis[i]=false;
+        }
+        visited[src]=true;
+        dfs(src,vis,adj,dfs);
+        return dfs;
+        }
+        }
+    //******************G7-Number of Provinces************************************************* */
     class Solution {
         static void  dfs(int i,ArrayList<ArrayList<Integer>> adjLs,boolean []visited){
             visited[i]=true;
@@ -39,7 +87,7 @@ public class Striver_Graph_Playlist {
             return cnt;
     }
     }
-    //*******************Number of Islands****************************** */  
+    //******************G8-*Number of Islands*************************************************** */  
     class Solution {
         class Pair{
             int row;
@@ -92,7 +140,7 @@ public class Striver_Graph_Playlist {
             return cnt;
     }
 }
-    //*******************Flood Fill************************************* */
+    //******************G9-Flood Fill********************************************************** */
     class Solution{
         public void dfs(int sr,int sc,int [][]ans,int [][]image,int []dx,int []dy,int iniColor,int newColor,int n,int m){
             ans[sr][sc]=newColor;
@@ -117,7 +165,7 @@ public class Striver_Graph_Playlist {
             return ans;
         }
     }
-    //*******************Rotten Oranges**********************************/
+    //******************G10-Rotten Oranges*******************************************************/
     class Solution{
     class Pair{
         int rows;
@@ -180,7 +228,8 @@ public class Striver_Graph_Playlist {
         return tm;
     }
 }
-    //******************Distance of nearest cell having 1|0/1 Matrix|******** */
+    
+    //*****************G13-Distance of nearest cell having 1|0/1 Matrix|******************************/
     class Solution  {
     class Tuple{
         int row;
@@ -231,7 +280,7 @@ public class Striver_Graph_Playlist {
         return distance;
     }
 }
-    //****************Replace 'O' with 'X'*********************************** */
+    //*****************G14-Replace 'O' with 'X'*********************************** */
     class Solution{
         static void dfs(int row,int col,char [][]a,boolean [][]visited,int []dx,int []dy,int n,int m){
             visited[row][col]=true;
@@ -285,7 +334,7 @@ public class Striver_Graph_Playlist {
             
         }
     }
-    //*******************Number of Enclaves*************************** */
+    //*****************G15-Number of Enclaves*************************** */
     class Solution {
         class Pair{
             int row;
@@ -349,7 +398,7 @@ public class Striver_Graph_Playlist {
             return cnt;
     }
     }
-    //*****************Number of Distinct Islands****************************Constructive+DFS**************** */
+    //*****************G16-Number of Distinct Islands****************************Constructive+DFS**************** */
     class Solution {
         class Pair{
             int row;
@@ -399,7 +448,7 @@ public class Striver_Graph_Playlist {
             return hs.size();
         }
     }
-    //*****************Bipartite Graph******BFS************************************************************** */
+    //*****************G17-Bipartite Graph******BFS************************************************************** */
     class Solution
 {
     public boolean check(int start,int V,ArrayList<ArrayList<Integer>> adj,int []color){
@@ -440,7 +489,7 @@ public class Striver_Graph_Playlist {
         return true;
     }
 }
-    //*****************Bipartite Graph******DFS************************************************************** */
+    //*****************G18-Bipartite Graph******DFS************************************************************** */
     class Solution{
     public boolean check(int start,int c,ArrayList<ArrayList<Integer>> adj,int []color){
         color[start]=c;
@@ -474,9 +523,296 @@ public class Striver_Graph_Playlist {
         return true;
     }
 }
-    //*****************Find Eventual States DFs*************************************************************** */
+    //*****************G20-Find Eventual States DFS*************************************************************** */
 
-    //*****************Djikstra's Shortest Path Algorithm******************************************************* */ 
+    //*****************G24-Course Schedule I and II*************************************************************** */
+    class Solution {
+        public boolean isPossible(int N, int[][] prerequisites)
+        {
+            // Your Code goes here
+            ArrayList<ArrayList<Integer>> adj=new ArrayList<>();
+            for(int i=0;i<N;i++){
+                adj.add(new ArrayList<>());
+            }
+            int m=prerequisites.length;
+            for(int i=0;i<m;i++){
+                adj.get(prerequisites[i][0]).add(prerequisites[i][1]);
+            }
+            
+            int indegree[]=new int[N];
+            for(int i=0;i<N;i++){
+                for(Integer it:adj.get(i)){
+                    indegree[it]++;
+                }
+            }
+            Queue<Integer> q=new LinkedList<>();
+            for(int i=0;i<N;i++){
+                if(indegree[i]==0){
+                    q.add(i);
+                }
+            }
+            List<Integer> topo=new ArrayList<>();
+                while(!q.isEmpty()){
+                    int node=q.peek();
+                    q.remove();
+                    topo.add(node);
+                    for(Integer it: adj.get(node)){
+                        indegree[it]--;
+                        if(indegree[it]==0){q.add(it);}
+                    }
+                }
+            if(topo.size()==N)return true;
+            return false;}
+    }
+    //****************G25-Find Eventual Safe States BFS Topo*********************************************************/
+    class Solution {
+
+        List<Integer> eventualSafeNodes(int V, List<List<Integer>> adj) {
+    
+            // Your code here
+             ArrayList<ArrayList<Integer>> adjRev=new ArrayList<>();
+                for(int i=0;i<V;i++){
+                    adjRev.add(new ArrayList<>());
+                }
+                int indegree[]=new int[V];
+                for(int i=0;i<V;i++){
+                    for(Integer it: adj.get(i)){
+                    adjRev.get(it).add(i);
+                    indegree[i]++;
+                    }
+                }
+                Queue<Integer> q=new LinkedList<>();
+                List<Integer> safeNodes=new ArrayList<>();
+                for(int i=0;i<V;i++){
+                    if(indegree[i]==0){
+                        q.add(i);
+                    }
+                }
+                
+                while(!q.isEmpty()){
+                    int node=q.peek();
+                    q.remove();
+                    safeNodes.add(node);
+                    for(Integer it: adjRev.get(node)){
+                            indegree[it]--;
+                            if(indegree[it]==0){q.add(it);}
+                    }
+                }
+                    
+                Collections.sort(safeNodes);
+                return safeNodes;
+        }
+    }
+    //****************G26-Alien Dictionary Topo Sort***************************************************************/
+    class Solution{
+    public List<Integer> topoSort(int V,List<List<Integer>> adj){
+            int indegree[]=new int[V];
+            for(int i=0;i<V;i++){
+                for(Integer it:adj.get(i)){
+                    indegree[it]++;
+                }
+            }
+            Queue<Integer> q=new LinkedList<>();
+            for(int i=0;i<V;i++){
+                if(indegree[i]==0){
+                    q.add(i);
+                }
+            }
+            List<Integer> topo=new ArrayList<>();
+            while(!q.isEmpty()){
+                int node=q.peek();
+                q.remove();
+                topo.add(node);
+                for(Integer it: adj.get(node)){
+                    indegree[it]--;
+                    if(indegree[it]==0){q.add(it);}
+                }
+            }
+            return topo;
+        }
+    public String findOrder(String [] dict, int N, int K)
+    {
+        // Write your code here
+        List<List<Integer>> adj=new ArrayList<>();
+        for(int i=0;i<K;i++){
+            adj.add(new ArrayList<>());
+        }
+        
+        for(int j=0;j<N-1;j++){
+            String s1=dict[j];
+            String s2=dict[j+1];
+            int len=Math.min(s1.length(),s2.length());
+            for(int i=0;i<len;i++){
+                if(s1.charAt(i)!=s2.charAt(i)){
+                    adj.get(s1.charAt(i)-'a').add(s2.charAt(i)-'a');
+                    break;
+                }
+            }
+        }
+        
+        List<Integer> topo=topoSort(K,adj);
+        String ans="";
+        for(int it: topo){
+            ans=ans+(char)(it+(int)('a'));
+        }
+        return ans;
+        
+        
+    }
+}
+    //****************G27-Shortest Path in DAG******************************************************************* */
+    class Solution {
+        class Pair{
+            int destination;
+            int edgeW;
+            Pair(int d,int e){
+                this.destination=d;
+                this.edgeW=e;
+            }
+        }
+         public void dfsTopo(int node,ArrayList<ArrayList<Pair>> adj,boolean vis[],Stack<Integer> st){
+                vis[node]=true;
+                for(int i=0;i<adj.get(node).size();i++)
+                {
+                    int v=adj.get(node).get(i).destination;
+                    if(vis[v]==false){
+                        dfsTopo(v,adj,vis,st);
+                    }
+                }
+                st.push(node);
+            }
+        public int[] shortestPath(int N,int M, int[][] edges) {
+            //Code here
+             ArrayList<ArrayList<Pair>> adj=new ArrayList<>();
+            for(int i=0;i<N;i++){
+                ArrayList<Pair> temp=new ArrayList<>();
+                adj.add(temp);
+                }
+            for(int i=0;i<M;i++){
+                int src=edges[i][0];
+                int dest=edges[i][1];
+                int ew=edges[i][2];
+                adj.get(src).add(new Pair(dest,ew));
+            }
+            
+            Stack<Integer> st=new Stack<>();
+            boolean vis[]=new boolean[N];
+            for(int i=0;i<N;i++){
+                vis[i]=false;
+            }
+            for(int i=0;i<N;i++){
+                if(vis[i]==false){
+                    dfsTopo(i,adj,vis,st);
+                }
+            }
+            
+            int distance[]=new int[N];
+            for(int i=0;i<N;i++){
+            distance[i]=(int)(1e9);
+            }
+            distance[0]=0;
+            while(!st.isEmpty()){
+                int node=st.peek();
+                st.pop();
+                for(int i=0;i<adj.get(node).size();i++){
+                    int v=adj.get(node).get(i).destination;
+                    int wt=adj.get(node).get(i).edgeW;
+                    if(distance[node]+wt<distance[v]){
+                        distance[v]=distance[node]+wt;
+                    }
+                }
+            }
+            
+            for(int i=0;i<N;i++){
+            if(distance[i]==(int)(1e9))
+            distance[i]=-1;
+            }
+            return distance;
+            
+        }
+    }
+    //****************G28-Shortest Path in Unidirected graph with unit distance*********************************** */
+    class Solution {
+    public int[] shortestPath(int[][] edges,int n,int m ,int src) {
+        // Code here
+        ArrayList<ArrayList<Integer>> adj=new ArrayList<>();
+        for(int i=0;i<n;i++){
+            adj.add(new ArrayList<>());
+            }
+        for(int i=0;i<m;i++){
+            adj.get(edges[i][0]).add(edges[i][1]);
+            adj.get(edges[i][1]).add(edges[i][0]);
+            }
+        int distance[]=new int[n];
+        for(int i=0;i<n;i++){
+        distance[i]=(int)(1e9);
+        }
+        distance[src]=0;
+        Queue<Integer> q=new LinkedList<>();
+        q.add(src);
+        while(!q.isEmpty()){
+            int node=q.peek();
+            q.remove();
+            for(Integer it: adj.get(node)){
+                if(distance[node]+1<distance[it]){
+                    distance[it]=distance[node]+1;
+                    q.add(it);
+                }
+            }
+        }
+        for(int i=0;i<n;i++){
+            if(distance[i]==(int)(1e9)){
+                distance[i]=-1;
+            }
+        }
+        return distance;
+    }
+}
+    //****************G29- Word Ladder I******************************************************************************/
+    class Solution{
+    class Pair{
+            String word;
+            int steps;
+            Pair(String _word,int _steps){
+                this.word=_word;
+                this.steps=_steps;
+            }
+        }
+    public int wordLadderLength(String startWord, String targetWord, String[] wordList)
+    {
+        // Code here
+        Queue<Pair> q=new LinkedList<>();
+        q.add(new Pair(startWord,1));
+        Set<String> st=new HashSet<String>();
+        int n=wordList.length;
+        for(int i=0;i<n;i++){
+            st.add(wordList[i]);
+        }
+        st.remove(startWord);
+        while(!q.isEmpty()){
+            String curW=q.peek().word;
+            int step=q.peek().steps;
+            q.remove();
+            if(curW.equals(targetWord)==true) return step;
+            for(int i=0;i<curW.length();i++){
+                for(char ch='a';ch<='z';ch++){
+                char replacedArray[]=curW.toCharArray();
+                replacedArray[i]=ch;
+                String replacedWord=new String(replacedArray);
+                
+                if(st.contains(replacedWord)==true){
+                    st.remove(replacedWord);
+                    q.add(new Pair(replacedWord,step+1));
+                }
+            }
+            }
+        }
+        return 0;
+    }
+}
+    //****************G30- */
+    
+    //*****************G32-Djikstra's Shortest Path Algorithm******************************************************* */ 
     class Solution
     {
         class Pair{
@@ -516,7 +852,7 @@ public class Striver_Graph_Playlist {
             return distance;
         }
     }
-    //*****************Print Shortest Path Djikstra************************************************************* */
+    //*****************G35-Print Shortest Path Djikstra************************************************************* */
     class Solution {
     class Pair{
         int first;
@@ -577,40 +913,7 @@ public static List<Integer> shortestPath(int n, int m, int edges[][]) {
     return path;
 }
 }
-//********************Bellman Ford - Negative Cycle |Base Code************************************************ */
-    class Solution {
-    static int[] bellman_ford(int V, ArrayList<ArrayList<Integer>> edges, int S) {
-        // Write your code here
-        int[] distance=new int[V];
-        for(int i=0;i<V;i++){
-            distance[i]=(int)(1e8);
-        }
-        distance[S]=0;
-
-        for(int i=0;i<V-1;i++) {
-            for(ArrayList<Integer> it: edges){
-                int u=it.get(0);
-                int v=it.get(1);
-                int wt=it.get(2);
-                if(distance[u]!=(int)(1e8)&&distance[u]+wt<distance[v]){
-                    distance[v]=distance[u]+wt;
-                }
-            }
-        }
-        for(ArrayList<Integer> it: edges){
-                int u=it.get(0);
-                int v=it.get(1);
-                int wt=it.get(2);
-                if(distance[u]!=(int)(1e8)&&distance[u]+wt<distance[v]){
-                    int temp[]=new int[1];
-                    temp[0]=-1;
-                    return temp;
-                    }
-                }
-        return distance;
-    }
-}
-    //********************Shortest Distance in a Binary Maze******************* */
+    //*****************G36-Shortest Distance in a Binary Maze******************* */
     class Solution {
         class Tuple{
             int dis;
@@ -662,7 +965,7 @@ public static List<Integer> shortestPath(int n, int m, int edges[][]) {
             return -1;
         }
     }
-    //*********************Path with Minimum Effort*************************************** */
+    //*****************G37-Path with Minimum Effort*************************************** */
     class Solution {
         class Tuple{
                int dis;
@@ -713,7 +1016,7 @@ public static List<Integer> shortestPath(int n, int m, int edges[][]) {
                return 0;                    
                }
    }
-   //*******************Cheapest Flights with at most K stops************************************* */
+   //******************G38-Cheapest Flights with at most K stops************************************* */
     class Solution {
     class Pair{
         int first;
@@ -775,7 +1078,7 @@ public static List<Integer> shortestPath(int n, int m, int edges[][]) {
         return dist[dst];
     }
 }
-    //***********************Minimum multiplication to reach end*************** */
+    //*****************G39-Minimum multiplication to reach end*************** */
     class Solution {
         class Pair{
             int first;
@@ -813,7 +1116,7 @@ public static List<Integer> shortestPath(int n, int m, int edges[][]) {
             return -1;
             }
     }
-    //*****************Count Paths************************************************ */  
+    //*****************G40-Count Paths*No of Ways to Arrive at a Destination*********************************** */  
     class Solution {
     class Pair{
         int first;
@@ -867,5 +1170,72 @@ static int countPaths(int n, List<List<Integer>> roads) {
 }
 return ways[n-1]%mod;
 }
+}
+    //*****************G41-Bellman Ford - Negative Cycle |Base Code************************************************ */
+    class Solution {
+        static int[] bellman_ford(int V, ArrayList<ArrayList<Integer>> edges, int S) {
+            // Write your code here
+            int[] distance=new int[V];
+            for(int i=0;i<V;i++){
+                distance[i]=(int)(1e8);
+            }
+            distance[S]=0;
+    
+            for(int i=0;i<V-1;i++) {
+                for(ArrayList<Integer> it: edges){
+                    int u=it.get(0);
+                    int v=it.get(1);
+                    int wt=it.get(2);
+                    if(distance[u]!=(int)(1e8)&&distance[u]+wt<distance[v]){
+                        distance[v]=distance[u]+wt;
+                    }
+                }
+            }
+            for(ArrayList<Integer> it: edges){
+                    int u=it.get(0);
+                    int v=it.get(1);
+                    int wt=it.get(2);
+                    if(distance[u]!=(int)(1e8)&&distance[u]+wt<distance[v]){
+                        int temp[]=new int[1];
+                        temp[0]=-1;
+                        return temp;
+                        }
+                    }
+            return distance;
+        }
+    }
+    //*****************G42-Flyod Warshall|Multiple Source-Shortest Path************************************************ */
+    class Solution{
+    public void shortest_distance(int[][] matrix)
+    {
+        // Code here 
+        int n=matrix.length;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(i==j){
+                    matrix[i][j]=0;
+                }       
+                else if(matrix[i][j]==-1){
+                    matrix[i][j]=(int)(1e9);
+                }
+            }
+        }
+        for(int k=0;k<n;k++){
+            for(int i=0;i<n;i++){
+                for(int j=0;j<n;j++){
+                    matrix[i][j]=Math.min(matrix[i][j],matrix[i][k]+matrix[k][j]);
+                }
+            }
+        }
+        
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(matrix[i][j]==(int)(1e9)){
+                    matrix[i][j]=-1;
+                }    
+            }
+        }
+        return;
+    }
 }
 }
