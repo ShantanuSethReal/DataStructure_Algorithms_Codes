@@ -768,7 +768,7 @@ public class Striver_Graph_Playlist {
         return distance;
     }
 }
-    //****************G29- Word Ladder I******************************************************************************/
+    //****************G29-Word Ladder I******************************************************************************/
     class Solution{
     class Pair{
             String word;
@@ -810,8 +810,65 @@ public class Striver_Graph_Playlist {
         return 0;
     }
 }
-    //****************G30- */
-    
+    //****************G30-Word Ladder II****************************************************************** */
+    class Solution{
+    public ArrayList<ArrayList<String>> findSequences(String startWord, String targetWord, String[] wordList)
+    {
+        // Code here
+        Set<String> st=new HashSet<String>();
+        int n=wordList.length;
+        for(int i=0;i<n;i++){
+            st.add(wordList[i]);
+        }
+        Queue<ArrayList<String>> q=new LinkedList<>();
+        ArrayList<String> ls=new ArrayList<>();
+        ls.add(startWord);
+        q.add(ls);
+        
+        ArrayList<String> usedOnLevel=new ArrayList<>();
+        ArrayList<ArrayList<String>> ans=new ArrayList<>();
+        usedOnLevel.add(startWord);
+        int level=0;
+        
+        while(!q.isEmpty()){
+            ArrayList<String> vec=q.peek();
+            q.remove();
+            if(vec.size()>level){
+                level++;
+                for(String it: usedOnLevel){
+                    st.remove(it);
+                }
+            }
+            String word=vec.get(vec.size()-1);
+            if(word.equals(targetWord)==true){
+                    if(ans.size()==0){
+                        ans.add(vec);
+                    }
+                    else if(ans.get(0).size()==vec.size()){
+                        ans.add(vec);
+                    }
+                }
+            
+            for(int i=0;i<word.length();i++){
+                for(char ch='a';ch<='z';ch++){
+                char replacedArray[]=word.toCharArray();
+                replacedArray[i]=ch;
+                String replacedWord=new String(replacedArray);
+                
+                if(st.contains(replacedWord)==true){
+                    vec.add(replacedWord);
+                    ArrayList<String> temp=new ArrayList<>(vec);
+                    q.add(temp);
+                    usedOnLevel.add(replacedWord);
+                    vec.remove(vec.size()-1);
+                    
+                        }
+                    }
+                }
+            }   
+        return ans;
+        }
+    }    
     //*****************G32-Djikstra's Shortest Path Algorithm******************************************************* */ 
     class Solution
     {
