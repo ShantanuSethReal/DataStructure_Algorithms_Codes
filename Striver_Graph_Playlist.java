@@ -1295,4 +1295,237 @@ return ways[n-1]%mod;
         return;
     }
 }
+    //************G43-Find the City With the Smallest Number of Neighbours at a Threshold Distance************** */
+    class Solution {
+        int findCity(int n, int m, int[][] edges,int distanceThreshold)
+        {
+            //code here
+          int dist[][]=new int[n][n];
+          
+          for(int i=0;i<n;i++){
+              for(int j=0;j<n;j++){
+                  dist[i][j]=Integer.MAX_VALUE;
+              }
+          }
+          for(int i=0;i<m;i++){
+              int u=edges[i][0];
+              int v=edges[i][1];
+              int wt=edges[i][2];
+              dist[u][v]=wt;
+              dist[v][u]=wt;
+          }
+          
+          for(int i=0;i<n;i++){dist[i][i]=0;}
+          for(int k=0;k<n;k++){
+              for(int i=0;i<n;i++){
+                  for(int j=0;j<n;j++){
+                      if(dist[i][k]==Integer.MAX_VALUE||dist[k][j]==Integer.MAX_VALUE){continue;}
+                      dist[i][j]=Math.min(dist[i][j],dist[i][k]+dist[k][j]);
+                  }
+              }
+          }
+         
+          int cntcity=n;
+          int cityno=-1;
+          for(int city=0;city<n;city++){
+              int cnt=0;
+              for(int adj=0;adj<n;adj++){
+                  if(dist[city][adj]<=distanceThreshold){
+                      cnt++;
+                  }
+              }  
+                  if(cnt<=cntcity){
+                      cntcity=cnt;
+                      cityno=city;
+                  }
+              }
+          return cityno;
+        }
+  }
+  //*****************G45-Prim's Algorithm for Minimum spanning tree**************************** */
+  class Solution{
+    static class Pair{
+        int node;
+        int distance;
+        Pair(int _first,int _second){
+            this.node=_first;
+            this.distance=_second;
+        }
+    }
+    //Function to find sum of weights of edges of the Minimum Spanning Tree.
+    static int spanningTree(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj) 
+    {
+        // Add your code here
+        PriorityQueue<Pair> pq=new PriorityQueue<Pair>((x,y)-> x.distance-y.distance);
+        boolean vis[]=new boolean[V];
+        for(int i=0;i<V;i++){
+            vis[i]=false;
+        }
+        pq.add(new Pair(0,0));
+        int sum=0;
+        while(!pq.isEmpty()){
+            int wt=pq.peek().distance;
+            int node=pq.peek().node;
+            
+            pq.remove();
+            
+            if(vis[node]==true)
+                continue;
+            vis[node]=true;
+            sum+=wt;
+            
+            for(int i=0;i<adj.get(node).size();i++){
+                int eW=adj.get(node).get(i).get(1);
+                int adjNode=adj.get(node).get(i).get(0);
+            
+                if(vis[adjNode]==false){
+                    pq.add(new Pair(adjNode,eW));
+                }
+                
+            }
+        }
+        return sum;
+       
+    }
+}
+ //******************G46-Disjoint Set************************************************************* */
+ class DisjointSet {
+    List<Integer> rank = new ArrayList<>();
+    List<Integer> parent = new ArrayList<>();
+    List<Integer> size = new ArrayList<>(); 
+    public DisjointSet(int n) {
+        for(int i = 0;i<=n;i++) {
+            rank.add(0); 
+            parent.add(i); 
+            size.add(1); 
+        }
+    }
+    public int findUPar(int node) {
+        if(node == parent.get(node)) {
+            return node; 
+        }
+        int ulp = findUPar(parent.get(node)); 
+        parent.set(node, ulp); 
+        return parent.get(node); 
+    }
+    public void unionByRank(int u, int v) {
+        int ulp_u = findUPar(u); 
+        int ulp_v = findUPar(v); 
+        if(ulp_u == ulp_v) return; 
+        if(rank.get(ulp_u) < rank.get(ulp_v)) {
+            parent.set(ulp_u, ulp_v); 
+        }
+        else if(rank.get(ulp_v) < rank.get(ulp_u)) {
+            parent.set(ulp_v, ulp_u); 
+        }
+        else {
+            parent.set(ulp_v, ulp_u); 
+            int rankU = rank.get(ulp_u); 
+            rank.set(ulp_u, rankU + 1); 
+        }
+    }  
+    public void unionBySize(int u, int v) {
+        int ulp_u = findUPar(u); 
+        int ulp_v = findUPar(v); 
+        if(ulp_u == ulp_v) return; 
+        if(size.get(ulp_u) < size.get(ulp_v)) {
+            parent.set(ulp_u, ulp_v); 
+            size.set(ulp_v, size.get(ulp_v) + size.get(ulp_u)); 
+        }
+        else {
+            parent.set(ulp_v, ulp_u); 
+            size.set(ulp_u, size.get(ulp_u) + size.get(ulp_v));
+        }
+    }
+}
+ //**************** Krusakal's Minimum Spanning Tree***************************/
+ class Solution{
+    class DisjointSet {
+    List<Integer> rank = new ArrayList<>();
+    List<Integer> parent = new ArrayList<>();
+    List<Integer> size = new ArrayList<>(); 
+    public DisjointSet(int n) {
+        for(int i = 0;i<=n;i++) {
+            rank.add(0); 
+            parent.add(i); 
+            size.add(1); 
+        }
+    }
+    public int findUPar(int node) {
+        if(node == parent.get(node)) {
+            return node; 
+        }
+        int ulp = findUPar(parent.get(node)); 
+        parent.set(node, ulp); 
+        return parent.get(node); 
+    }
+    public void unionByRank(int u, int v) {
+        int ulp_u = findUPar(u); 
+        int ulp_v = findUPar(v); 
+        if(ulp_u == ulp_v) return; 
+        if(rank.get(ulp_u) < rank.get(ulp_v)) {
+            parent.set(ulp_u, ulp_v); 
+        }
+        else if(rank.get(ulp_v) < rank.get(ulp_u)) {
+            parent.set(ulp_v, ulp_u); 
+        }
+        else {
+            parent.set(ulp_v, ulp_u); 
+            int rankU = rank.get(ulp_u); 
+            rank.set(ulp_u, rankU + 1); 
+        }
+    }  
+    public void unionBySize(int u, int v) {
+        int ulp_u = findUPar(u); 
+        int ulp_v = findUPar(v); 
+        if(ulp_u == ulp_v) return; 
+        if(size.get(ulp_u) < size.get(ulp_v)) {
+            parent.set(ulp_u, ulp_v); 
+            size.set(ulp_v, size.get(ulp_v) + size.get(ulp_u)); 
+        }
+        else {
+            parent.set(ulp_v, ulp_u); 
+            size.set(ulp_u, size.get(ulp_u) + size.get(ulp_v));
+        }
+    }
+}
+class Edge implements Comparable<Edge>{
+        int src,dest,weight;
+        Edge(int _src,int _dest,int _weight){
+            this.src=_src;this.dest=_dest;this.weight=_weight;
+        }
+        public int compareTo(Edge compareEdge){
+            return this.weight-compareEdge.weight;
+        }
+    } 
+    //Function to find sum of weights of edges of the Minimum Spanning Tree.
+    static int spanningTree(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj) 
+    {
+       List<Edge> edges=new ArrayList<Edge>();
+       for(int i=0;i<V;i++){
+           for(int j=0;j<adj.get(i).size();j++){
+            int adjN=adj.get(i).get(j).get(0);
+            int wt=adj.get(i).get(j).get(1);
+            int node=i;
+            Edge temp=new Edge(i,adjN,wt);
+            edges.add(temp);
+           }
+       }
+       DisjointSet ds=new DisjointSet(V);
+       Collections.sort(edges);
+       int mstwt=0;
+       for(int i=0;i<edges.size();i++){
+           int wt=edges.get(i).weight;
+           int u=edges.get(i).src;
+           int v=edges.get(i).dest;
+           
+           if(ds.findUPar(u)!=ds.findUPar(v)){
+               mstwt+=wt;
+               ds.unionBySize(u,v);
+           }
+       }
+       return mstwt;
+    }
+}
+
 }
