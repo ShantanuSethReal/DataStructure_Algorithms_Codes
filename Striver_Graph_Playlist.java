@@ -265,7 +265,7 @@ public class Striver_Graph_Playlist {
     return false;
     }
 }
-//**********************G12-Detect Cycle in Undirected Graph DFS************************************************** */
+    //**********************G12-Detect Cycle in Undirected Graph DFS************************************************** */
     class Solution{    
     public boolean dfs(int node,int parent,boolean vis[],ArrayList<ArrayList<Integer>> adj){
         vis[src]=true;
@@ -587,9 +587,69 @@ public class Striver_Graph_Playlist {
         return true;
     }
 }
-    //*****************G20-Find Eventual States DFS*************************************************************** */
-    
-     //****************G22-Topological Sort BFS******************************************** */
+    //*****************G19-Detect cycle in a directed graph using DFS********************************************** */
+    class Solution{
+        private boolean dfsCheck(int node,ArrayList<ArrayList<Integer>> adj,boolean vis[],boolean pathVis[]) {
+        vis[node]=true; 
+        pathVis[node]=true; 
+        for(Integer it : adj.get(node)) {
+            if(vis[it]==false){
+                if(dfsCheck(it,adj,vis,pathVis)==true) 
+                    return true; 
+            }
+            else if(pathVis[it]==true){
+                return true; 
+            }
+        }
+        pathVis[node]=false; 
+        return false; 
+    }
+    public boolean isCyclic(int V,ArrayList<ArrayList<Integer>> adj) {
+        boolean vis[]=new boolean[V];
+        boolean pathVis[] = new boolean[V];
+        
+        for(int i=0;i<V;i++){
+            if(vis[i]==false) {
+                if(dfsCheck(i,adj,vis,pathVis)==true)return true; 
+            }
+        }
+        return false; 
+    }
+}
+    //******************G20-Find Eventual States DFS*************************************************************** */
+    //******************G21-Topological Sort DFS******************************************** */
+    class Solution{    
+        public void dfs(int node,boolean vis[],ArrayList<ArrayList<Integer>> adj,Stack<Integer> st){
+            vis[node]=true;
+            for(Integer it: adj.get(node))
+            {
+                if(vis[it]==false){
+                    dfs(it,vis,adj,st);
+                }
+            }
+            st.push(node);
+        }
+        public ArrayList<Integer> dfsOfGraph(int V,ArrayList<ArrayList<Integer>> adj){
+        boolean vis[]=new boolean[V];
+        Stack<Integer> st=new Stack<>();
+        for(int i=0;i<V;i++){
+            vis[i]=false;
+        }
+        for(int i=0;i<V;i++){
+            if(vis[i]==false){
+                dfs(i,vis,adj,st);
+            }
+        }    
+        int ans[]=new int[V];
+        int i=0;
+        while(!st.isEmpty()){
+            ans[i++]=st.peek();
+            st.pop();
+        }
+        return ans;
+    }
+    }
+     //*****************G22-Topological Sort BFS******************************************** */
     class Solution{
     public boolean topoSort(int V,ArrayList<ArrayList<Integer>> adj){
         int indegree[]=new int[V];
@@ -618,38 +678,39 @@ public class Striver_Graph_Playlist {
         return topo;
     }
 }
-    //*********************G21-Topological Sort DFS******************************************** */
-    class Solution{    
-    public void dfs(int node,boolean vis[],ArrayList<ArrayList<Integer>> adj,Stack<Integer> st){
-        vis[node]=true;
-        for(Integer it: adj.get(node))
-        {
-            if(vis[it]==false){
-                dfs(it,vis,adj,st);
+    //******************G-23-Detect a Cycle in Directed Graph Kahn's Algorithm BFS***************/
+    class Solution {
+        public boolean isCyclic(int N,ArrayList<ArrayList<Integer>> adj){
+            // int topo[] = new int[N];
+            int indegree[]=new int[N];
+            for(int i=0;i<N;i++){
+                for(Integer it : adj.get(i)){
+                    indegree[it]++;
+                }
             }
+    
+            Queue<Integer> q=new LinkedList<Integer>();
+            for(int i=0;i<N;i++){
+                if(indegree[i]==0){
+                    q.add(i);
+                }
+            }
+            int cnt=0;
+            while(!q.isEmpty()){
+                Integer node=q.poll();
+                cnt++;
+                for (Integer it : adj.get(node)){
+                    indegree[it]--;
+                    if (indegree[it]==0){
+                        q.add(it);
+                    }
+                }
+            }
+            if(cnt==N)
+                return false;
+            return true;
         }
-        st.push(node);
     }
-    public ArrayList<Integer> dfsOfGraph(int V,ArrayList<ArrayList<Integer>> adj){
-    boolean vis[]=new boolean[V];
-    Stack<Integer> st=new Stack<>();
-    for(int i=0;i<V;i++){
-        vis[i]=false;
-    }
-    for(int i=0;i<V;i++){
-        if(vis[i]==false){
-            dfs(i,vis,adj,st);
-        }
-    }    
-    int ans[]=new int[V];
-    int i=0;
-    while(!st.isEmpty()){
-        ans[i++]=st.peek();
-        st.pop();
-    }
-    return ans;
-}
-}
     //*****************G24-Course Schedule I and II*************************************************************** */
     class Solution {
         public boolean isPossible(int N, int[][] prerequisites)
