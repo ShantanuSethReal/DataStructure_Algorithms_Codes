@@ -189,11 +189,50 @@ public class Striver_TreesPlayList {
     //**************L13.Preorder Inorder Postorder Traversals in One Traversal********************/
     
     //**************L14.Maximum Depth in Binary Tree | Height of Binary Tree********************/
-    
+    class Solution{
+        public int heightOfBinaryTree(TreeNode root){
+            if(root==null){
+                return 0;
+            }
+            int lh=heightOfBinaryTree(root.left);
+            int rh=heightOfBinaryTree(root.right);
+            return 1+Math.max(lh,rh);
+        }
+    }
     //**************L15.Check for Balanced Binary Tree********************/
-    
+    class Solution{
+        public boolean isBalanced(TreeNode root){
+            return dfsHeight(root)!=-1
+        }
+        public int dfsHeight(TreeNode root){
+            if(root==null){
+                return 0;
+            }
+            int lh=dfsHeight(root.left);
+            if(lh==-1)return -1;
+            int rh=dfsHeight(root.right);
+            if(rh==-1)return -1;
+            if(Math.abs(lh-rh)>1)return -1;
+            return 1+Math.max(lh,rh);
+        }
+    }
     //**************L16.Diameter of Binary Tree********************/
-    
+    class Solution{
+        public int diameterOfBinaryTree(TreeNode root){
+            int []diameter=new int[]{0};
+            heightOfBinaryTree(root,diameter);
+            return diameter[0];
+        }
+        public int heightOfBinaryTree(TreeNode root,int diameter[]){
+            if(root==null){
+                return 0;
+            }
+            int lh=heightOfBinaryTree(root.left,diameter);
+            int rh=heightOfBinaryTree(root.right,diameter);
+            diameter[0]=Math.max(diameter[0],lh+rh);
+            return 1+Math.max(lh,rh);
+        }
+    }
     //**************L17.Maximum Path Sum in Binary Tree********************/
     
     //**************L18.Check it two trees are Identical or Not********************/
