@@ -17,7 +17,7 @@ public class BinarySearch_Accio {
             }
         }
     }
-        //*********************Binary Search Recursive************************************** */
+    //*********************Binary Search Recursive************************************** */
     class Solution{
             public static int BinarySearchRecursive(int arr[],int start,int end,int ele){
             if(start>end){
@@ -255,7 +255,7 @@ public class BinarySearch_Accio {
                 }
                 return binarysearch(matrix,target,R);
             }
-        }}
+        }
     //*********************Search in a Rotated Sorted Array****************************** */
     class Solution {
         //********Solution 1************** */
@@ -314,6 +314,120 @@ public class BinarySearch_Accio {
              }
              return -1;   
             }
+        }
+    }
+    //**********************Square Root of an Integer************************************ */
+    class Solution {
+        public int mySqrt(int target) {
+            int start=1;
+            int end=target;
+            int ans=0;
+            while(start<=end){
+                int mid=start+((end-start)/2);
+                if(mid==target/mid)return mid;
+                else if(mid<target/mid){
+                    ans=mid;
+                    start=mid+1;
+                }
+                else{end=mid-1;}
+            }
+            return ans;
+        }
+    }
+    //**********************Triangular Number********************************************** */
+    class Solution {
+        int isTriangular(int N){
+            //code here
+            int start=1,end=N;
+            while(start<=end){
+                int mid=(start+end)/2;
+                if((mid*(mid+1)/2)==N) return 1;
+                else if((mid*(mid+1)/2)>N){end=mid-1;}
+                else{start=mid+1;}
+            }
+            return 0;
+        }
+    }
+    //**********************Ship Within Days*********************************************** */
+    class Solution {
+        public boolean isPossible(int[] weights,int truckWeight,int days){
+            int currWeight=0;
+            int currDay=1;
+            int n=weights.length;
+            for(int i=0;i<n;i++){
+                currWeight+=weights[i];
+                if(currWeight>truckWeight){
+                    currWeight=weights[i];
+                    currDay++;
+                }
+            }
+            return (currDay<=days);
+        }
+        public int shipWithinDays(int[] weights, int days) {
+            int maxLoad=Integer.MIN_VALUE;
+            int totalLoad=0;
+            int n=weights.length;
+    
+            for(int i=0;i<n;i++){
+                maxLoad=Math.max(maxLoad,weights[i]);
+                totalLoad+=weights[i];
+            }
+    
+            int start=maxLoad;
+            int end=totalLoad;
+            int ans=-1;
+            while(start<=end){
+                int mid=(start+end)/2;
+                if(isPossible(weights,mid,days)==true){
+                    ans=mid;
+                    end=mid-1;
+                }
+                else start=mid+1;
+            }
+            return ans;
+        }
+    }
+    //**********************Flowers Bloom in M bouquets within K days************************ */
+    class Solution {
+        public boolean isPossible(int[] bloomDay,int days,int m,int k){
+            int boques=0;
+            int flower=0;
+            int n=bloomDay.length;
+            for(int i=0;i<n;i++){
+                if(bloomDay[i]<=days){
+                    flower++;
+                }
+                else flower=0;
+    
+    
+                if(flower==k){
+                    boques++;
+                    flower=0;
+                    if(boques==m)return true;
+                }
+            }
+            return false;
+        }
+        public int minDays(int[] bloomDay, int m, int k) {
+            int maxDays=Integer.MIN_VALUE;
+            int n=bloomDay.length;
+    
+            for(int i=0;i<n;i++){
+                maxDays=Math.max(maxDays,bloomDay[i]);
+            }
+            int start=1;
+            int end=maxDays;
+            int ans=-1;
+            while(start<=end){
+                int mid=(start+end)/2;
+                if(isPossible(bloomDay,mid,m,k)==true){
+                    ans=mid;
+                    end=mid-1;
+                }
+                else start=mid+1;
+            }
+    
+            return ans;
         }
     }
 }
