@@ -36,9 +36,7 @@ class Solution{
             ds.add(new ArrayList<>(ans));
             return;
             }
-            else{
-                return;
-            }
+            else{return;}
         }
         ans.add(arr[ind]);
         s+=arr[ind];
@@ -65,9 +63,7 @@ class Solution{
             ds.add(new ArrayList<>(ans));
             return true;
             }
-            else{
-                return false;
-            }
+            else{return false;}
         }
         ans.add(arr[ind]);
         s+=arr[ind];
@@ -128,7 +124,7 @@ class Solution {
         findCombinations(ind+1,arr,target,ans,ds);
     }
     
-    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+    public List<List<Integer>> combinationSum(int[] candidates,int target){
         List<List<Integer>> ans =new ArrayList<>();
         findCombinations(0,candidates,target,ans,new ArrayList<>());
         return ans;
@@ -137,23 +133,22 @@ class Solution {
 //*********************************Combination Sum II(Any number of Chances)*********************************************/
 //*********************************Pick and Not Pick Concept********************************************************* */
 class Solution {
-    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+    public List<List<Integer>> combinationSum2(int[] candidates,int target){
         List<List<Integer>> ans=new ArrayList<>();
         Arrays.sort(candidates);
         findCombinations(0,candidates,target,ans,new ArrayList<>());
         return ans;
     }
     static void findCombinations(int ind,int[] arr,int target,List<List<Integer>> ans,List<Integer> ds){
-        if(target==0) {
+        if(target==0){
             ans.add(new ArrayList<>(ds));
             return;
         }
-
-        for (int i = ind; i<arr.length; i++) {
+        for(int i=ind;i<arr.length;i++){
             if(i>ind && arr[i]==arr[i-1]) 
             {continue;}
             if (arr[i]>target) 
-            break;
+            {break;}
             ds.add(arr[i]);
             findCombinations(i+1,arr,target-arr[i],ans,ds);
             ds.remove(ds.size()-1);
@@ -191,8 +186,8 @@ class Solution {
             if(i!=ind&&nums[i]==nums[i-1])
             {continue;} 
             ds.add(nums[i]); 
-            findSubsets(i+1, nums, ds, ansList); 
-            ds.remove(ds.size() - 1);
+            findSubsets(i+1,nums,ds,ansList); 
+            ds.remove(ds.size()-1);
         }
     }
 }
@@ -207,38 +202,37 @@ class Solution{
             dfs(0,board,res);
             return res;
         }
-        static boolean validate(char[][] board, int row, int col) {
+        static boolean validate(char[][] board,int row,int col){
             int duprow=row;
             int dupcol=col;
             while(row>=0&&col>=0){
-                if(board[row][col]=='Q') return false;
+                if(board[row][col]=='Q')return false;
                 row--;
                 col--;
             }
             row=duprow;
             col=dupcol;
             while(col>=0){
-                if(board[row][col]=='Q') return false;
+                if(board[row][col]=='Q')return false;
                 col--;
             }
             row=duprow;
             col=dupcol;
-            while(col>=0&&row<board.length) {
-                if(board[row][col]=='Q') return false;
+            while(col>=0&&row<board.length){
+                if(board[row][col]=='Q')return false;
                 col--;
                 row++;
             }
             return true;
-        }
-        
-        static void dfs(int col, char[][] board, List<List<String>> res) {
+        } 
+        static void dfs(int col,char[][] board,List<List<String>> res){
             if(col==board.length){
                 res.add(construct(board));
                 return;
             }
     
-            for (int row=0;row<board.length;row++) {
-                if (validate(board,row,col)) {
+            for(int row=0;row<board.length;row++){
+                if(validate(board,row,col)){
                     board[row][col]='Q';
                     dfs(col+1,board,res);
                     board[row][col]='.';
@@ -246,8 +240,8 @@ class Solution{
             }
         }
         static List<String> construct(char[][] board){
-            List<String> res = new LinkedList < String > ();
-            for (int i=0;i<board.length;i++) {
+            List<String> res=new LinkedList<String>();
+            for(int i=0;i<board.length;i++){
                 String s=new String(board[i]);
                 res.add(s);
             }
@@ -329,7 +323,7 @@ class Solution{
 }
 //*******************************Palindrome Partioning***************************************************************************** */
 class Solution {
-    public List<List<String>> partition(String s) {
+    public List<List<String>> partition(String s){
         List<List<String>> res=new ArrayList<>();
         List<String> path=new ArrayList<>();
         solve(0,s,path,res);

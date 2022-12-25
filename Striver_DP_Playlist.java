@@ -7,130 +7,138 @@ public class Striver_DP_Playlist {
  //*******************************DP-6 House Robber*******************************************************************/  
  //*******************************DP-7 Ninja Training*****************************************************************/  
  //*******************************DP-8 Grid Unique Paths**************************************************************/  
- class Solution{
-    //************Memoization***************** */
-    class Solution{
-    public static int UniquePaths(int row,int col,int dp[][]){
-        if(row==0&&col==0){
-            return 1;
-        }
-        if(row<0||col<0){
-            return 0;
-        }
-        if(dp[row][col]!=-1)return dp[row][col];
-        int up=UniquePaths(row-1,col,dp);
-        int left=UniquePaths(row,col-1,dp);
+ class TUF{
+    //*****************************Memoization********************************************************************** */  
+    static int countWaysUtil(int i,int j,int[][] dp){
+      if(i==0&&j == 0){return 1;}
+      if(i<0||j<0){return 0;}
+      if(dp[i][j]!=-1)return dp[i][j];
         
-        return dp[row][col]=up+left;
+      int up=countWaysUtil(i-1,j,dp);
+      int left=countWaysUtil(i,j-1,dp);
+      return dp[i][j]=up+left;
     }
-    //Function to find total number of unique paths.
-    public static int NumberOfPath(int a, int b) 
-    {
-        //Your code here
-        int dp[][]=new int[a][b];
-        for(int i=0;i<a;i++){
-            for(int j=0;j<b;j++){
-                dp[i][j]=-1;
-            }
-        }
-        dp[0][0]=1;
-        int ans=UniquePaths(a-1,b-1,dp);
-        return dp[a-1][b-1];
-    }
-}
-    //************Tabulation****************** */
-    class Solution{
-    //Function to find total number of unique paths.
-    public static int NumberOfPath(int a, int b) 
-    {
-        //Your code here
-        int dp[][]=new int[a][b];
-        for(int i=0;i<a;i++){
-            for(int j=0;j<b;j++){
-                dp[i][j]=0;
-            }
-        }
+    static int countWays(int m,int n){
+        int dp[][]=new int[m][n];
+        for (int[] row : dp)
+            Arrays.fill(row, -1);
+        return countWaysUtil(m-1,n-1,dp);
         
-        for(int i=0;i<a;i++){
-            for(int j=0;j<b;j++){
-                if(i==0&&j==0)dp[i][j]=1;
-                else{
-                    int up=0;
-                    int left=0;
-                    if(i>0){up=dp[i-1][j];}
-                    if(j>0){left=dp[i][j-1];}
-                    dp[i][j]=up+left;
-                }
-            }
-        }
-        
-        return dp[a-1][b-1];
     }
-}
- } 
+    //*****************************Tabulation********************************************************************** */  
+    static int countWaysUtil(int m,int n,int[][] dp){     
+         for(int i=0;i<m;i++){
+              for(int j=0;j<n;j++){
+                  if(i==0&&j==0){
+                      dp[i][j]=1;
+                      continue;
+                  }
+                  int up=0;
+                  int left = 0;
+                  if(i>0) 
+                    up=dp[i-1][j];
+                  if(j>0)
+                    left=dp[i][j-1];
+                    
+                  dp[i][j]=up+left;
+              }
+          }
+          return dp[m-1][n-1];
+        }
+    static int countWays(int m,int n){
+            int dp[][]=new int[m][n];
+            for (int[] row : dp)
+                Arrays.fill(row, -1);
+            return countWaysUtil(m,n,dp);
+        }
+    }
  //*******************************DP-9 Grid Unique Paths with Obstacles***********************************************/  
- class Solution{
-    //************Memoization***************** */
-    class Solution{
-    public static int UniquePaths(int row,int col,int dp[][],int matrix[][]){
-        //**************Add condition in base case********* */
-        if(matrix[row][col]==0){return 0;}
-        if(row==0&&col==0){
-            return 1;
-        }
-        if(row<0||col<0){
-            return 0;
-        }
-        if(dp[row][col]!=-1)return dp[row][col];
-        int up=UniquePaths(row-1,col,dp);
-        int left=UniquePaths(row,col-1,dp);
+ class TUF{
+    //*****************************Memoization********************************************************************** */  
+    static int mazeObstaclesUtil(int i,int j,int[][] maze,int[][] dp){
+      if(i>0&&j>0&&maze[i][j]==-1){return 0;}
+      if(i==0&&j==0){return 1;}
+      if(i<0||j<0){return 0;}
+      if(dp[i][j]!=-1) return dp[i][j];
         
-        return dp[row][col]=up+left;
+      int up=mazeObstaclesUtil(i-1,j,maze,dp);
+      int left=mazeObstaclesUtil(i,j-1,maze,dp);
+      
+      return dp[i][j]=up+left;
     }
-    //Function to find total number of unique paths.
-    public static int NumberOfPath(int a, int b,int matrix[][]) 
-    {
-        //Your code here
-        int dp[][]=new int[a][b];
-        for(int i=0;i<a;i++){
-            for(int j=0;j<b;j++){
-                dp[i][j]=-1;
+    static int mazeObstacles(int n,int m,int[][] maze){
+        int dp[][]=new int[n][m];
+        for(int row[]: dp)
+        Arrays.fill(row,-1);
+        return mazeObstaclesUtil(n-1,m-1,maze,dp);
+    }
+    //*****************************Tabulation********************************************************************** */  
+    static int mazeObstaclesUtil(int n,int m,int[][] maze,int[][] dp){
+        for(int i=0;i<n;i++){
+             for(int j=0;j<m;j++){
+                 if(i>0&&j>0 && maze[i][j]==-1){
+                   dp[i][j]=0;
+                   continue;
+                 }
+                 if(i==0&&j==0){
+                     dp[i][j]=1;
+                     continue;
+                 }
+                 int up=0;
+                 int left=0;
+                 if(i>0) 
+                   up=dp[i-1][j];
+                 if(j>0)
+                   left=dp[i][j-1];
+                   
+                 dp[i][j]=up+left;
+             }
+         }
+         return dp[n-1][m-1];
+       }
+} 
+    //****************************DP-10 Minimum Path Sum in Grid******************************************************/
+ class TUF{
+    //*****************************Memoization********************************************************************** */  
+    static int minSumPathUtil(int i,int j,int[][] matrix,int[][] dp){
+      if(i==0&&j==0){return matrix[0][0];}
+      if(i<0||j<0){return (int)Math.pow(10,9);}
+      if(dp[i][j]!=-1){return dp[i][j];}
+        
+      int up=matrix[i][j]+minSumPathUtil(i-1,j,matrix,dp);
+      int left=matrix[i][j]+minSumPathUtil(i,j-1,matrix,dp);
+      return dp[i][j]=Math.min(up,left);
+      
+    } 
+    static int minSumPath(int n,int m,int[][] matrix){
+        int dp[][]=new int[n][m];
+        for(int row[]: dp)
+        Arrays.fill(row,-1);
+        return minSumPathUtil(n-1,m-1,matrix,dp);
+        
+    } 
+    //*****************************Tabulation********************************************************************** */  
+    static int minSumPath(int n,int m,int[][] matrix){
+    int dp[][]=new int[n][m];
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            if(i==0&&j==0) {dp[i][j] = matrix[i][j];}
+            else{
+                int up=matrix[i][j];
+                if(i>0) up+=dp[i-1][j];
+                else up+=(int)Math.pow(10,9);
+                
+                int left=matrix[i][j];
+                if(j>0) left+=dp[i][j-1];
+                else left+=(int)Math.pow(10,9);
+                
+                dp[i][j]=Math.min(up,left);
             }
         }
-        dp[0][0]=1;
-        int ans=UniquePaths(a-1,b-1,dp,matrix);
-        return dp[a-1][b-1];
     }
+    
+    return dp[n-1][m-1];
+    
 }
-    //************Tabulation****************** */
-    class Solution{
-    //Function to find total number of unique paths.
-    public static int NumberOfPath(int a, int b,int matrix[][]) 
-    {
-        //Your code here
-        int dp[][]=new int[a][b];
-        for(int i=0;i<a;i++){
-            for(int j=0;j<b;j++){
-                dp[i][j]=0;
-            }
-        }
-        
-        for(int i=0;i<a;i++){
-            for(int j=0;j<b;j++){
-                if(i==0&&j==0)dp[i][j]=1;
-                else if(matrix[i][j]==0){dp[i][j]=0;}
-                else{
-                    int up=0;
-                    int left=0;
-                    if(i>0){up=dp[i-1][j];}
-                    if(j>0){left=dp[i][j-1];}
-                    dp[i][j]=up+left;
-                }
-            }
-        }
-        
-        return dp[a-1][b-1];
-    }
 }
- }
 }
