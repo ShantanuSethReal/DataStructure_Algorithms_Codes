@@ -134,7 +134,7 @@ class Solution {
         return ans;
     }
 }
-//*********************************Combination Sum I(Any number of Chances)*********************************************/
+//*********************************Combination Sum II(Any number of Chances)*********************************************/
 //*********************************Pick and Not Pick Concept********************************************************* */
 class Solution {
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
