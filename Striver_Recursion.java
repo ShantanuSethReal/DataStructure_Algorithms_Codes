@@ -1,6 +1,6 @@
 public class RecursionStriver {
 //**********************************Printing Subsequences************************************************************* */
-    class Solution{
+class Solution{
     public static void main(String[] args) {
         int arr[]={3,1,2};
         ArrayList<ArrayList<Integer>> ds=new ArrayList<>();
@@ -20,7 +20,7 @@ public class RecursionStriver {
         }
     }
 //*********************************Printing Subsequences whose sum is K************************************************ */
-    class Solution{
+class Solution{
     public static void main(String[] args) {
     int arr[]={1,2,1};
     int sum=2;
@@ -111,35 +111,7 @@ public static void main(String[] args) {
     }
 }
 //*********************************Combination Sum I(Any number of Chances)*********************************************/
-//**********************************Pick and Not Pick Concept********************************************************* */
-class Solution {
-    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
-        List<List<Integer>> ans=new ArrayList<>();
-        Arrays.sort(candidates);
-        findCombinations(0,candidates,target,ans,new ArrayList<>());
-        return ans;
-    }
-    static void findCombinations(int ind,int[] arr,int target,List<List<Integer>> ans,List<Integer> ds){
-        if(target==0) {
-            ans.add(new ArrayList<>(ds));
-            return;
-        }
-
-        for (int i = ind; i<arr.length; i++) {
-            if(i>ind && arr[i]==arr[i - 1]) 
-            {continue;}
-
-            if (arr[i]>target) 
-            break;
-
-            ds.add(arr[i]);
-            findCombinations(i+1,arr,target-arr[i],ans,ds);
-            ds.remove(ds.size()-1);
-        }
-    }
-}
-//*********************************Combination Sum II(Any number of Chances)*********************************************/
-//**********************************Pick and Not Pick Concept********************************************************* */
+//*********************************Pick and Not Pick Concept********************************************************* */
 class Solution {
     public void findCombinations(int ind,int arr[],int target,List<List<Integer>> ans,List<Integer> ds){
         if(ind==arr.length){
@@ -162,7 +134,32 @@ class Solution {
         return ans;
     }
 }
+//*********************************Combination Sum I(Any number of Chances)*********************************************/
+//*********************************Pick and Not Pick Concept********************************************************* */
+class Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> ans=new ArrayList<>();
+        Arrays.sort(candidates);
+        findCombinations(0,candidates,target,ans,new ArrayList<>());
+        return ans;
+    }
+    static void findCombinations(int ind,int[] arr,int target,List<List<Integer>> ans,List<Integer> ds){
+        if(target==0) {
+            ans.add(new ArrayList<>(ds));
+            return;
+        }
 
+        for (int i = ind; i<arr.length; i++) {
+            if(i>ind && arr[i]==arr[i-1]) 
+            {continue;}
+            if (arr[i]>target) 
+            break;
+            ds.add(arr[i]);
+            findCombinations(i+1,arr,target-arr[i],ans,ds);
+            ds.remove(ds.size()-1);
+        }
+    }
+}
 //********************************Subset Sum I*************************************************************************/
 class Solution{
     ArrayList<Integer> subsetSums(ArrayList<Integer> arr, int N){
@@ -199,14 +196,13 @@ class Solution {
         }
     }
 }
-
-//**********************************************N Queen Problem************************************************************** */
-       class Solution{
+//******************************* N Queen Problem************************************************************** */
+class Solution{
         public static List<List<String>> solveNQueens(int n){
-            char[][] board = new char[n][n];
-            for (int i = 0; i < n; i++)
-                for (int j = 0; j < n; j++)
-                    board[i][j] = '.';
+            char[][] board=new char[n][n];
+            for (int i=0;i<n;i++)
+                for(int j=0;j<n;j++)
+                    board[i][j]='.';
             List<List<String>> res=new ArrayList<List<String>>();
             dfs(0,board,res);
             return res;
@@ -259,7 +255,7 @@ class Solution {
         }
     }
 //*******************************Sudoku Solver************************************************************** */
-        class Solution {
+class Solution {
             public void solveSudoku(char[][] board) {
                 solveSudokuUtil(board);
             }
@@ -299,7 +295,7 @@ class Solution {
             }
         }
  //******************************M-Coloring Graph Problem****************************************************** */
-class solve {
+class Solution{
     public boolean graphColoring(boolean graph[][], int m, int n) {
         int color[]=new int[n];
         for(int i=0;i<n;i++) 
@@ -331,7 +327,7 @@ class solve {
         return true;
     }
 }
-//******************Palindrome Partioning***************************************************************************** */
+//*******************************Palindrome Partioning***************************************************************************** */
 class Solution {
     public List<List<String>> partition(String s) {
         List<List<String>> res=new ArrayList<>();
@@ -363,8 +359,7 @@ class Solution {
         return true;
     }
 }
-    }
-    //*********************************Rat in a Maze********************************************************************* */
+//*******************************Rat in a Maze********************************************************************* */
 class Solution {
     public static void solve(int i,int j,int[][] m,int vis[][],ArrayList<String> ans,String move,int n){
         if((i==n-1)&&(j==n-1)){
@@ -408,8 +403,8 @@ class Solution {
         return ans;
     }
 }
-//************Code 2*********Rat in a Maze*************************************************************************** */
-    class Solution {
+//************Code 2*************Rat in a Maze*************************************************************************** */
+class Solution {
         public static void solve(int i,int j,int[][] m,int vis[][],ArrayList<String> ans,String move,int n,int dx[],int dy[]){
             if((i==n-1)&&(j==n-1)){
                 ans.add(move);
@@ -446,7 +441,7 @@ class Solution {
             return ans;
         }
         }
-//************************************Kth Permutation Sequence******************************************************* */
+//*******************************Kth Permutation Sequence******************************************************* */
 class Solution {
     public String getPermutation(int n, int k) {
         int fact=1;
@@ -469,4 +464,5 @@ class Solution {
         }
         return ans;
     }
+}
 }
