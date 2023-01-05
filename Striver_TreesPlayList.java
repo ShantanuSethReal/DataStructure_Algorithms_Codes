@@ -289,6 +289,174 @@ public class Striver_TreesPlayList {
         }
     }
 
+    //**************L39.Introduction to BST*****************************/
+    class Solution{
+        Left < Node < Right;
+        Left <= Node < Right;//Duplicates;
+        Height =Log N
+        Left Subtree= BST;
+        Right Subtree= BST;
+    } 
+    //**************L40.Search in a BST*********************************/
+    class Solution{
+        //O(Log N)
+        public TreeNode searchBST(TreeNode root, int val) {
+            while(root=null&&root.val!=val){
+                root=val<root.val?root.left:root.right;
+            }
+            return root;
+        }
+    }
+    //**************L41.Ceil in a BST***********************************/
+    class Solution {
+        public static int findCeil(TreeNode<Integer> root,int key) {
+            int ceil=-1; 
+            while(root!=null){
+                if(root.data==key){
+                    ceil=root.data;
+                    return ceil;
+                }
+    
+                if(key>root.data){
+                    root=root.right;
+                }
+                else{
+                    ceil=root.data; 
+                    root=root.left;
+                }
+            }
+            return ceil;
+        }
+    }
+    //**************L42.Floor in a BST**********************************/
+    class Solution {
+        public static int floorInBST(TreeNode<Integer> root,int key) {
+            int floor=-1; 
+            while(root!=null){
+                if(root.data==key){
+                    floor=root.data;
+                    return floor;
+                }
+                if(key>root.data) {
+                    floor=root.data;
+                    root=root.right;
+                }
+                else {
+                    root=root.left;
+                }
+            }
+            return floor;
+        }
+    }
+    //**************L43.Insert a given node in a BST********************/
+    class Solution {
+        public TreeNode insertIntoBST(TreeNode root,int val) {
+            if(root==null) return new TreeNode(val);
+            TreeNode curr=root;
+            while(true){
+                if(curr.val<=val){
+                    if(curr.right!=null) 
+                    curr=cur.right;
+                    else{
+                        curr.right=new TreeNode(val);
+                        break;
+                    }
+                } 
+                else{
+                    if(curr.left!=null)
+                     curr=curr.left;
+                    else{
+                        curr.left=new TreeNode(val);
+                        break;
+                    }
+                }
+            }
+            return root;
+        }
+    }
+    //**************L44.Delete a given node in a BST********************/
+    class Solution {
+        public TreeNode deleteNode(TreeNode root,int key) {
+            if(root==null) {
+                return null;
+            }
+            if(root.val==key){
+                return helper(root);
+            }
+            TreeNode dummy=root;
+            while(root!=null) {
+                if(root.val>key) {
+                    if (root.left!=null&&root.left.val==key){
+                        root.left=helper(root.left);
+                        break;
+                    } 
+                    else{
+                        root=root.left;
+                    }
+                } 
+                else{
+                    if(root.right!=null&&root.right.val==key) {
+                        root.right=helper(root.right);
+                        break;
+                    } 
+                    else{
+                        root=root.right;
+                    }
+                }
+            }
+            return dummy;
+        }
+        public TreeNode helper(TreeNode root) {
+                if(root.left==null) {
+                    return root.right;
+                } 
+                else if(root.right==null){
+                    return root.left;
+                } 
+                else {
+                    TreeNode rightChild=root.right;
+                    TreeNode lastRight=findLastRight(root.left);
+                    lastRight.right=rightChild;
+                    return root.left;
+                }
+        }
+        public TreeNode findLastRight(TreeNode root) {
+            if(root.right==null){
+                return root;
+            }
+            return findLastRight(root.right);
+        }
+    }
+    //**************L45.Kth Smallest/Largest Element in BST********************/
+    class Solution{
+    static Node kthlargest(Node root,int k[])
+    {
+	if(root==null)return null;
+	Node right=kthlargest(root.right,k);
+	if(right!=null){return right;}
+	k[0]--;
+	if(k[0]==0){return root;}
+	return kthlargest(root.left,k);
+    }
+
+    static Node kthsmallest(Node root,int k[])
+    {
+        if(root==null){return null;}
+        Node left=kthsmallest(root.left,k);
+        if(left!=null){return left;}
+        k[0]--;
+        if(k[0]==0){return root;}
+        return kthsmallest(root.right,k);
+    }
+}
+    //**************L46.Check if a tree is BST or BT********************/
+    //**************L47.LCA in a BST********************/
+    //**************L48.Construct BST from Preorder********************/
+    //**************L49.Inorder Successor/Predecessor********************/
+    //**************L50.BST Iterator********************/
+    //**************L51.Two Sum in a BST********************/
+    //**************L52.Recover BST/Correct BST********************/
+    //**************L53.Largest BST in a BT********************/
 
 
 

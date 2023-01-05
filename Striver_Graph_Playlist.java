@@ -1,6 +1,6 @@
 public class Striver_Graph_Playlist {
     class Striver{
-    //******************G5-Breadth First Search************************************************** */
+    //******************G5-Breadth First Search************************************O(2E+V)***| O(3N)*********** */
      class Solution{
         public ArrayList<Integer> bfsOfGraph(int V,ArrayList<ArrayList<Integer>> adj){
         ArrayList<Integer> bfs=new ArrayList<>();
@@ -24,7 +24,7 @@ public class Striver_Graph_Playlist {
         return bfs;
     }
     }
-        //**************G6-Depth First Search************************************************** */
+        //**************G6-Depth First Search*****************************************O(2E+V)***| O(3N)********* */
     class Solution{    
         public void dfs(int node,boolean vis[],ArrayList<ArrayList<Integer>> adj, ArrayList<Integer> dfs){
             vis[node]=true;
@@ -37,14 +37,14 @@ public class Striver_Graph_Playlist {
             }
         }
         public ArrayList<Integer> dfsOfGraph(int V,ArrayList<ArrayList<Integer>> adj){
-        ArrayList<Integer> dfs=new ArrayList<>();
-        boolean vis[]=new boolean[V];
-        for(int i=0;i<V;i++){
-            vis[i]=false;
-        }
-        visited[src]=true;
-        dfs(src,vis,adj,dfs);
-        return dfs;
+            ArrayList<Integer> dfs=new ArrayList<>();
+            boolean vis[]=new boolean[V];
+            for(int i=0;i<V;i++){
+                vis[i]=false;
+            }
+            visited[src]=true;
+            dfs(src,vis,adj,dfs);
+            return dfs;
         }
         }
     //******************G7-Number of Provinces************************************************* */
