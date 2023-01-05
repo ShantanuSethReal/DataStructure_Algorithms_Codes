@@ -288,6 +288,23 @@ public class Striver_TreesPlayList {
             return list;
         }
     }
+    //**************L22.Top View of Binary Tree********************/
+    //**************L23.Bottom View of Binary Tree********************/
+    //**************L24.Right View of Binary Tree********************/
+    //**************L25.Check for Symmetrical Binary Tree********************/
+    //**************L26.Print Root to Node Path of Binary Tree********************/
+    //**************L27.Lowest Common Ancestor of two nodes in Binary Tree********************/
+    //**************L28.Maximum Width of Binary Tree********************/
+    //**************L29.Children Sum Property********************/
+    //**************L30.Print All Nodes at a distance K from a Node********************/
+    //**************L31.Minimum time taken to burn a Tree********************/
+    //**************L32.Count Total Nodes in a Binary Tree********************/
+    //**************L33.Requirements to construct a unique Binary Tree********************/
+    //**************L34.Construct a Binary Tree from PreOrder and InOrder********************/
+    //**************L35.Construct a Binary Tree from PostOrder and InOrder********************/
+    //**************L36.Serialize and DeSerialize a Binary Tree********************/
+    //**************L37.Morris Traversal********************/
+    //**************L38.Flatten a Binary Tree to a Linked List********************/
 
     //**************L39.Introduction to BST*****************************/
     class Solution{
@@ -450,14 +467,214 @@ public class Striver_TreesPlayList {
     }
 }
     //**************L46.Check if a tree is BST or BT********************/
+    class Solution {
+        private boolean checkBST(TreeNode node,long min,long max) {
+            if(node==null)return true; 
+            if(node.val<=min||node.val>=max)return false; 
+            
+            if(checkBST(node.left,min,node.val)&&checkBST(node.right,node.val,max)){
+                return true; 
+            }
+            return false; 
+        }
+        public boolean isValidBST(TreeNode root) {
+            return checkBST(root, Long.MIN_VALUE, Long.MAX_VALUE); 
+        }
+    }
     //**************L47.LCA in a BST********************/
+    class Solution {
+        public TreeNode lowestCommonAncestor(TreeNode root,TreeNode p,TreeNode q){
+            if(root==null)return null;
+            int curr=root.val; 
+            if(curr<p.val&&curr<q.val) {
+                return lowestCommonAncestor(root.right,p,q);
+            }
+            if(curr>p.val&&curr>q.val) {
+                return lowestCommonAncestor(root.left,p,q);
+            }
+            return root; 
+        }
+    }
     //**************L48.Construct BST from Preorder********************/
+    class Solution {
+        public TreeNode bstFromPreorder(int[] A) {
+            return bstFromPreorder(A,Integer.MAX_VALUE,new int[]{0});
+        }
+        public TreeNode bstFromPreorder(int[] A,int bound,int[] i){
+            if(i[0]==A.length||A[i[0]]>bound) return null;
+            TreeNode root=new TreeNode(A[i[0]++]);
+            root.left=bstFromPreorder(A,root.val,i);
+            root.right=bstFromPreorder(A,bound,i);
+            return root;
+        }
+    }
     //**************L49.Inorder Successor/Predecessor********************/
+    class Solution {
+        public TreeNode inorderSuccessor(TreeNode root,TreeNode p){
+            TreeNode successor = null;
+            while (root != null) {
+                if (p.val>=root.val) {
+                    root=root.right;
+                }else{
+                    successor=root;
+                    root=root.left;
+                }
+            }
+            return successor;
+        }
+        public TreeNode inorderPredecessor(TreeNode root,TreeNode p){
+            TreeNode predecessor=null;
+            while(root!=null) {
+                if (p.val<=root.val) {
+                    root=root.left;
+                }else{
+                    predecessor=root;
+                    root=root.right;
+                }
+            }
+            return predecessor;
+        }
+    }
     //**************L50.BST Iterator********************/
+    class Solution{
+        public class BSTIterator {
+            private Stack<TreeNode> stack = new Stack<TreeNode>();
+            public BSTIterator(TreeNode root){
+                pushAll(root);
+            }
+            /** @return whether we have a next smallest number */
+            public boolean hasNext(){
+                return !stack.isEmpty();
+            }
+            /** @return the next smallest number */
+            public int next(){
+                TreeNode tmpNode=stack.pop();
+                pushAll(tmpNode.right);
+                return tmpNode.val;
+            }
+            
+            private void pushAll(TreeNode node) {
+                for (;node!=null;stack.push(node),node=node.left);
+            }
+        }
+    }
     //**************L51.Two Sum in a BST********************/
+    class Solution{
+    class BSTIterator {
+        private Stack<TreeNode> stack=new Stack<TreeNode>();
+        boolean reverse=true; 
+        
+        public BSTIterator(TreeNode root,boolean isReverse){
+            reverse=isReverse; 
+            pushAll(root);
+        }
+        /** @return whether we have a next smallest number */
+        public boolean hasNext() {
+            return !stack.isEmpty();
+        }
+    
+        /** @return the next smallest number */
+        public int next() {
+            TreeNode tmpNode=stack.pop();
+            if(reverse==false) pushAll(tmpNode.right);
+            else pushAll(tmpNode.left); 
+            return tmpNode.val;
+        }
+        
+        private void pushAll(TreeNode node){
+            while(node!=null){
+                 stack.push(node);
+                 if(reverse==true){
+                     node=node.right; 
+                 }else{
+                     node=node.left; 
+                 }
+            }
+        }
+    }
+    class Solution {
+        public boolean findTarget(TreeNode root,int k){
+            if(root==null) return false; 
+            BSTIterator l=new BSTIterator(root,false); 
+            BSTIterator r=new BSTIterator(root,true); 
+            
+            int i=l.next(); 
+            int j=r.next(); 
+            while(i<j){
+                if(i+j==k) return true; 
+                else if(i+j<k) i=l.next(); 
+                else j=r.next(); 
+            }
+            return false; 
+        }
+    }
+}
     //**************L52.Recover BST/Correct BST********************/
+    class Solution {
+        private TreeNode first;
+        private TreeNode prev;
+        private TreeNode middle;
+        private TreeNode last; 
+        private void inorder(TreeNode root){
+            if(root==null) return; 
+            inorder(root.left);
+            if (prev!=null&&(root.val<prev.val))
+            {
+                if(first==null)
+                {
+                    first = prev;
+                    middle = root;
+                }
+                else
+                    last = root;
+            }
+            prev=root;
+            inorder(root.right); 
+        }
+        public void recoverTree(TreeNode root) {
+            first=middle=last=null; 
+            prev=new TreeNode(Integer.MIN_VALUE); 
+            inorder(root);
+            if(first!=null&&last!=null){
+                int t=first.val;
+                first.val=last.val;
+                last.val=t; 
+            }
+            else if(first!=null&&middle!=null){
+                int t=first.val;
+                first.val=middle.val;
+                middle.val=t; 
+            }
+        }
+       
+    }
     //**************L53.Largest BST in a BT********************/
+    class Solution {
+        class NodeValue {
+            public int maxNode, minNode, maxSize;
+            NodeValue(int minNode,int maxNode,int maxSize){
+                this.maxNode=maxNode;
+                this.minNode=minNode;
+                this.maxSize=maxSize;
+            }
+        }
+        private NodeValue largestBSTSubtreeHelper(TreeNode root){
+            if(root==null) {
+                return new NodeValue(Integer.MAX_VALUE,Integer.MIN_VALUE,0);
+            }
+            NodeValue left = largestBSTSubtreeHelper(root.left);
+            NodeValue right = largestBSTSubtreeHelper(root.right);
+            if (left.maxNode < root.val && root.val < right.minNode) {
+                return new NodeValue(Math.min(root.val,left.minNode),Math.max(root.val,right.maxNode),left.maxSize+right.maxSize+1);
+            }
+            return new NodeValue(Integer.MIN_VALUE,Integer.MAX_VALUE,Math.max(left.maxSize, right.maxSize));
+        }
+        public int largestBSTSubtree(TreeNode root) {
+            return largestBSTSubtreeHelper(root).maxSize;
+        }
+    }
 
+    //***************************TAKE U FORWARD YOUTUBE TREES PLAYLIST************************************************* */
 
 
 
