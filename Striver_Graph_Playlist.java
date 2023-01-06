@@ -1065,7 +1065,7 @@ public class Striver_Graph_Playlist {
                 this.distance=_dis;
                 this.node=_node;
             }
-        }
+        };
         //Function to find the shortest distance of all the vertices
         //from the source vertex S.
         static int[] dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int S)
