@@ -1239,7 +1239,7 @@ class Solution{
                 }
             }
     }
-}
+}}
 //**********************************DP-38 Best Time To Buy and Sell Stocks IV******************************************** */
 class Solution{
     int getAns(vector<int>& Arr, int n, int ind, int buy, int cap, vector<vector<vector<int>>>& dp ){
@@ -1347,7 +1347,6 @@ class Solution{
         static int getAns(int arr[], int n,  int ind, int prev_index,int[][] dp){
             if(ind==n) return 0;
             if(dp[ind][prev_index+1]!=-1)return dp[ind][prev_index+1];
-            
             int notTake=0+getAns(arr,n,ind+1,prev_index,dp);
             int take=0;
             if(prev_index==-1||arr[ind]>arr[prev_index]){
@@ -1355,124 +1354,225 @@ class Solution{
             }
             return dp[ind][prev_index+1]=Math.max(notTake,take);
         }
+    }
         
 }
 //**********************************DP-42 Printing Longest Increasing Subsequence******************************************** */
 class Solution{
     class TUF{
-        static int longestIncreasingSubsequence(int arr[], int n){
-            
+        static int longestIncreasingSubsequence(int arr[],int n){
             int dp[][]=new int[n+1][n+1];
-            
-            for(int ind = n-1; ind>=0; ind --){
-                for (int prev_index = ind-1; prev_index >=-1; prev_index --){
-                    
-                    int notTake = 0 + dp[ind+1][prev_index +1];
-            
-                    int take = 0;
-            
-                    if(prev_index == -1 || arr[ind] > arr[prev_index]){
-                        
-                        take = 1 + dp[ind+1][ind+1];
+            for(int ind=n-1;ind>=0;ind --){
+                for (int prev_index=ind-1;prev_index>=-1;prev_index --){
+                    int notTake=0+dp[ind+1][prev_index +1];
+                    int take=0;
+                    if(prev_index==-1||arr[ind] > arr[prev_index]){
+                        take=1+dp[ind+1][ind+1];
                     }
-            
-                    dp[ind][prev_index+1] = Math.max(notTake,take);
-                    
+                    dp[ind][prev_index+1]=Math.max(notTake,take);
                 }
             }
-            
             return dp[0][0];
         }
-        static int longestIncreasingSubsequence(int arr[], int n){
-    
+        static int longestIncreasingSubsequence(int arr[],int n){
             int dp[]=new int[n];
             Arrays.fill(dp,1);
-            
-            for(int i=0; i<=n-1; i++){
-                for(int prev_index = 0; prev_index <=i-1; prev_index ++){
-                    
+            for(int i=0;i<=n-1;i++){
+                for(int prev_index=0;prev_index<=i-1;prev_index ++){
                     if(arr[prev_index]<arr[i]){
-                        dp[i] = Math.max(dp[i], 1 + dp[prev_index]);
+                        dp[i]=Math.max(dp[i],1+dp[prev_index]);
                     }
                 }
             }
-            
-            int ans = -1;
-            
-            for(int i=0; i<=n-1; i++){
-                ans = Math.max(ans, dp[i]);
+            int ans=-1;
+            for(int i=0;i<=n-1;i++){
+                ans=Math.max(ans, dp[i]);
             }
-            
             return ans;
         }
-        static int longestIncreasingSubsequence(int arr[], int n){
-    
+        static int longestIncreasingSubsequence(int arr[],int n){
             int[] dp=new int[n];
             Arrays.fill(dp,1);
             int[] hash=new int[n];
             Arrays.fill(hash,1);
             
-            for(int i=0; i<=n-1; i++){
-                
-                hash[i] = i; // initializing with current index
-                for(int prev_index = 0; prev_index <=i-1; prev_index ++){
-                    
-                    if(arr[prev_index]<arr[i] && 1 + dp[prev_index] > dp[i]){
-                        dp[i] = 1 + dp[prev_index];
-                        hash[i] = prev_index;
+            for(int i=0;i<=n-1;i++){
+                hash[i]=i; // initializing with current index
+                for(int prev_index=0;prev_index<=i-1;prev_index ++){
+                    if(arr[prev_index]<arr[i]&&1+dp[prev_index]>dp[i]){
+                        dp[i]=1+dp[prev_index];
+                        hash[i]=prev_index;
                     }
                 }
             }
-            
             int ans = -1;
             int lastIndex =-1;
-            
-            for(int i=0; i<=n-1; i++){
-                if(dp[i]> ans){
-                    ans = dp[i];
-                    lastIndex = i;
+            for(int i=0;i<=n-1;i++){
+                if(dp[i]>ans){
+                    ans=dp[i];
+                    lastIndex=i;
                 }
             }
-            
             ArrayList<Integer> temp=new ArrayList<>();
             temp.add(arr[lastIndex]);
-            
-            while(hash[lastIndex] != lastIndex){ // till not reach the initialization value
-                lastIndex = hash[lastIndex];
+            while(hash[lastIndex]!=lastIndex){ // till not reach the initialization value
+                lastIndex=hash[lastIndex];
                 temp.add(arr[lastIndex]);    
             }
-            
-            // reverse the array 
-            
-            System.out.print("The subsequence elements are ");
-            
             for(int i=temp.size()-1; i>=0; i--){
                 System.out.print(temp.get(i)+" ");
             }
-            System.out.println();
-            
             return ans;
         }
-}
+}}
 //**********************************DP-43 Longest Increasing Subsequence|Binary Search******************************************** */
 class Solution{
-
+    int longestIncreasingSubsequence(int arr[], int n){
+        vector<int> temp;
+        temp.push_back(arr[0]);
+        int len=1;
+        for(int i=1;i<n;i++){
+            if(arr[i]>temp.back()){
+               temp.push_back(arr[i]);
+               len++;
+            } 
+            else{
+                int ind=lower_bound(temp.begin(),temp.end(),arr[i])-temp.begin();
+                temp[ind]=arr[i];
+            }
+        }
+        return len;
+    }
 }
 //**********************************DP-44 Largest Divisible Subset******************************************** */
 class Solution{
-    
+    vector<int> divisibleSet(vector<int>& arr){
+        int n=arr.size();
+        sort(arr.begin(),arr.end());
+        vector<int> dp(n,1);
+        vector<int> hash(n,1);
+        for(int i=0;i<=n-1;i++){
+            hash[i]=i; // initializing with current index
+            for(int prev_index=0;prev_index <=i-1;prev_index ++){
+                if(arr[i]%arr[prev_index]==0&&1+dp[prev_index]>dp[i]){
+                    dp[i]=1+dp[prev_index];
+                    hash[i]=prev_index;
+                }
+            }
+        }
+        int ans=-1;
+        int lastIndex=-1;
+        for(int i=0;i<=n-1;i++){
+            if(dp[i]>ans){
+                ans=dp[i];
+                lastIndex=i;
+            }
+        }
+        vector<int> temp;
+        temp.push_back(arr[lastIndex]);
+        while(hash[lastIndex]!=lastIndex){ // till not reach the initialization value
+            lastIndex=hash[lastIndex];
+            temp.push_back(arr[lastIndex]);    
+        }
+        reverse(temp.begin(),temp.end());
+        return temp;
+    }}
 }
 //**********************************DP-45 Longest String chain******************************************** */
 class Solution{
     
+bool compare(string& s1, string& s2){
+    if(s1.size()!=s2.size()+1) return false;
+    int first=0;
+    int second=0;
+    while(first<s1.size()){
+        if(second<s2.size()&&s1[first]==s2[second]){
+            first++;
+            second++;
+        }
+        else first++;
+    }
+    if(first==s1.size()&&second == s2.size()) return true;
+    else return false; 
+}
+bool comp(string& s1,string& s2){
+    return s1.size()<s2.size();
+}
+int longestStrChain(vector<string>& arr){
+    int n=arr.size();
+    sort(arr.begin(),arr.end(),comp);
+    vector<int> dp(n,1);
+    int maxi=1;
+    for(int i=0;i<=n-1;i++){
+        for(int prev_index=0;prev_index<=i-1;prev_index++){
+            if(compare(arr[i],arr[prev_index])&&1+dp[prev_index]>dp[i]){
+                dp[i]=1+dp[prev_index];
+            }
+        }
+        if(dp[i]>maxi)
+            maxi=dp[i];
+    }
+    return maxi;
+}}
 }
 //**********************************DP-46 Longest Bitonic Sequence******************************************** */
 class Solution{
-    
+    class TUF{
+        static int longestBitonicSequence(int[] arr, int n){
+            int[] dp1=new int[n];
+            int[] dp2=new int[n];
+            Arrays.fill(dp1,1);
+            Arrays.fill(dp2,1);
+            for(int i=0;i<=n-1;i++){
+                for(int prev_index=0;prev_index<=i-1;prev_index++){
+                    if(arr[prev_index]<arr[i]){
+                        dp1[i]=Math.max(dp1[i],1+dp1[prev_index]);
+                    }
+                }
+            }
+            for(int i=n-1;i>=0;i--){
+                for(int prev_index=n-1;prev_index >i;prev_index--){
+                    
+                    if(arr[prev_index]<arr[i]){
+                        dp2[i]=Math.max(dp2[i],1+dp2[prev_index]);
+                    }
+                }
+            }
+            int maxi=-1;
+            for(int i=0;i<n;i++){
+                maxi=Math.max(maxi,dp1[i]+dp2[i]-1);
+            }
+            return maxi;
+         } }
 }
 //**********************************DP-47 Number of Longest Increasing Subsequence******************************************** */
 class Solution{
-    
+    class TUF{
+        static int findNumberOfLIS(int[] arr){
+            int n=arr.length;
+            int[] dp=new int[n];
+            int[] ct=new int[n];
+            Arrays.fill(dp,1);
+            Arrays.fill(ct,1);
+            int maxi=1;
+            for(int i=0;i<=n-1;i++){
+                for(int prev_index=0;prev_index<=i-1;prev_index++){
+                    if(arr[prev_index]<arr[i]&&dp[prev_index]+1>dp[i]){
+                        dp[i]=dp[prev_index]+1;
+                        ct[i]=ct[prev_index];
+                    }
+                    else if(arr[prev_index]<arr[i]&&dp[prev_index]+1==dp[i]){
+                        ct[i]=ct[i]+ct[prev_index];
+                    }
+                }
+                 maxi=Math.max(maxi,dp[i]);
+            }
+            int nos =0;
+            for(int i=0;i<=n-1;i++){
+               if(dp[i]==maxi) nos+=ct[i];
+            }
+            return nos;
+           }   }
 }
 //**********************************DP-48 Matrix Change Multiplication******************************************** */
 //**********************************DP-49 Matrix Change Multiplication|Bottom Up******************************************** */
