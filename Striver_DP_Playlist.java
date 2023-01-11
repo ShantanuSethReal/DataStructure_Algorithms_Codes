@@ -1575,12 +1575,131 @@ class Solution{
            }   }
 }
 //**********************************DP-48 Matrix Change Multiplication******************************************** */
+class Solution{
+    static int f(int arr[],int i,int j,int[][] dp){
+        if(i==j)return 0;
+        if(dp[i][j]!=-1)return dp[i][j];
+        int mini=Integer.MAX_VALUE;
+        for(int k=i;k<=j-1;k++){
+        int ans=f(arr,i,k,dp)+f(arr,k+1,j,dp)+arr[i-1]*arr[k]*arr[j];
+        mini=Math.min(mini,ans);
+        }
+        return mini;
+    }
+}
 //**********************************DP-49 Matrix Change Multiplication|Bottom Up******************************************** */
+class Solution{
+    static int matrixMultiplication(int[] arr,int N){
+        int [][] dp=new int[N][N];
+        for(int row[]: dp)
+        Arrays.fill(row,-1);
+        for(int i=1;i<N;i++){
+            dp[i][i]=0;
+        }
+        for(int i=N-1;i>=1;i--){
+            for(int j=i+1;j<N;j++){
+                int mini=Integer.MAX_VALUE;
+                for(int k=i;k<=j-1;k++){
+                    int ans=dp[i][k]+dp[k+1][j]+arr[i-1]*arr[k]*arr[j];
+                    mini=Math.min(mini,ans);
+                }
+                dp[i][j] = mini;
+            }
+        }
+        return dp[1][N-1];
+    }
+}
 //**********************************DP-50 Minimum Cost to Cut the Rod******************************************** */
+class Solution{
+    int f(int i, int j, vector<int> &cuts,  vector<vector<int>> &dp){
+        if(i>j)return 0;
+        if(dp[i][j]!=-1)
+            return dp[i][j];
+        int mini=INT_MAX;
+        for(int ind=i;ind<=j;ind++){
+            int ans=cuts[j+1]-cuts[i-1]+f(i,ind-1,cuts,dp)+f(ind+1,j,cuts,dp);
+            mini=min(mini, ans);
+        }
+        return dp[i][j]=mini;
+    }
+    
+    
+    int cost(int n, int c, vector<int> &cuts){
+        cuts.push_back(n);
+        cuts.insert(cuts.begin(),0);
+        sort(cuts.begin(),cuts.end());
+        vector<vector<int>> dp(c+1,vector<int>(c+1,-1));
+        return f(1,c,cuts,dp);
+    }
+
+    int cost(int n, int c, vector<int> &cuts){
+        cuts.push_back(n);
+        cuts.insert(cuts.begin(),0);
+        sort(cuts.begin(),cuts.end());
+        vector<vector<int>> dp(c+2,vector<int>(c+2,0));
+        for(int i=c;i>=1;i--){
+            for(int j=1;j<=c;j++){
+                if(i>j) continue;
+                int mini=INT_MAX;
+                for(int ind=i;ind<=j;ind++){
+                    int ans=cuts[j+1]-cuts[i-1]+dp[i][ind-1]+dp[ind+1][j];
+                    mini=min(mini, ans);
+                }
+                dp[i][j]=mini;
+            }
+        }
+        return dp[1][c];
+    }
+}
 //**********************************DP-51 Burst Balloons******************************************** */
+class Solution{
+    
+}
 //**********************************DP-52 Evaluate Boolean Expression to True******************************************** */
+class Solution{
+    int f(int i,int j,boolean isTrue,String str){
+        if(i>j)return 0;
+        if(i==j){
+            if(isTrue==1){
+                return str.charAt(i)=='T';
+            }
+            else return str.charAt(i)=='F';
+        }
+        if(dp[i][j][isTrue]!=-1)return dp[i][j][isTrue];
+        int ways=0;
+        for(int ind=i+1;ind<=j-1;ind=ind+2){
+            int LeftTrue=f(i,ind-1,1,str);
+            int LeftFalse=f(i,ind-1,0,str);
+            int RightTrue=f(ind+1,j,1,str);
+            int RightFalse=f(ind+1,j,0,str);
+        }
+
+        if(str.charAt(ind)=='&'){
+            if(isTrue==true) ways=ways+(LeftTrue*RightTrue);
+            else ways=ways+(LeftFalse*RightTrue)+(LeftTrue*RightFalse)+(LeftFalse*RightFalse);
+        }
+        else if(str.charAt(ind)=='|'){
+            if(isTrue==true) ways=ways+(LeftFalse*RightTrue)+(LeftTrue*RightFalse)+(LeftTrue*RightTrue);
+            else ways=ways+(LeftFalse*RightFalse);
+        }
+        else if(str.charAt(ind)=='^'){
+            if(isTrue==true) ways=ways+((LeftFalse*RightTrue)+(LeftTrue*RightFalse))
+            else ways=ways+(LeftTrue*RightTrue)+(LeftFalse*RightFalse);
+        }
+    }
+    return dp[i][j][isTrue]=ways;
+}
 //**********************************DP-53 Palindrome Partitioning II******************************************** */
+class Solution{
+    
+}
 //**********************************DP-54 Partition Array for Maximum Sum******************************************** */
+class Solution{
+    
+}
 //**********************************DP-55 Maximum Rectangle Area with All 1's******************************************** */
+class Solution{
+    
+}
 //**********************************DP-56 Count Square SubMatrices with All 1's******************************************** */
 }
