@@ -1532,7 +1532,6 @@ class Solution{
             }
             for(int i=n-1;i>=0;i--){
                 for(int prev_index=n-1;prev_index >i;prev_index--){
-                    
                     if(arr[prev_index]<arr[i]){
                         dp2[i]=Math.max(dp2[i],1+dp2[prev_index]);
                     }
@@ -1650,7 +1649,7 @@ class Solution{
         }
         return dp[1][c];
     }
-}
+}}
 //**********************************DP-51 Burst Balloons******************************************** */
 class Solution{
     
@@ -1691,15 +1690,111 @@ class Solution{
 }
 //**********************************DP-53 Palindrome Partitioning II******************************************** */
 class Solution{
-    
-}
+    int f(int i,String str){
+        if(i==str.length())return 0;
+        if(dp[i]!=-1)return dp[i];
+        String temp="";
+        int minCost=Integer.MAX_VALUE;
+        for(int j=i;j<str.length();j++){
+            temp=temp+str.charAt(j);
+            if(isPalindrome(temp)==true){
+                int cost=1+f(j+1,str);
+            }
+            minCost=Math.min(minCost,cost);
+        }
+        
+        return dp[i]=minCost;
+    }
+
+    int f(int i,String str){
+        int dp[]=new int[n+1];
+        for(int i=1;i<n;i++){
+            dp[i]=0;
+        }
+        int n=str.length();
+        for(int i=n-1;i>=1;i--){
+            int minCost=Integer.MAX_VALUE;
+            for(int j=i;j<n;j++){
+                if(isPalindrome(i,j,str)==true){
+                    int cost=1+dp[j+1];
+                    minCost=Math.min(minCost,cost);
+                }
+            }
+            dp[i]=minCost;
+        }
+        return dp[0]-1;
+}}
 //**********************************DP-54 Partition Array for Maximum Sum******************************************** */
 class Solution{
+    f(int i,int arr[],int k){
+        if(i==n)return 0;
+        if(dp[i]!=-1)return dp[i];
+        int maxAns=Integer.MIN_VALUE,len=0,maxi=Integer.MIN_VALUE;
+        for(int j=i;j<Math.min(j+k,n);j++){
+            len++;
+            maxi=Math.max(arr[j],maxi);
+            int sum=len*maxi+f(j+1,arr,k);
+            maxAns=Math.max(sum,maxAns);
+        }
+        return dp[i]=maxAns;
+    }
     
-}
+    int f(int i,int arr[]){
+        int dp[]=new int[n+1];
+        for(int i=1;i<n;i++){
+            dp[i]=0;
+        }
+        dp[n]=0;
+        int n=arr.length;
+        for(int i=n-1;i>=1;i--){
+            int maxAns=Integer.MIN_VALUE,len=0,maxi=Integer.MIN_VALUE;
+            for(int j=i;j<Math.min(j+k,n);j++){
+                len++;
+                maxi=Math.max(arr[j],maxi);
+                int sum=len*maxi+dp[j+1];
+                maxAns=Math.max(sum,maxAns);
+            }
+            dp[i]=maxAns;
+        }
+            return dp[0];
+}}
 //**********************************DP-55 Maximum Rectangle Area with All 1's******************************************** */
 class Solution{
-    
+    //Area of Largest Histogram
+    public static int maximalAreaOfSubMatrixOfAll1(int[][] mat,int n,int m){
+        int maxArea=0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(mat[i][j]==1)height[j]+=mat[i][j];
+                else height[j]=0;
+                int area=getMaxAreainHistogram(height);
+                maxArea=Math.max(maxArea,area);
+            }
+        }
+        return maxArea;
+	}
 }
 //**********************************DP-56 Count Square SubMatrices with All 1's******************************************** */
+class Solution{
+    public static int countSquares(int n, int m, int[][] arr) {
+                // Write your code here
+        int dp[][]=new int[n][m];
+        for(int j=0;j<m;j++)dp[0][j]=arr[0][j];
+        for(int i=0;i<n;i++)dp[i][0]=arr[i][0];
+        for(int i=1;i<n;i++){
+            for(int j=1;j<m;j++){
+                if(arr[i]==1)dp[i][j]=Math.min(Math.min(dp[i-1][j],dp[i][j-1]),dp[i-1][j-1])+1;
+                else dp[i][j]=0;
+            }
+        }
+        int sum=0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                sum+=dp[i][j];
+            }
+        }
+        return sum;
+    }
+}
+
 }
