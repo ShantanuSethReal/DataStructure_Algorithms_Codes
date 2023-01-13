@@ -1,5 +1,5 @@
 public class Accio_Module_4 {
-    class BST-1{
+        class BinarySearchTree-1(CLASS-1){
         //BST-1
         //LeftMost Node is Minimum Value and RightMost Node is Maximum Value
         //****************************************************Construct BST from Sorted Array*************************
@@ -16,33 +16,33 @@ public class Accio_Module_4 {
         }
         }
         //***************************************************Basic Operations*******************************************
-        //***************************************************Size of BST*************************************
+        //***************************************************Size of BST*******************************************************************************************
         class Solution{
         public int sizeOfTree(TreeNode root){
             if(root==null)return 0;
             return 1+sizeOfTree(root.left)+sizeOfTree(root.right);
         }}
-        //***************************************************Sum of BST*************************************
+        //***************************************************Sum of BST*******************************************************************************************
         class Solution{
             public int sumOfTree(TreeNode root){
             if(root==null)return 0;
             return root.data+sumOfTree(root.left)+sumOfTree(root.right);
         }}
-        //***************************************************Minimum of BST*************************************
+        //***************************************************Minimum of BST*******************************************************************************************
         class Solution{
             public int minOfBST(TreeNode root){
             TreeNode temp=root;
             while(temp.left!=null){temp=temp.left;}
             return temp.data;
         }}
-        //***************************************************Maximum of BST*************************************
+        //***************************************************Maximum of BST*******************************************************************************************
         class Solution{
             public int maxOfBST(TreeNode root){
             TreeNode temp=root;
             while(temp.right!=null){temp=temp.right;}
             return temp.data;
         }}
-        //***************************************************Search a Value*************************************
+        //***************************************************Search a Value*******************************************************************************************
         class Solution{
             public TreeNode searchVal(TreeNode root,int target){
             if(root==null)return false;
@@ -51,7 +51,7 @@ public class Accio_Module_4 {
             else if(root.data<target)searchVal(root.right,target);
             else{return true};
         }}
-        //*************************************************Insertions Delete*******************************************
+        //*************************************************Insertions Delete*************************************************************************************************
         //***************************************************Insert a Node
         class Solution{
             public static TreeNode insertNode(TreeNode root,int target){
@@ -66,7 +66,7 @@ public class Accio_Module_4 {
 
             return root;
         }}
-        //***************************************************Delete a Node************************************* 
+        //***************************************************Delete a Node******************************************************************************************* 
         //Case-1 Delete a Leaf Node|Case 2- Delete a Node with one child|Case 3- Delete a Node with two child
         //Inorder Predecessor or Inorder Successor
         class Solution{
@@ -95,7 +95,7 @@ public class Accio_Module_4 {
                 return root;
             }
         }
-        //***************************************************Validate BST*************************************
+        //***************************************************Validate BST*******************************************************************************************
         class Solution{
         public boolean isValidBSTUtil(Node root,int min,int max){
             if(root==null){
@@ -105,7 +105,7 @@ public class Accio_Module_4 {
             return isValidBSTUtil(root.left,min,root.data)&&isValidBSTUtil(root.right,root.data,max);
         }
     }
-        //***************************************************Code 2 - Inorder Traversal*************************************
+        //***************************************************Code 2 - Inorder Traversal*******************************************************************************************
         class Solution{
         Node prev=null;
         boolean isBST(TreeNode root){
@@ -117,7 +117,7 @@ public class Accio_Module_4 {
             return true;
         }
     }
-        //***************************************************LCA*************************************
+        //***************************************************LCA*******************************************************************************************
         class Solution{
         Node LCA(Node node, int n1, int n2)
         {
@@ -128,10 +128,17 @@ public class Accio_Module_4 {
             return node;
         }}
         //Target Sum Pair
-    }
-    class PrefixSum,Kadane,Kmp-1{
-        class TreeNode
-        //***************************************************Serialize and Deserealize************************************* 
+    }}
+        class BinarySearchTree-2(CLASS-2){
+        //*****************************************************Target Sum Pair*********************************************************************************** */
+        //*****************************************************Recover a BST************************************************************************************** */
+        //*****************************************************Construct BST from PreOrder************************************************************************ */ 
+        //*****************************************************Construct BST from PostOrder************************************************************************ */    
+        //*****************************************************Construct BST from LevelOrder************************************************************************ */    
+        //*****************************************************BST Iterator************************************************** */    
+        }}
+        class PrefixSum,Kadane,Kmp-1(CLASS-3){
+        //***************************************************Serialize and Deserealize******************************************************************************************* 
         class Solution{
             public static String serialize(TreeNode root) {
             //Write code here
@@ -167,7 +174,7 @@ public class Accio_Module_4 {
     
             return root;
         }}
-        //***************************************************Convert BST to Greater Tree*************************************
+        //***************************************************Convert BST to Greater Tree*******************************************************************************************
         class Solution{
             int sum=0;
         public TreeNode convertBST(TreeNode root) {
@@ -177,13 +184,13 @@ public class Accio_Module_4 {
         
         }
         public void convertBSTUtil(TreeNode root){
-            if(root==null)return ;
+            if(root==null)return ;  
             convertBSTUtil(root.right);
             root.val+=sum;
             sum=root.val;
             convertBSTUtil(root.left);
         }}
-        //***************************************************Prefix Sum-Two Versions*************************************  
+        //***************************************************Prefix Sum-Two Versions*******************************************************************************************  
         class Solution{
             //Version-1
             int prefixSum[]=new int[n];
@@ -199,7 +206,7 @@ public class Accio_Module_4 {
 		}
         int rangeSum=prefixSum[j+1]-prefixSum[i];
     }
-        //*****************************************************Range Query**************************************************
+        //*****************************************************Range Query********************************************************************************************************
         class Solution{
             public int[] sumQuery(int[] arr, int[][] ranges) {
             // Your code here.
@@ -217,7 +224,7 @@ public class Accio_Module_4 {
             }
             return ans;
         }}
-        //****************************************************Car Pooling***************************************************
+        //****************************************************Car Pooling*********************************************************************************************************
         class Solution{
             public boolean carPooling(int[][] trips, int capacity) {
             //your code
@@ -241,7 +248,7 @@ public class Accio_Module_4 {
                     }
                     return true;
                 }}
-        //***************************************************XOR Query******************************************************
+        //***************************************************XOR Query************************************************************************************************************
         class Solution{
             public static int[] xorQueries(int[] arr, int[][] ranges) {
             // your code goes here
@@ -263,30 +270,30 @@ public class Accio_Module_4 {
           }
           return ans;
          }   }
-        //************************************************2D-Prefix Sum*****************************************************
+        //************************************************2D-Prefix Sum***********************************************************************************************************
         class Solution{ 
             public List<Integer> solve(int matrix[][], Pair query[]) {
             // Your code here
             List<Integer> ans=new ArrayList<>();
             int n=matrix.length;
             int m=matrix[0].length;
-            int preSum[][]=new int[n][m];
             //Prefix-Row
-            for(int i=0;i<n;i++){
-                preSum[i][0]=matrix[i][0];
-                for(int j=1;j<m;j++){
-                    preSum[i][j]+=preSum[i][j-1]+matrix[i][j];
+            for(int i=0;i<matrix.length;i++){
+                for(int j=1;j<matrix[0].length;j++){
+                    matrix[i][j]+=matrix[i][j-1];
                 }
             }
             //Prefix-Col
-            for(int j=0;j<m;j++){
-                for(int i=1;i<n;i++){
-                    preSum[i][j]+=preSum[i-1][j];
+            for(int i=1;i<matrix.length;i++){
+                for(int j=0;j<matrix[0].length;j++){
+                    matrix[i][j]+=matrix[i-1][j];
                 }
             }
             for(Pair qu: query){
                 int r1=qu.row1,c1=qu.col1,r2=qu.row2,c2=qu.col2;
-                int sum=preSum[r2][c2]-(preSum[r2][c1-1]+preSum[r1-1][c2]-preSum[r1-1][c1-1]);
+                int origsum=matrix[r2][c2];
+                int extrasum=(c1!=0?matrix[r2][c1-1]:0+r1!=0?matrix[r1-1][c2]:0-r1!=0&&c1!=0?matrix[r1-1][c1-1]:0);
+                int sum=origsum-extrasum;
                 ans.add(sum);
                 sum=0;
             }
@@ -294,11 +301,146 @@ public class Accio_Module_4 {
             
         }
 
-    }}
-    class Kadane{
+    }
+        }
+    }
+        class PrefixSum,Kadane,Kmp-2(CLASS-4){
+        //***********************************************2D Range Query**********************************************************************************************
+        //***********************************************Array Sum Divisible by P**********************************************************************************************
+        //***********************************************LeetCode 2017-Grid**********************************************************************************************
+        }
+    }
+        class PrefixSum,Kadane,Kmp-3(CLASS-5){
+        //**************************************************Kadane's Algorithm*****************************************************************************************
+        class Solution{
+            public int kadane(int arr[]){
+            int presum=0;
+            int maxsum=Integer.MIN_VALUE;
+            for(int i=0;i<n;i++){
+                presum+=arr[i];
+                maxsum=Math.max(presum,maxsum);
+                if(presum<0)presum=0;
+                }
+            return maxsum;
+            }   
+        } 
+        //*************************************************Maximum Sum Circular Array***************************************************************************** */
+        class Solution{
+            public int MaxSum(int[] arr, int n) {
+                // Write your code here
+                int maxSum=Integer.MIN_VALUE,maxSumSoFar=0,minSum=Integer.MAX_VALUE,minSumSoFar=0,total=0;
+                for(int i=0;i<n;i++){
+                    total+=arr[i];
+                    maxSumSoFar+=arr[i];
+                    if(maxSumSoFar>maxSum){maxSum=maxSumSoFar;}
+                    if(maxSumSoFar<0){maxSumSoFar=0;}
+                    minSumSoFar+=arr[i];
+                    if(minSumSoFar<minSum){minSum=minSumSoFar;}
+                    if(minSumSoFar>0){minSumSoFar=0;}
+                }
+                int result=Math.max(maxSum,total-minSum);
+                return result;
+        }}
+        //***********************************************KMP Algorithm********************************************************************************************* */
+        //LeetCode 2017
+         }
 
-    }
-    class KMP{
-        
-    }
+        class Sliding Window(Class-1){
+            //*****************************************Subarray product less than K*********************************************************************************
+            class Solution{
+                public int numSubarrayProductLessThanK(int[] nums, int k) {
+                int start=0,end=0,ans=0,prod=1,n=nums.length;
+                while(end<n){
+                    //*********Expansion*************** */
+                    prod=prod*nums[end];
+                    end++;
+                    //********Contraction************** */
+                    while(start<end&&prod>=k){
+                        prod=prod/nums[start];
+                        start++;
+                    }
+                    //*******Calculation*************** */
+                    if(prod<k)ans+=end-start;
+                }
+                return ans;
+            }}
+            //***************************************Maximum Consecutive Ones with Flips******************************************************************** */
+            class Solution{
+                static int maxOne(int arr[], int n,int k)
+            {
+                int start=0,end=0,flips=0,ans=Integer.MIN_VALUE;
+                while(end<n){
+                    if(arr[end]==0)flips++;
+                    end++;
+                    while(start<end&&flips>k){
+                        if(arr[start]==0)flips--;
+                        start++;
+                    }
+                    ans=Math.max(ans,end-start);
+                    }
+                    return ans;
+            }}
+            //*************************************Longest Substring with No Repeating Character************************************************************ */
+            class Solution{
+                public int longestSubstring(String s) {
+                //Write your code here
+                int start=0,end=0,ans=Integer.MIN_VALUE,n=s.length(),repeat=0;;
+                int freq[]=new int[256];
+                while(end<n){
+                    freq[s.charAt(end)]++;
+                    if(freq[s.charAt(end)]>1)repeat++;
+                    end++;
+                    
+                    while(start<end&&repeat>0){
+                        if(freq[s.charAt(start)]>1)repeat--;
+                        freq[s.charAt(start)]--;
+                        start++;
+                    }
+                    if(repeat==0)ans=Math.max(ans,end-start);
+                }
+                return ans;
+            }}
+            //*************************************Longest Substring with At Least K Repeating Characters*************************************************** */
+            class Solution{
+                private int XUniqueK(String s,int x,int k){
+                int ans=0,start=0,end=0,unique=0,char_atleastk=0,n=s.length();
+                int freq[]=new int[256];
+                while(end<n){
+                    freq[s.charAt(end)]++;
+                    if(freq[s.charAt(end)]==1)unique++;
+                    if(freq[s.charAt(end)]==k)char_atleastk++;
+                    end++;
+                    
+                    while(start<end&&unique>x){
+                        freq[s.charAt(start)]--;
+                        if(freq[s.charAt(start)]==0)unique--;
+                        if(freq[s.charAt(start)]==k-1)char_atleastk--;
+                        start++;
+                    }
+                    
+                    if(unique==x&&char_atleastk==x)
+                    {ans=Math.max(ans,end-start);}
+                }
+                return ans;
+            }
+            public int longestSubstring(String s, int k) {
+                // write code here
+                    int freq[]=new int[256];
+                    int n=s.length();
+                    int unique=0;
+                    int ans=0;
+                    for(int i=0;i<n;i++){
+                        freq[s.charAt(i)]++;
+                        if(freq[s.charAt(i)]==1)unique++;
+                    }
+                    for(int i=1;i<=unique;i++){
+                        ans=Math.max(ans,XUniqueK(s,i,k));
+                    }
+                    return ans;
+                }
+            }
+            //*************************************Minimum Window Substring **********************************************************************************/
+            //*************************************Sliding window maximum*********************************************************************************** */
+        }
+        }
 }
