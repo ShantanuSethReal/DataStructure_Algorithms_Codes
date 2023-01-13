@@ -289,23 +289,501 @@ public class Striver_TreesPlayList {
         }
     }
     //**************L22.Top View of Binary Tree********************/
+    class Solution{
+        static ArrayList<Integer> topView(Node root)
+        {
+            ArrayList<Integer> ans=new ArrayList<>(); 
+            if(root==null)return ans;
+            Map<Integer,Integer> map=new TreeMap<>();
+            Queue<Pair> q=new LinkedList<Pair>();
+            q.add(new Pair(root,0)); 
+            while(!q.isEmpty()){
+                Pair it=q.remove();
+                int hd=it.hd; 
+                Node temp=it.node; 
+                if(map.get(hd)==null)map.put(hd,temp.data); 
+                if(temp.left!=null){q.add(new Pair(temp.left,hd-1));}
+                if(temp.right!=null){q.add(new Pair(temp.right,hd+1));}
+            }
+            for (Map.Entry<Integer,Integer> entry : map.entrySet()) {
+                ans.add(entry.getValue()); 
+            }
+            return ans; 
+        
+    }
+}
     //**************L23.Bottom View of Binary Tree********************/
+    class Solution{
+        static ArrayList<Integer> BottomView(Node root)
+        {
+            ArrayList<Integer> ans=new ArrayList<>(); 
+            if(root==null)return ans;
+            Map<Integer,Integer> map=new TreeMap<>();
+            Queue<Pair> q=new LinkedList<Pair>();
+            q.add(new Pair(root,0)); 
+            while(!q.isEmpty()){
+                Pair it=q.remove();
+                int hd=it.hd; 
+                Node temp=it.node; 
+                map.put(hd,temp.data); 
+                if(temp.left!=null){q.add(new Pair(temp.left,hd-1));}
+                if(temp.right!=null){q.add(new Pair(temp.right,hd+1));}
+            }
+            for (Map.Entry<Integer,Integer> entry : map.entrySet()) {
+                ans.add(entry.getValue()); 
+            }
+            return ans; 
+        
+    }
+}
     //**************L24.Right View of Binary Tree********************/
+    class Solution{
+        public List<Integer> rightSideView(TreeNode root) {
+            List<Integer> result=new ArrayList<Integer>();
+            rightView(root,result,0);
+            return result;
+        }
+        
+        public void rightView(TreeNode curr,List<Integer> result,int currDepth){
+            if(curr==null){return;}
+            if(currDepth==result.size()){result.add(curr.val);}
+            rightView(curr.right,result,currDepth+1);
+            rightView(curr.left,result,currDepth+1);
+        }
+        public List<Integer> lightSideView(TreeNode root) {
+            List<Integer> result = new ArrayList<Integer>();
+            leftView(root,result,0);
+            return result;
+        }
+        
+        public void leftView(TreeNode curr,List<Integer> result,int currDepth){
+            if(curr==null){return;}
+            if(currDepth==result.size()){result.add(curr.val);}
+            leftView(curr.left,result,currDepth + 1);
+            leftView(curr.right,result,currDepth + 1);
+        }
+    }
     //**************L25.Check for Symmetrical Binary Tree********************/
+    class Solution{
+        public boolean isSymmetric(TreeNode root){
+            return root==null||isSymmetricHelp(root.left,root.right);
+        }
+        private boolean isSymmetricHelp(TreeNode left,TreeNode right){
+            if(left==null||right==null)return left==right;
+            if(left.val!=right.val)return false;
+            return isSymmetricHelp(left.left,right.right)&&isSymmetricHelp(left.right,right.left);
+        }
+    }
     //**************L26.Print Root to Node Path of Binary Tree********************/
+    class Solution{
+        static boolean getPath(Node root, ArrayList < Integer > arr, int x) {
+            if(root==null)return false;
+            arr.add(root.data);
+            if(root.data==x)
+                return true;
+            if(getPath(root.left,arr,x)||getPath(root.right,arr,x))
+                return true;
+            arr.remove(arr.size()-1);
+            return false;
+        }
+    }
     //**************L27.Lowest Common Ancestor of two nodes in Binary Tree********************/
+    class Solution{
+        public TreeNode lowestCommonAncestor(TreeNode root,TreeNode p,TreeNode q){
+            //base case
+            if(root==null||root==p||root==q){
+                return root;
+            }
+            TreeNode left=lowestCommonAncestor(root.left,p,q);
+            TreeNode right=lowestCommonAncestor(root.right,p,q);
+            if(left==null){
+                return right;
+            }
+            else if(right==null){
+                return left;
+            }
+            else { //both left and right are not null, we found our result
+                return root;
+            }
+        }
+    }
     //**************L28.Maximum Width of Binary Tree********************/
+    class Solution{
+        class Pair{
+            TreeNode node; 
+            int num; 
+            Pair(TreeNode _node,int _num) {
+                num=_num;
+                node=_node; 
+            }
+        }
+        public static int widthOfBinaryTree(TreeNode root){
+            if(root==null)return 0;
+            int ans=0;
+            Queue<Pair> q=new LinkedList<>(); 
+            q.offer(new Pair(root,0)); 
+            while(!q.isEmpty()){
+                int size=q.size();
+                int mmin=q.peek().num;    //to make the id starting from zero
+                int first=0,last=0;
+                for(int i=0;i<size;i++){
+                    int cur_id=q.peek().num-mmin;
+                    TreeNode node=q.peek().node;
+                    q.poll();
+                    if(i==0) first=cur_id;
+                    if(i==size-1) last=cur_id;
+                    if(node.left!=null)
+                        q.offer(new Pair(node.left,cur_id*2+1));
+                    if(node.right != null) 
+                        q.offer(new Pair(node.right,cur_id*2+2));
+                }
+                ans=Math.max(ans,last-first+1);
+            }
+            return ans;
+        }
+    }
     //**************L29.Children Sum Property********************/
     //**************L30.Print All Nodes at a distance K from a Node********************/
+    class Solution{
+        private void markParents(TreeNode root, Map<TreeNode,TreeNode> parent_track,TreeNode target) {
+            Queue<TreeNode> queue=new LinkedList<TreeNode>();
+            queue.offer(root);
+            while(!queue.isEmpty()) { 
+                TreeNode current=queue.poll(); 
+                if(current.left!=null) {
+                    parent_track.put(current.left,current);
+                    queue.offer(current.left);
+                }
+                if(current.right!=null) {
+                    parent_track.put(current.right,current);
+                    queue.offer(current.right);
+                }
+            }
+        }
+        public List<Integer> distanceK(TreeNode root,TreeNode target,int k) {
+            Map<TreeNode,TreeNode> parent_track=new HashMap<>();
+            markParents(root,parent_track,root); 
+            Map<TreeNode,Boolean> visited=new HashMap<>(); 
+            Queue<TreeNode> queue=new LinkedList<TreeNode>();
+            queue.offer(target);
+            visited.put(target,true);
+            int curr_level=0;
+            while(!queue.isEmpty()){ /*Second BFS to go upto K level from target node and using our hashtable info*/
+                int size=queue.size();
+                if(curr_level == k) break;
+                curr_level++;
+                for(int i=0;i<size;i++) {
+                    TreeNode current=queue.poll(); 
+                    if(current.left!=null&&visited.get(current.left)==null) {
+                        queue.offer(current.left);
+                        visited.put(current.left,true);
+                    }
+                    if(current.right!=null&&visited.get(current.right)==null ) {
+                        queue.offer(current.right);
+                        visited.put(current.right,true);
+                    }
+                    if(parent_track.get(current)!=null&&visited.get(parent_track.get(current))==null) {
+                        queue.offer(parent_track.get(current));
+                        visited.put(parent_track.get(current),true);
+                    }
+                }
+            }
+            List<Integer> result=new ArrayList<>(); 
+            while(!queue.isEmpty()) {
+                TreeNode current=queue.poll(); 
+                result.add(current.val);
+            }
+            return result;
+        }
+    }
     //**************L31.Minimum time taken to burn a Tree********************/
+    class Solution{
+        private static BinaryTreeNode<Integer> bfsToMapParents(BinaryTreeNode<Integer> root,HashMap<BinaryTreeNode<Integer>, BinaryTreeNode<Integer>> mpp, int start){
+        Queue<BinaryTreeNode<Integer>> q=new LinkedList<>();
+        q.offer(root);
+        BinaryTreeNode<Integer> res=new BinaryTreeNode<>(-1);
+        while(!q.isEmpty()){
+            BinaryTreeNode<Integer> node=q.poll();
+            if(node.data==start)res=node;
+            if(node.left!=null){
+                mpp.put(node.left,node);
+                q.offer(node.left);
+            }
+            if(node.right!=null){
+                mpp.put(node.right,node);
+                q.offer(node.right);
+            }
+        }
+        return res;
+    }   
+    private static int findMaxDistance(HashMap<BinaryTreeNode<Integer>,BinaryTreeNode<Integer>> mpp,BinaryTreeNode<Integer> target){
+        Queue<BinaryTreeNode<Integer>> q=new LinkedList<>();  
+        q.offer(target);
+        HashMap<BinaryTreeNode<Integer>,Integer> vis=new HashMap<>();
+        vis.put(target,1);
+        int maxi=0;
+        
+        while(!q.isEmpty()){
+            int sz=q.size();
+            int fl=0;
+            
+            for(int i=0;i<sz;i++){
+                BinaryTreeNode<Integer> node=q.poll();
+                if(node.left!=null&&vis.get(node.left)==null){
+                    fl=1;
+                    vis.put(node.left,1);
+                    q.offer(node.left);
+                }
+                if(node.right!=null&&vis.get(node.right)==null){
+                    fl=1;
+                    vis.put(node.right,1);
+                    q.offer(node.right);
+                }
+                if(mpp.get(node)!=null&&vis.get(mpp.get(node))==null){
+                    fl=1;
+                    vis.put(mpp.get(node),1);
+                    q.offer(mpp.get(node));
+                }
+            }
+            if(fl==1)maxi++;
+        }
+        return maxi;
+    }
+    public static int timeToBurnTree(BinaryTreeNode<Integer> root, int start)
+    {
+        HashMap<BinaryTreeNode<Integer>, BinaryTreeNode<Integer>> mpp = new HashMap<>();
+        BinaryTreeNode<Integer> target = bfsToMapParents(root, mpp, start);
+        int maxi = findMaxDistance(mpp, target);
+        return maxi;
+    }
+}
     //**************L32.Count Total Nodes in a Binary Tree********************/
+    class Solution{
+        public int countNodes(TreeNode root) {
+            if(root==null)return 0;
+            int left=getHeightLeft(root);
+            int right=getHeightRight(root);
+            //If left and right are equal it means that the tree is complete and hence go for 2^h -1.
+            if(left==right)return ((2<<(left)) -1);
+            //else recursively calculate the number of nodes in left and right and add 1 for root.
+            else return countNodes(root.left)+countNodes(root.right)+1;
+        }
+        public int getHeightLeft(TreeNode root){
+            int count=0;
+            while(root.left!=null){
+                count++;
+                root=root.left;
+            }
+            return count;
+        }        
+        public int getHeightRight(TreeNode root){
+            int count=0;
+            while(root.right!=null){
+                count++;
+                root=root.right;
+            }
+            return count;
+        }
+    }
     //**************L33.Requirements to construct a unique Binary Tree********************/
+    class Solution{
+        //You cannot construct a unique tree from pre and post order 
+    }
     //**************L34.Construct a Binary Tree from PreOrder and InOrder********************/
-    //**************L35.Construct a Binary Tree from PostOrder and InOrder********************/
+    class Solution{
+        static TreeNode buildTree(int[] preorder,int[] inorder) {
+          Map<Integer,Integer> inMap=new HashMap<Integer,Integer>();
+          for (int i=0;i<inorder.length;i++) {
+            inMap.put(inorder[i],i);
+          }
+          TreeNode root=buildTree(preorder,0,preorder.length - 1,inorder,0,inorder.length-1,inMap);
+          return root;
+        }
+        static TreeNode buildTree(int[] preorder,int preStart,int preEnd,int[]inorder,int inStart,int inEnd,Map < Integer, Integer > inMap) {
+          if (preStart>preEnd||inStart>inEnd) return null;
+          TreeNode root=new TreeNode(preorder[preStart]);
+          int inRoot=inMap.get(root.val);
+          int numsLeft=inRoot-inStart;
+          root.left=buildTree(preorder,preStart+1,preStart+numsLeft,inorder,inStart,inRoot-1,inMap);
+          root.right=buildTree(preorder,preStart+numsLeft+1,preEnd,inorder,inRoot+1,inEnd,inMap);
+          return root;
+        }
+    }
+    //*************L35.Construct a Binary Tree from PostOrder and InOrder********************/
+    class Solution{
+        public TreeNode buildTree(int[] inorder,int[] postorder){
+            if (inorder==null||postorder==null||inorder.length!=postorder.length)
+                return null;
+            HashMap<Integer,Integer> hm=new HashMap<Integer,Integer>();
+            for (int i=0;i<inorder.length;++i)
+                hm.put(inorder[i],i);
+            return buildTreePostIn(inorder,0,inorder.length-1,postorder,0,postorder.length-1,hm);
+        }
+    
+        private TreeNode buildTreePostIn(int[] inorder,int is,int ie,int[] postorder,int ps,int pe,HashMap<Integer,Integer> hm){
+            if(ps>pe||is>ie) return null;
+            TreeNode root=new TreeNode(postorder[pe]);
+            int inroot=hm.get(postorder[pe]);
+            int numsLeft=inroot-is;
+            root.left=buildTreePostIn(inorder,is,inroot-1,postorder,ps,ps+numsLeft-1,hm);
+            root.right=buildTreePostIn(inorder,inroot+1,ie,postorder,ps+numsLeft,pe-1,hm);
+            return root;
+        }
+    }
     //**************L36.Serialize and DeSerialize a Binary Tree********************/
+    class Solution{
+        public String serialize(TreeNode root){
+            if(root==null)return "";
+            Queue<TreeNode> q=new LinkedList<>();
+            StringBuilder res=new StringBuilder();
+            q.add(root);
+            while (!q.isEmpty()){
+                TreeNode node=q.poll();
+                if(node==null) {
+                    res.append("n ");
+                    continue;
+                }
+                res.append(node.val+" ");
+                q.add(node.left);
+                q.add(node.right);
+            }
+            return res.toString();
+        }
+    
+        public TreeNode deserialize(String data) {
+            if(data=="") return null;
+            Queue<TreeNode> q=new LinkedList<>();
+            String[] values=data.split(" ");
+            TreeNode root=new TreeNode(Integer.parseInt(values[0]));
+            q.add(root);
+            for (int i=1;i<values.length;i++){
+                TreeNode parent=q.poll();
+                if(!values[i].equals("n")) {
+                    TreeNode left=new TreeNode(Integer.parseInt(values[i]));
+                    parent.left=left;
+                    q.add(left);
+                }
+                if (!values[++i].equals("n")) {
+                    TreeNode right=new TreeNode(Integer.parseInt(values[i]));
+                    parent.right=right;
+                    q.add(right);
+                }
+            }
+            return root;
+        }
+    }
     //**************L37.Morris Traversal********************/
+    class Solution {
+        public List<Integer> inorderTraversal(TreeNode root) {
+            List<Integer> inorder=new ArrayList<Integer>(); 
+            TreeNode cur=root; 
+            while(cur!=null){
+                if(cur.left==null){
+                    inorder.add(cur.val); 
+                    cur=cur.right; 
+                }
+                else{
+                    TreeNode prev=cur.left; 
+                    while(prev.right!=null&&prev.right!=cur){
+                        prev=prev.right; 
+                    }
+                    if(prev.right==null) {
+                        prev.right=cur;
+                        cur=cur.left; 
+                    }
+                    else{
+                        prev.right=null; 
+                        inorder.add(cur.val); 
+                        cur=cur.right; 
+                    }
+                }
+            }
+            return inorder; 
+        }
+        static ArrayList<Integer> preorderTraversal(Node root){
+            ArrayList<Integer> preorder=new ArrayList<>();
+            Node cur=root;
+            while(cur!=null){
+                if(cur.left==null){
+                    preorder.add(cur.data);
+                    cur=cur.right;
+                } else {
+                    Node prev=cur.left;
+                    while(prev.right!=null&&prev.right!=cur) {
+                        prev = prev.right;
+                    }
+    
+                    if(prev.right==null){
+                        prev.right=cur;
+                        preorder.add(cur.data);
+                        cur=cur.left;
+                    }else{
+                        prev.right=null;
+                        cur=cur.right;
+                    }
+                }
+            }
+            return preorder;
+        }
+    }
     //**************L38.Flatten a Binary Tree to a Linked List********************/
+    class Solution {
+        static Node prev=null;
+        static void flatten(Node root){
+            if(root==null)return;
+            flatten(root.right);
+            flatten(root.left);
+            root.right=prev;
+            root.left=null;
+            prev=root;
+          }
+        static Node prev=null;
+        static void flatten(Node root){
+            if(root==null)return;
+            Stack<Node > st=new Stack<>();
+            st.push(root);
+            while(!st.isEmpty()){
+                Node  cur=st.peek();
+                st.pop();
 
+                if(cur.right!=null){
+                st.push(cur.right);
+                }
+                if(cur.left!=null){
+                st.push(cur.left);
+                }
+                if(!st.isEmpty()){
+                cur.right=st.peek();
+                }
+                cur.left=null;
+            }
+        }
+        static ArrayList<Integer> preorderTraversal(Node root){
+            ArrayList<Integer> preorder=new ArrayList<>();
+            Node cur=root;
+            while(cur!=null){
+                if(cur.left==null){
+                    preorder.add(cur.data);
+                    cur=cur.right;
+                }else{
+                    Node prev=cur.left;
+                    while(prev.right!=null&&prev.right!=cur){
+                        prev=prev.right;
+                    }
+    
+                    if (prev.right==null){
+                        prev.right=cur;
+                        preorder.add(cur.data);
+                        cur=cur.left;
+                    }else{
+                        prev.right=null;
+                        cur=cur.right;
+                    }
+                }
+            }
+            return preorder;
+        }
+}     
     //**************L39.Introduction to BST*****************************/
     class Solution{
         Left < Node < Right;
