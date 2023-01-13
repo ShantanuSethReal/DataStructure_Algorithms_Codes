@@ -234,13 +234,104 @@ public class Striver_TreesPlayList {
         }
     }
     //**************L17.Maximum Path Sum in Binary Tree********************/
+    class Solution{
+        public static int maxPathSum(Node root){
+            int maxValue[]=new int[1];
+            maxValue[0]=Integer.MIN_VALUE;
+            maxPathDown(root,maxValue);
+            return maxValue[0];
+        }
     
+        public static int maxPathDown(Node node,int maxValue[]){
+            if (node==null) return 0;
+            int left=Math.max(0,maxPathDown(node.left,maxValue));
+            int right=Math.max(0,maxPathDown(node.right,maxValue));
+            maxValue[0]=Math.max(maxValue[0],left+right+node.val);
+            return Math.max(left,right)+node.val;
+        }
+    }
     //**************L18.Check it two trees are Identical or Not********************/
+    class Solution {
+        static boolean isIdentical(Node node1,Node node2){
+            if(node1==null&&node2==null)
+                return true;
+            else if(node1==null||node2==null)
+                return false;
     
+            return ((node1.data==node2.data)&&isIdentical(node1.left,node2.left)&&isIdentical(node1.right,node2.right));
+        }
+    }
     //**************L19.Zig-Zag or Spiral Traversal in Binary Tree********************/
+    class Solution {
+        public static ArrayList<ArrayList<Integer>> zigzagLevelOrder(Node root){
+            Queue<Node> queue=new LinkedList<Node>();
+            ArrayList<ArrayList< Integer>> wrapList=new ArrayList<>();
     
+            if (root == null) return wrapList;
+    
+            queue.offer(root);
+            boolean flag=true;
+            while(!queue.isEmpty()){
+                int levelNum=queue.size();
+                ArrayList<Integer> subList=new ArrayList<Integer>(levelNum);
+                for (int i=0;i<levelNum;i++) {
+                    int index=i;
+                    if (queue.peek().left!=null) queue.offer(queue.peek().left);
+                    if (queue.peek().right!=null) queue.offer(queue.peek().right);
+                    if (flag==true)subList.add(queue.poll().val);
+                    else subList.add(0,queue.poll().val);
+                }
+                flag=!flag;
+                wrapList.add(subList);
+            }
+            return wrapList;
+        }
+    }
     //**************L20.Boundary Traversal in Binary Tree********************/
+    class Solution{
+        static Boolean isLeaf(Node root){
+            return (root.left==null)&&(root.right==null);
+        }
     
+        static void addLeftBoundary(Node root,ArrayList<Integer> res){
+            Node cur=root.left;
+            while(cur!=null){
+                if(isLeaf(cur)==false)res.add(cur.data);
+                if(cur.left!=null)cur=cur.left;
+                else cur=cur.right;
+            }
+        }
+        static void addRightBoundary(Node root,ArrayList<Integer> res){
+            Node cur=root.right;
+            ArrayList<Integer> tmp=new ArrayList <Integer>();
+            while(cur!=null){
+                if(isLeaf(cur)==false)tmp.add(cur.data);
+                if(cur.right!=null)cur=cur.right;
+                else cur=cur.left;
+            }
+            int i;
+            for(i=tmp.size()- 1;i>=0;--i){
+                res.add(tmp.get(i));
+            }
+        }
+    
+        static void addLeaves(Node root, ArrayList<Integer>res){
+            if(isLeaf(root)){
+                res.add(root.data);
+                return;
+            }
+            if(root.left!=null)addLeaves(root.left,res);
+            if(root.right!=null)addLeaves(root.right,res);
+        }
+        static ArrayList<Integer> printBoundary(Node node) {
+            ArrayList<Integer> ans=new ArrayList<Integer>();
+            if (isLeaf(node)==false)ans.add(node.data);
+            addLeftBoundary(node,ans);
+            addLeaves(node,ans);
+            addRightBoundary(node,ans);
+            return ans;
+        }
+    }
     //**************L21.Vertical Order Traversal of Binary Tree********************/
     class Solution{
         class Tuple{
@@ -443,6 +534,30 @@ public class Striver_TreesPlayList {
         }
     }
     //**************L29.Children Sum Property********************/
+    class Solution{
+        static void reorder(Node root){
+          if (root==null) return;
+          int child=0;
+          if(root.left!=null){
+            child+=root.left.data;
+          }
+          if(root.right!=null){
+            child+=root.right.data;
+          }
+        
+          if(child<root.data){
+            if(root.left!=null) root.left.data=root.data;
+            else if(root.right!=null) root.right.data=root.data;
+          }
+        
+          reorder(root.left);
+          reorder(root.right);
+        
+          int tot = 0;
+          if (root.left!=null) tot+=root.left.data;
+          if (root.right!=null) tot+=root.right.data;
+          if (root.left!=null || root.right!=null)root.data=tot;
+        }}
     //**************L30.Print All Nodes at a distance K from a Node********************/
     class Solution{
         private void markParents(TreeNode root, Map<TreeNode,TreeNode> parent_track,TreeNode target) {
