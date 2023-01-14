@@ -1153,9 +1153,153 @@ class Solution{
         }
     }
 //**********************************DP-31 Shortest Common SuperSequence******************************************** */
+class Solution{
+    static String Recursion{
+        //Str1.length()+Str2.length()-LCS;
+    }
+    static String shortestSupersequence(String s1, String s2){
+        int n=s1.length();
+        int m=s2.length();
+        int[][] dp =new int[n+1][m+1];
+        for (int i =0;i<=n;i++) {
+          dp[i][0]=0;
+        }
+        for (int i=0;i<=m;i++) {
+          dp[0][i]=0;
+        }
+        for (int ind1=1;ind1<=n;ind1++) {
+          for (int ind2=1;ind2 <= m; ind2++) {
+            if (s1.charAt(ind1-1)==s2.charAt(ind2-1))
+              dp[ind1][ind2]=1+dp[ind1-1][ind2-1];
+            else
+              dp[ind1][ind2]=0  Math.max(dp[ind1-1][ind2],dp[ind1][ind2-1]);
+          }
+        }
+        int len=dp[n][m];
+        int i=n;
+        int j=m;
+        int index=len-1;
+        String ans="";
+      
+        while(i>0&&j> 0){
+          if(s1.charAt(i-1)==s2.charAt(j-1)){
+            ans+=s1.charAt(i-1);
+            index--;
+            i--;
+            j--;
+          } else if(dp[i-1][j]> dp[i][j-1] {
+              ans+=s1.charAt(i-1);
+              i--;
+          } else{
+              ans+=s2.charAt(j-1);
+              j--;
+          }
+        }
+        while(i>0){
+            ans+=s1.charAt(i-1);
+            i--;
+        }
+        while(j>0){
+            ans+=s2.charAt(j-1);
+            j--;
+        }
+        String ans2=new StringBuilder(ans).reverse().toString();
+        return ans2;
+      }
+}
 //**********************************DP-32 Distinct Subsequences******************************************** */
+class Solution{
+    static int countUtil(String s1, String s2, int ind1, int ind2,int[][] dp){
+        if(ind2<0)return 1;
+        if(ind1<0)return 0;
+        if(dp[ind1][ind2]!=-1)return dp[ind1][ind2];
+        if(s1.charAt(ind1)==s2.charAt(ind2)){
+            int leaveOne=countUtil(s1,s2,ind1-1,ind2-1,dp);
+            int stay=countUtil(s1,s2,ind1-1,ind2,dp);
+            return dp[ind1][ind2]=(leaveOne+stay)%prime;
+        }
+        else{
+            return dp[ind1][ind2]=countUtil(s1,s2,ind1-1,ind2,dp);
+        }
+    }
+    static int subsequenceCounting(String s1,String s2,int n,int m){
+        int dp[][]=new int[n+1][m+1];
+        for(int i=0;i<n+1;i++){
+            dp[i][0]=1;
+        }
+        for(int i=1;i<m+1;i++){
+            dp[0][i]=0;
+        }
+        for(int i=1;i<n+1;i++){
+            for(int j=1;j<m+1;j++){
+                if(s1.charAt(i-1)==s2.charAt(j-1))
+                    dp[i][j]=(dp[i-1][j-1]+dp[i-1][j])%prime;
+                else
+                    dp[i][j]=dp[i-1][j];
+            }
+        }
+        return dp[n][m];
+    } 
+    
+}
 //**********************************DP-33 Edit Distance******************************************** */
+class Solution{
+    static int editDistanceUtil(String S1,String S2,int i,int j,int[][] dp){
+        if(i<0)return j+1;
+        if(j<0)return i+1;
+        if(dp[i][j]!=-1) return dp[i][j];
+        if(S1.charAt(i)==S2.charAt(j))
+            return dp[i][j]=0+editDistanceUtil(S1,S2,i-1,j-1,dp);
+        // Minimum of three choices
+        else return dp[i][j]=1+Math.min(editDistanceUtil(S1,S2,i-1,j-1,dp),Math.min(editDistanceUtil(S1,S2,i-1,j,dp),editDistanceUtil(S1,S2,i,j-1,dp)));
+    }
+    static int editDistance(String S1, String S2){
+        int n=S1.length();
+        int m=S2.length();
+        int[][] dp=new int[n+1][m+1];
+         for(int i=0;i<=n;i++){
+            dp[i][0]=i;
+        }
+        for(int j=0;j<=m;j++){
+            dp[0][j]=j;
+        }
+        for(int i=1;i<n+1;i++){
+            for(int j=1;j<m+1;j++){
+                if(S1.charAt(i-1)==S2.charAt(j-1))
+                    dp[i][j]=0+dp[i-1][j-1];
+                else dp[i][j]=1+Math.min(dp[i-1][j-1],Math.min(dp[i-1][j],dp[i][j-1]));
+            }
+        }
+        return dp[n][m];
+    }
+}
 //**********************************DP-34 Wild Card Matching******************************************** */
+class Solution{
+    static boolean isAllStars(String S1,int i){
+        for (int j=0;j<=i;j++){
+          if (S1.charAt(j)!='*')
+            return false;
+        }
+        return true;
+      }
+    static int wildcardMatchingUtil(String S1, String S2, int i, int j, int[][] dp) {
+
+        //Base Conditions
+        if(i<0&&j<0)return 1;
+        if(i<0&&j>=0)return 0;
+        if(j<0&&i>=0)return isAllStars(S1,i)?1:0;
+        if(dp[i][j]!=-1) return dp[i][j];
+        if(S1.charAt(i)==S2.charAt(j)||S1.charAt(i)=='?')
+          return dp[i][j]=wildcardMatchingUtil(S1,S2,i-1,j-1,dp);
+    
+        else {
+          if(S1.charAt(i)=='*')
+            return (wildcardMatchingUtil(S1,S2,i-1,j,dp)==1||wildcardMatchingUtil(S1,S2,i,j-1,dp)==1)?1:0;
+          else return 0;
+        }
+      }
+    
+}
 //**********************************DP-35 Best Time To Buy and Sell Stocks I******************************************** */
 class Solution{
     class TUF{
