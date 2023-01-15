@@ -1097,64 +1097,64 @@ public class Striver_Graph_Playlist {
     }
     //*****************G35-Print Shortest Path Djikstra************************************************************* */
     class Solution {
-    class Pair{
-        int first;
-        int second;
-        Pair(int _first,int _second){
-            this.first=_first;
-            this.second=_second;
-        }
-    }
-public static List<Integer> shortestPath(int n, int m, int edges[][]) {
-    // code here
-    ArrayList<ArrayList<Pair>> adj=new ArrayList<>();
-    for(int i=0;i<=n;i++){
-        adj.add(new ArrayList<>());
-    }
-    for(int i=0;i<m;i++){
-        adj.get(edges[i][0]).add(new Pair(edges[i][1],edges[i][2]));
-        adj.get(edges[i][1]).add(new Pair(edges[i][0],edges[i][2]));
-    }
-    PriorityQueue<Pair> pq=new PriorityQueue<Pair>((x,y)->x.first-y.first);
-    int distance[]=new int[n+1];
-    int parent[]=new int[n+1];
-    for(int i=1;i<=n;i++){
-        distance[i]=(int)(1e9);
-        parent[i]=i;
-    }
-    distance[1]=0;
-    pq.add(new Pair(0,1));
-    while(pq.size()!=0){
-        Pair it=pq.peek();
-        int dis=it.first;
-        int node=it.second;
-        pq.remove();
-        
-        for(Pair iter: adj.get(node)){
-            int adjNode=iter.first;
-            int edgeWeight=iter.second;
-            if(dis+edgeWeight<distance[adjNode]){
-                distance[adjNode]=dis+edgeWeight;
-                pq.add(new Pair(dis+edgeWeight,adjNode));
-                parent[adjNode]=node;
+        class Pair{
+            int first;
+            int second;
+            Pair(int _first,int _second){
+                this.first=_first;
+                this.second=_second;
             }
         }
-    }
-       
-    List<Integer> path=new ArrayList<>();
-    if(distance[n]==1e9){
-        path.add(-1);
-        return path;
-    }
-    int node=n;
-    while(parent[node]!=node){
-        path.add(node);
-        node=parent[node];
-    }
-    path.add(1);
-    Collections.reverse(path);
-    return path;
-}
+        public static List<Integer> shortestPath(int n, int m, int edges[][]) {
+            // code here
+            ArrayList<ArrayList<Pair>> adj=new ArrayList<>();
+            for(int i=0;i<=n;i++){
+                adj.add(new ArrayList<>());
+            }
+            for(int i=0;i<m;i++){
+                adj.get(edges[i][0]).add(new Pair(edges[i][1],edges[i][2]));
+                adj.get(edges[i][1]).add(new Pair(edges[i][0],edges[i][2]));
+            }
+            PriorityQueue<Pair> pq=new PriorityQueue<Pair>((x,y)->x.first-y.first);
+            int distance[]=new int[n+1];
+            int parent[]=new int[n+1];
+            for(int i=1;i<=n;i++){
+                distance[i]=(int)(1e9);
+                parent[i]=i;
+            }
+            distance[1]=0;
+            pq.add(new Pair(0,1));
+            while(pq.size()!=0){
+                Pair it=pq.peek();
+                int dis=it.first;
+                int node=it.second;
+                pq.remove();
+                
+                for(Pair iter: adj.get(node)){
+                    int adjNode=iter.first;
+                    int edgeWeight=iter.second;
+                    if(dis+edgeWeight<distance[adjNode]){
+                        distance[adjNode]=dis+edgeWeight;
+                        pq.add(new Pair(dis+edgeWeight,adjNode));
+                        parent[adjNode]=node;
+                    }
+                }
+            }
+            
+            List<Integer> path=new ArrayList<>();
+            if(distance[n]==1e9){
+                path.add(-1);
+                return path;
+            }
+            int node=n;
+            while(parent[node]!=node){
+                path.add(node);
+                node=parent[node];
+            }
+            path.add(1);
+            Collections.reverse(path);
+            return path;
+        }
 }
     //*****************G36-Shortest Distance in a Binary Maze******************* */
     class Solution {
@@ -1864,3 +1864,32 @@ class Edge implements Comparable<Edge>{
         }
     }
 }
+//**************************************STRIVER GRAPH PLAYLIST*************************************** */
+//Breadth First Search
+//Depth First Search
+//Number of Provinces
+//Number of Islands
+//Flood Fill
+//Rotten Oranges
+//Detect a Cycle DFS
+//Detect a Cycle BFS
+//Distance of nearest 1
+//Surrounded Regions with X's
+//Number of Enclaves
+//Number of Distinct Islands
+//Bipartite Graph DFS
+//Bipartite Graph BFS
+//Detect a Cycle in Directed Graph DFS
+//Detect a Cycle in Directed Graph BFS(Kahn's Algo)
+//Topological Sort BFS
+//Topological Sort DFS
+//Djikstra's Algo
+//Printing Djikstra
+//Shortest Distance in a Binary Maze
+//BellMan Ford
+//Flyod Warshal 
+//Count Number of ways to arrive at a destination
+//Minimum Multiplication to  reach end
+
+//Path With Minimum Effort
+//Cheapest flight with at most K stops
