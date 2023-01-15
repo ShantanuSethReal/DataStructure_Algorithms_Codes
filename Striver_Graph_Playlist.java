@@ -1330,7 +1330,7 @@ public class Striver_Graph_Playlist {
                 this.first=_first;
                 this.second=_second;
             }
-        }
+            }
         int minimumMultiplications(int[] arr, int start, int end) {
             Queue<Pair> q=new LinkedList<>();
             q.add(new Pair(start,0));
@@ -1890,6 +1890,15 @@ class Edge implements Comparable<Edge>{
 //Flyod Warshal 
 //Count Number of ways to arrive at a destination
 //Minimum Multiplication to  reach end
-
-//Path With Minimum Effort
 //Cheapest flight with at most K stops
+//Path With Minimum Effort
+//Find the city with max no of cities under threshold
+//Course Schedule I and II
+//Shortest Path in DAG
+//Shortest Path in undirected graph with unit dist
+//Alien Dictionary
+//Word Ladder I
+
+//Eventual Safe States
+//Word Ladder II
+
