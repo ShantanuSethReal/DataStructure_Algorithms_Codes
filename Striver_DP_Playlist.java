@@ -164,10 +164,10 @@ class Solution{
         class TUF {
             static int ninjaTraining(int n,int[][] points){
                 int[][] dp=new int[n][4];
-                dp[0][0]=Math.max(points[0][1], points[0][2]);
-                dp[0][1]=Math.max(points[0][0], points[0][2]);
-                dp[0][2]=Math.max(points[0][0], points[0][1]);
-                dp[0][3]=Math.max(points[0][0], Math.max(points[0][1], points[0][2]));
+                dp[0][0]=Math.max(points[0][1],points[0][2]);
+                dp[0][1]=Math.max(points[0][0],points[0][2]);
+                dp[0][2]=Math.max(points[0][0],points[0][1]);
+                dp[0][3]=Math.max(points[0][0],Math.max(points[0][1], points[0][2]));
         
                 for(int day=1;day<n;day++){
                     for(int last=0;last<4;last++){
@@ -180,7 +180,7 @@ class Solution{
                         }
                     }
                 }
-                return dp[n - 1][3];
+                return dp[n-1][3];
             }
         }        
 }
@@ -218,16 +218,16 @@ class Solution{
 }}
 //**********************************DP-9 Grid Unique Paths with Obstacles***********************************************/  
 class Solution{
-    static int mazeObstaclesUtil(int i, int j, int[][] maze, int[][] dp) {
-        if(i>0&&j>0&&maze[i][j]==-1) return 0; 
+    static int mazeObstaclesUtil(int i,int j,int[][] maze,int[][] dp){
+        if(i>0&&j>0&&maze[i][j]==-1)return 0; 
         if(i==0&&j==0)return 1;
         if(i<0||j<0)return 0;
         if(dp[i][j]!=-1)return dp[i][j];
         int up=mazeObstaclesUtil(i-1,j,maze,dp);
         int left=mazeObstaclesUtil(i,j-1,maze,dp);
-        return dp[i][j] = up+left;
+        return dp[i][j]=up+left;
       }
-      static int mazeObstaclesUtil(int n, int m, int[][] maze, int[][] dp) {
+      static int mazeObstaclesUtil(int n,int m,int[][] maze,int[][] dp){
         for(int i=0;i<n;i++){
              for(int j=0;j<m;j++){
                  if(i>0&&j>0&&maze[i][j]==-1){
@@ -239,10 +239,10 @@ class Solution{
                      continue;
                  }
                  int up=0;
-                 int left = 0;
+                 int left=0;
                  if(i>0)up=dp[i-1][j];
                  if(j>0)left=dp[i][j-1];
-                 dp[i][j] = up+left;
+                 dp[i][j]=up+left;
              }
          }
          return dp[n-1][m-1];
@@ -287,10 +287,10 @@ class Solution{
           if(i==n-1)return triangle[i][j];
           int down=triangle[i][j]+minimumPathSumUtil(i+1,j,triangle,n,dp);
           int diagonal=triangle[i][j]+minimumPathSumUtil(i+1,j+1,triangle,n,dp);
-          return dp[i][j] = Math.min(down, diagonal);
+          return dp[i][j]=Math.min(down, diagonal);
         }
         static int minimumPathSum(int[][] triangle, int n){
-            int dp[][]= new int[n][n];
+            int dp[][]=new int[n][n];
             for(int j=0;j<n;j++){
                 dp[n-1][j]=triangle[n-1][j];
             }
@@ -302,7 +302,8 @@ class Solution{
                 }
             }
             return dp[0][0];
-                }        }
+                }      
+            }
 }
 //**********************************DP-12 Minimum/Maximum Falling Path Sum******************************************** */
 class Solution{

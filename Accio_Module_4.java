@@ -131,10 +131,129 @@ public class Accio_Module_4 {
     }}
         class BinarySearchTree-2(CLASS-2){
         //*****************************************************Target Sum Pair*********************************************************************************** */
+        class Solution{
+            public boolean find(Node root,int tar){
+                Node curr=root;
+                while(curr!=null&&curr.data!=tar){
+                    curr=curr.data<tar?curr.right:curr.left;
+                }
+                if(curr==null){return false;}
+                else return true;
+            }
+            public void targetSumHelper(Node root,Node node,int tar)
+            {
+                // your code here
+                if(node==null)return;
+                targetSumHelper(root,node.left,tar);
+                int comp=tar-node.data;
+                if(comp>node.data){
+                    if(find(root,comp)){
+                        System.out.println(node.data+" "+comp);
+                        pair++;
+                    }
+                }
+                targetSumHelper(root,node.right,tar);
+            }
+            int pair=0;
+            public void targetSum(Node root, int tar)
+            {
+                // your code here
+                targetSumHelper(root,root,tar);
+                if(pair==0){
+                    System.out.println("-1");
+                }
+            }
+        
+        }
         //*****************************************************Recover a BST************************************************************************************** */
+        class Solution{
+            static TreeNode first=null;
+            static TreeNode second=null;
+            static TreeNode prev=new TreeNode(Integer.MIN_VALUE);
+            public static void inorder(TreeNode root){
+                if(root==null){return;}
+                inorder(root.left);
+                if(first==null&&prev.val>root.val){
+                    first=prev;
+                }
+                if(first!=null&&prev.val>root.val){
+                    second=root;
+                }
+                prev=root;
+                inorder(root.right);
+            }
+            public static void recoverTree(TreeNode root) {
+                //Write code here
+                inorder(root);
+                int temp=first.val;
+                first.val=second.val;
+                second.val=temp;
+            }
+        }
         //*****************************************************Construct BST from PreOrder************************************************************************ */ 
+        class Solution{
+        static int idx=0;
+        public static TreeNode CreateTree(int n,int[] A) {
+        // Write Your Code here
+		    return bstFromPreOrder(A,Integer.MIN_VALUE,Integer.MAX_VALUE);
+        }
+        public static TreeNode bstFromPreOrder(int[] A,int min,int max){
+                if(idx>=A.length||A[idx]>max||A[idx]<min){return null;}
+                TreeNode root=new TreeNode(A[idx++]);
+                root.left=bstFromPreOrder(A,min,root.val);
+                root.right=bstFromPreOrder(A,root.val,max);
+                return root;
+		}
+    }
         //*****************************************************Construct BST from PostOrder************************************************************************ */    
+        class Solution{
+            static int idx=0;
+            public static TreeNode CreateTree(int n,int[] postOrder) {
+                idx=n-1;
+                return bstFromPostOrder(postOrder,Integer.MIN_VALUE,Integer.MAX_VALUE);
+            }
+            public static TreeNode bstFromPostOrder(int[] A,int min,int max){
+                if(idx<0||A[idx]>max||A[idx]<min){return null;}
+                TreeNode root=new TreeNode(A[idx--]);
+                root.right=bstFromPostOrder(A,root.val,max);
+                root.left=bstFromPostOrder(A,min,root.val);
+                return root;
+		    }
+        }
         //*****************************************************Construct BST from LevelOrder************************************************************************ */    
+        class Solution{
+            class Pair{
+                Node par=null;
+                int lr=-(int)1e9,rr=(int)1e9;
+                pair(){}
+                pair(Node par,int lr,int rr){
+                    this.par=par;
+                    this.lr=lr;
+                    this.rr=rr;
+                }
+            }
+            Node bstFromLevel(int arr[],int n){
+                LinkedList<Pair> que=new LinkedList<>();
+                que.add(new Pair());
+                Node root=null;
+                int idx=0;
+                while(que.size()!=0&&idx<n){
+                    Pair rem=que.removeFirst();
+                    int ele=arr[idx];
+                    if(ele<rem.lr||ele>rem.rr){continue;}
+                    Node node=new Node(ele);
+                    idx++;
+                    Node par=rem.par;
+                    if(par==null) root=node;
+                    else if(ele<par.data)par.left=node;
+                    else par.right=node;
+                
+                    que.addLast(new Pair(node,rem.lr,ele));
+                    que.addLast(new Pair(node,ele,rem.rr));
+                }
+                return root;
+            }
+    }        
         //*****************************************************BST Iterator************************************************** */    
         }}
         class PrefixSum,Kadane,Kmp-1(CLASS-3){
@@ -344,8 +463,7 @@ public class Accio_Module_4 {
         //***********************************************KMP Algorithm********************************************************************************************* */
         //LeetCode 2017
          }}
-
-        class Sliding Window(Class-1){
+        class Sliding Window(CLASS-1){
             //*****************************************Subarray product less than K*********************************************************************************
             class Solution{
                 public int numSubarrayProductLessThanK(int[] nums, int k) {
@@ -441,7 +559,10 @@ public class Accio_Module_4 {
             }
             //*************************************Minimum Window Substring **********************************************************************************/
             //*************************************Sliding window maximum*********************************************************************************** */
+        }}}}}
+        class Sliding Window(CLASS-2){
+
+        }}}}
+        class Sliding Window(CLASS-3){
+
         }
-        }
-        }
-}
