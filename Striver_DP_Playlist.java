@@ -1855,7 +1855,7 @@ class Solution{
             int LeftFalse=f(i,ind-1,0,str);
             int RightTrue=f(ind+1,j,1,str);
             int RightFalse=f(ind+1,j,0,str);
-        }
+        
 
         if(str.charAt(ind)=='&'){
             if(isTrue==true) ways=ways+(LeftTrue*RightTrue);
@@ -1869,6 +1869,7 @@ class Solution{
             if(isTrue==true) ways=ways+((LeftFalse*RightTrue)+(LeftTrue*RightFalse))
             else ways=ways+(LeftTrue*RightTrue)+(LeftFalse*RightFalse);
         }
+    }
     }
     return dp[i][j][isTrue]=ways;
 }

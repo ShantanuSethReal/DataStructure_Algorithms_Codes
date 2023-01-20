@@ -26,16 +26,7 @@ public class Striver_Graph_Playlist {
     }
         //**************G6-Depth First Search*****************************************O(2E+V)***| O(3N)********* */
     class Solution{    
-        public void dfs(int node,boolean vis[],ArrayList<ArrayList<Integer>> adj, ArrayList<Integer> dfs){
-            vis[node]=true;
-            dfs.add(node);
-            for(Integer it: adj.get(node))
-            {
-                if(vis[it]==false){
-                    dfs(it,vis,adj,dfs);
-                }
-            }
-        }
+        s
         public ArrayList<Integer> dfsOfGraph(int V,ArrayList<ArrayList<Integer>> adj){
             ArrayList<Integer> dfs=new ArrayList<>();
             boolean vis[]=new boolean[V];
