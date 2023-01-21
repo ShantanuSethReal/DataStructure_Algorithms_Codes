@@ -1928,3 +1928,218 @@ class Edge implements Comparable<Edge>{
 //Eventual Safe States DFS
 //Eventual Safe States BFS
 
+
+
+//**************Snakes and Ladder************************* */
+class Solution{
+    class Pair{
+    int dest,dist;
+        Pair(int x,int y)
+        {
+            dest=x;
+            dist=y;
+        }
+    }
+    public int minThrow(int N,int arr[])
+    {
+        int moves[]=new int[35];
+        boolean vis[]=new boolean[35];
+        for(int i=0;i<35;i++){moves[i]=-1;vis[i]=false;}
+        for(int i=0;i<2*N;i+=2){moves[arr[i]]=arr[i+1];}
+        Queue<Pair> q=new LinkedList<>();
+        Pair p=new Pair(0,0);
+        q.add(new Pair(1,0));
+        vis[1]=true;
+        while(!q.isEmpty())
+        {
+            p=q.peek();
+            int src=p.dest;
+            int step= p.dist;
+            if(src==30){break;}
+            q.poll();
+            for(int i=src+1;i<=src+6&&i<=30;i++)
+            {
+                Pair temp=new Pair(0,0);
+                if(vis[i]==false)
+                {
+                    temp.dist=step+1;
+                    vis[i]=true;
+                    if(moves[i]!=-1){temp.dest=moves[i];}
+                    else{temp.dest=i;}
+                    q.add(temp);
+                }
+            }
+        }
+        return p.dist;
+    }
+}
+//*************Knight Steps*************************** */
+class Solution{
+    class Pair{
+        int x,y,s;
+        Pair(int X,int Y,int S){x=X;y=Y;s=S;}
+    }
+    class Solution
+    {
+        //Function to find out minimum steps Knight needs to reach target position.
+        public int minStepToReachTarget(int KnightPos[], int TargetPos[], int N)
+        {
+            // Code here
+            int sx=KnightPos[0],sy=KnightPos[1];
+            int Dx=TargetPos[0],Dy=TargetPos[1];
+            if(sx==Dx&&sy==Dy)return 0;
+            int dx[]=new int[]{-2,-1,1,2,2,1,-1,-2};
+            int dy[]=new int[]{-1,-2,-2,-1,1,2,2,1};
+            boolean visited[][]=new boolean[N+1][N+1];
+            for(boolean rows[]: visited){Arrays.fill(rows,false);}
+            Queue<Pair> q=new LinkedList<>();
+            q.add(new Pair(sx,sy,0));
+            visited[sx][sy]=true;
+            while(!q.isEmpty()){
+                Pair it=q.remove();
+                int xc=it.x;
+                int yc=it.y;
+                int steps=it.s;
+                for(int i=0;i<8;i++){
+                    int nr=xc+dx[i];
+                    int nc=yc+dy[i];
+                    if(nr>0&&nr<=N&&nc>0&&nc<=N&&visited[nr][nc]==false){
+                        if(nr==Dx&&nc==Dy){return steps+1;}
+                        visited[nr][nc]=true;
+                        q.add(new Pair(nr,nc,steps+1));
+                    }
+                }
+            }
+            return -1;
+        }
+    }
+}
+//*********Walls and Gates************ */
+class Solution  {
+    class Tuple{
+        int row;
+        int col;
+        int steps;
+        Tuple(int _row,int _col,int _steps){
+            this.row=_row;
+            this.col=_col;
+            this.steps=_steps;
+        }
+    }
+    public int[][] nearest(int[][] grid)
+    {
+        // Code here
+        int n=grid.length;
+        int m=grid[0].length;
+        Queue<Tuple> q=new LinkedList<>();
+        boolean visited[][]=new boolean[n][m];
+        int distance[][]=new int[n][m];
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j]==0){
+                    q.add(new Tuple(i,j,0));
+                    visited[i][j]=true;
+                }
+                else{
+                    visited[i][j]=false;
+                }
+            }
+        }
+        int dx[]={-1,0,1,0};
+        int dy[]={0,1,0,-1};
+        while(!q.isEmpty()){
+            int r=q.peek().row;
+            int c=q.peek().col;
+            int st=q.peek().steps;
+            q.remove();
+            distance[r][c]=st;
+            for(int i=0;i<4;i++){
+                int nr=r+dx[i];
+                int nc=c+dy[i];
+                if(nr>=0&&nr<n&&nc>=0&&nc<m&&visited[nr][nc]==false&&grid[nr][nc]==INF){
+                    visited[nr][nc]=true;
+                    q.add(new Tuple(nr,nc,st+1));
+                }
+            }
+        }
+        return distance;
+    }
+}
+//***********Surrounded Regions****************** */
+//***********Pacific Atlantic Water********* */
+class Solution {
+    class Tuple{
+        int row;
+        int col;
+        int ho;
+        Tuple(int _row,int _col,int _ho){
+            this.row=_row;
+            this.col=_col;
+            this.ho=_ho;
+        }
+    }
+    public List<List<Integer>> pacificAtlantic(int[][] heights) {
+        int n=heights.length;
+        int m=heights[0].length;
+        Queue<Tuple> q1=new LinkedList<>();
+        Queue<Tuple> q2=new LinkedList<>();
+        boolean visited1[][]=new boolean[n][m];
+        boolean visited2[][]=new boolean[n][m];
+        for(int i=0;i<m;i++){
+            q1.add(new Tuple(0,i,heights[0][i]));
+            q2.add(new Tuple(n-1,i,heights[n-1][i]));
+            visited1[0][i]=true;
+            visited2[n-1][i]=true;
+        }
+        for(int i=0;i<n;i++){
+            q1.add(new Tuple(i,0,heights[i][0]));
+            q2.add(new Tuple(i,m-1,heights[i][m-1]));
+            visited1[i][0]=true;
+            visited2[i][m-1]=true;
+        }
+        int dx[]={-1,0,1,0};
+        int dy[]={0,1,0,-1};
+        while(!q1.isEmpty()){
+            int r=q1.peek().row;
+            int c=q1.peek().col;
+            int hxy=q1.peek().ho;
+            q1.remove();
+            for(int i=0;i<4;i++){
+                int nr=r+dx[i];
+                int nc=c+dy[i];
+                if(nr>=0&&nr<n&&nc>=0&&nc<m&&visited1[nr][nc]==false&&heights[nr][nc]>=hxy){
+                    visited1[nr][nc]=true;
+                    q1.add(new Tuple(nr,nc,heights[nr][nc]));
+                }
+            }
+        }
+        while(!q2.isEmpty()){
+            int r=q2.peek().row;
+            int c=q2.peek().col;
+            int hxy=q2.peek().ho;
+            q2.remove();
+            
+            for(int i=0;i<4;i++){
+                int nr=r+dx[i];
+                int nc=c+dy[i];
+                if(nr>=0&&nr<n&&nc>=0&&nc<m&&visited2[nr][nc]==false&&heights[nr][nc]>=hxy){
+                    visited2[nr][nc]=true;
+                    q2.add(new Tuple(nr,nc,heights[nr][nc]));
+                }
+            }
+        }
+        List<List<Integer>> ans=new ArrayList<>();
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(visited1[i][j]&&visited2[i][j]){
+                    List<Integer> ls=new ArrayList<>();
+                    ls.add(i);
+                    ls.add(j);
+                    ans.add(ls);
+                }
+            }
+        }
+        return ans;
+        
+    }
+}
