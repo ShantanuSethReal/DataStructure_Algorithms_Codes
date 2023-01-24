@@ -26,7 +26,15 @@ public class Striver_Graph_Playlist {
     }
         //**************G6-Depth First Search*****************************************O(2E+V)***| O(3N)********* */
     class Solution{    
-        s
+        public void dfs(int src,boolean []vis,ArrayList<ArrayList<Integer>> adj,ArrayList<Integer> dfs){
+            vis[src]=true;
+            dfs.add(src);
+            for(Integer it: adj.get(src)){
+                if(visited[it]==false){
+                    dfs(it,vis,adj,dfs);
+                }
+            }
+        }
         public ArrayList<Integer> dfsOfGraph(int V,ArrayList<ArrayList<Integer>> adj){
             ArrayList<Integer> dfs=new ArrayList<>();
             boolean vis[]=new boolean[V];
@@ -2142,4 +2150,132 @@ class Solution {
         return ans;
         
     }
+}
+//********************Jump Game IV**************************************************** */
+class Solution {
+    public int minJumps(int[] arr) {
+      Map<Integer,ArrayList<Integer>> mp=new HashMap<>();
+      int n=arr.length;
+      boolean vis[]=new boolean[n];
+      Queue<Integer> q=new LinkedList<>();
+      for(int i=0;i<n;i++){
+          if(mp.containsKey(arr[i])==false){
+              ArrayList<Integer> newlist=new ArrayList<>();
+              newlist.add(i);
+              mp.put(arr[i],newlist);
+          }
+          else{
+              ArrayList<Integer> oldlist=mp.get(arr[i]);
+              oldlist.add(i);
+              mp.put(arr[i],oldlist);
+          }
+      }
+      q.add(0);
+      vis[0]=true;
+      int st=0;
+      while(!q.isEmpty()){
+          int s=q.size();
+          for(int i=0;i<s;i++){
+              Integer ind=q.remove();
+              if(ind==n-1){return st;}
+              int ele=arr[ind];               
+              if(ind+1<n&&vis[ind+1]==false){q.add(ind+1);vis[ind+1]=true;}
+              if(ind-1>=0&&vis[ind-1]==false){q.add(ind-1);vis[ind-1]=true;}
+              if(mp.containsKey(arr[ind])==true){
+                  for(Integer k: mp.get(arr[ind])){
+                      q.add(k);
+                      vis[k]=true;
+                  }
+              }
+              mp.remove(arr[ind]);
+          }
+          st++;
+        }
+        return n-1;  
+    }
+}
+//*****************Jump Game I*********************************************** */
+class Solution {
+    public boolean canJump(int[] arr) {
+      int n=arr.length;
+      boolean vis[]=new boolean[n];
+      Queue<Integer> q=new LinkedList<>();
+      q.add(0);
+      vis[0]=true;
+      while(!q.isEmpty()){
+        Integer ind=q.remove();
+        if(ind==n-1){return true;}
+        int steps=arr[ind];
+        for(int ir=0;ir<=steps;ir++){
+            if(ind+ir>=n-1){return true;}
+            int nl=ind+ir;
+                if(vis[nl]==false){
+                    vis[nl]=true;
+                    q.add(nl);
+                }
+        }
+      }
+      return false;  
+    }
+}
+//****************Jump Game II******************************************************** */
+class Solution {
+    public int jump(int[] arr) {
+      if(arr.length==1){return 0;}
+      int n=arr.length;
+      boolean vis[]=new boolean[n];
+      Queue<Integer> q=new LinkedList<>();
+      q.add(0);
+      vis[0]=true;
+      int st=1;
+      while(!q.isEmpty()){
+       int s=q.size();
+       for(int j=0;j<s;j++)
+       {
+        Integer ind=q.remove();
+        if(ind==n-1){return st;}
+        int steps=arr[ind];
+        for(int ir=0;ir<=steps;ir++){
+            if(ind+ir>=n-1){return st;}
+            int nl=ind+ir;
+                if(vis[nl]==false){
+                    vis[nl]=true;
+                    q.add(nl);
+                }
+            }
+        }
+        st++;
+      }
+      return -1;
+    }
+}
+//****************Jump Game III********************************************************* */
+class Solution {
+    public boolean canReach(int[] arr, int start) {
+      int n=arr.length;
+      boolean vis[]=new boolean[n];
+      Queue<Integer> q=new LinkedList<>();
+      q.add(start);
+      vis[start]=true;
+      while(!q.isEmpty()){
+        Integer ind=q.remove();
+        if(arr[ind]==0){return true;}
+        int steps=arr[ind];
+        int nl1=ind+steps;
+        int nl2=ind-steps;
+            if(nl1>=0&&nl1<n){
+                if(vis[nl1]==false){
+                vis[nl1]=true;
+                q.add(nl1);
+                }
+            }
+            if(nl2>=0&&nl2<n){
+                if(vis[nl2]==false){
+                vis[nl2]=true;
+                q.add(nl2);
+                }
+            }
+        }
+        return false;
+    }  
 }

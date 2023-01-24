@@ -29,7 +29,7 @@ class Solution{
             if(ind>1)
                 jumpTwo=solve(ind-2, height,dp)+Math.abs(height[ind]-height[ind-2]);
             
-            return dp[ind]=Math.min(jumpOne,jumpTwo);
+            return dp[ind]=Math.min(jumpOne,jumpTwo);   
         }
         class TUF{
             public static void main(String args[]) {
