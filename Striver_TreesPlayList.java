@@ -488,7 +488,7 @@ public class Striver_TreesPlayList {
             TreeNode left=lowestCommonAncestor(root.left,p,q);
             TreeNode right=lowestCommonAncestor(root.right,p,q);
             if(left==null){
-                return right;
+                                                                                                                                                                                                                                                                       return right;
             }
             else if(right==null){
                 return left;
@@ -522,7 +522,7 @@ public class Striver_TreesPlayList {
                     TreeNode node=q.peek().node;
                     q.poll();
                     if(i==0) first=cur_id;
-                    if(i==size-1) last=cur_id;
+                    if(i==size-1) last=cur_id;              
                     if(node.left!=null)
                         q.offer(new Pair(node.left,cur_id*2+1));
                     if(node.right != null) 
@@ -666,9 +666,9 @@ public class Striver_TreesPlayList {
     }
     public static int timeToBurnTree(BinaryTreeNode<Integer> root, int start)
     {
-        HashMap<BinaryTreeNode<Integer>, BinaryTreeNode<Integer>> mpp = new HashMap<>();
-        BinaryTreeNode<Integer> target = bfsToMapParents(root, mpp, start);
-        int maxi = findMaxDistance(mpp, target);
+        HashMap<BinaryTreeNode<Integer>, BinaryTreeNode<Integer>> mpp=new HashMap<>();
+        BinaryTreeNode<Integer> target=bfsToMapParents(root, mpp, start);
+        int maxi=findMaxDistance(mpp, target);
         return maxi;
     }
 }

@@ -1509,3 +1509,83 @@ public class Accio_Module_4 {
                 }
             }
     }
+
+    //***************************AccioJob Module 4******************************************** */
+    //Revision
+
+    //BIT MANIPULATION
+    //Set Kth bit,Clear Kth bit,Toggle Kth bit
+    //Game of XOR
+    //Flip bits-Using Mask|Iterating over all bits
+    //Reverse bits
+    //Generate Subsets
+    //Single Number I
+    //Single Number II
+    //Single Number III
+    //Check whether Kth bit is set or not
+    //Count Set Bits
+    //Check power of 2
+
+    //GRAPHS
+    //Construct Graph
+    //DFS Traversal
+    //Path between 2 vertices
+    //Count components
+    //BFS Traversal
+    //Print Paths'-String/List
+    //BFS Implementation
+    //Shortest path in undirected graph with unit distance
+    //Detect a cycle in Undirected graph DFS
+    //Detect a cycle in Undirected graph BFS'
+    //Detect cycle in directed graph DFS
+    //Bipartite DFS
+    //Bipartite BFS
+    //Flood Fill
+    //Number of Islands
+    //Max Area of Islands
+    //Nearest 0 from every cell
+    //Rotten Oranges    
+    //Jump Game I,II,III,IV
+    //Kth smallest/largest
+    //Minimum cost to connect ropes
+    //Implementing Djikstra
+    //Topo Sort DFS
+    //Topo Sort Kahn
+    //Number of Distinct islands
+
+
+    //SIDING WINDOW
+    //SubArray Product Less than K
+    //Maximum Consecutive Ones
+    //Longest Substring with Unique Characters-Frequency Array+HashMap
+    //Longest Subbstring with at least K repeating characters
+    //Minimum Window Substring
+    //Substring with concatenation of all words
+    //Sliding Window Maximum
+    //
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

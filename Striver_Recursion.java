@@ -404,16 +404,14 @@ class Solution {
                 ans.add(move);
                 return;
             }
-          
             String base="DLRU";
             for(int p=0;p<4;p++){
                 int nexti=i+dx[p];
                 int nextj=j+dy[p];
                 if(nexti>=0&&nexti<n&&nextj>=0&&nextj<n&&vis[nexti][nextj]==0&&m[nexti][nextj]==1){
                     vis[i][j]=1;
-                solve(nexti,nextj,m,vis,ans,move+base.charAt(p),n,dx,dy);
+                    solve(nexti,nextj,m,vis,ans,move+base.charAt(p),n,dx,dy);
                     vis[i][j]=0;
-                    
                 }
             }
              
@@ -460,3 +458,5 @@ class Solution {
     }
 }
 }
+//Revision
+//
