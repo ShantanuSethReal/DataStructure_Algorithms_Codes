@@ -1509,6 +1509,7 @@ public class Accio_Module_4 {
                 }
             }
     }
+    
 
     //***************************AccioJob Module 4******************************************** */
     //Revision
@@ -1568,7 +1569,114 @@ public class Accio_Module_4 {
 
 
 
+    //Range Addition Query
+    class Solution{
+        public int[] getModifiedArray(int length, int[][] updates) {
+            int arr[]=new int[length];
+            for(int i=0;i<length;i++){
+                int l=updates[i][0];
+                int r=updates[i][1];
+                int val=updates[i][2];
+                arr[l]+=val;
+                if(r+1<length){arr[r]-=val;}
+            }
+            for(int i=1;i<length;i++){
+                arr[i]+=arr[i-1];
+            }
+            return arr;
+        }
+    }
+    //2D prefix sum
+    class Solution{
 
+    }
+    //Max rectangle
+    class Solution{
+        class Solution {
+            int Kadane(int arr[],int n){
+                int csum=0,msum=Integer.MIN_VALUE;
+                for(int i=0;i<n;i++){
+                    csum+=arr[i];
+                    msum=Math.max(csum,msum);
+                    if(csum<0){csum=0;}
+                }
+                return msum;
+            }
+            int maximumSumRectangle(int R, int C, int M[][]) {
+                // code here
+                int ans=Integer.MIN_VALUE;
+                for(int slab=0;slab<R;slab++){
+                    int ColPrefix[]=new int[C];
+                    for(int moving=slab;moving<R;moving++){
+                        for(int col=0;col<C;col++){
+                            ColPrefix[col]+=M[moving][col];
+                        }
+                        ans=Math.max(ans,Kadane(ColPrefix,C));
+                    }
+                }
+                return ans;
+            }
+        };
+    } 
+    //Number of matrices with sum
+    class Solution{
+        class Solution {
+            public int SubArraySumEqualsTarget(int arr[],int n,int k){
+                int csum=0,cnt=0;
+                Map<Integer,Integer> hm=new HashMap<>();
+                hm.put(0,1);
+                for(int i=0;i<n;i++){
+                    csum+=arr[i];
+                    if(hm.containsKey(csum-k)){cnt+=hm.get(csum-k);}
+                    hm.put(csum,hm.getOrDefault(csum,0)+1);
+                }
+                return cnt;
+            }
+            public int numSubmatrixSumTarget(int[][] matrix, int target) {
+                int ans=0;
+                int R=matrix.length,C=matrix[0].length;
+                for(int slab=0;slab<R;slab++){
+                    int ColPrefix[]=new int[C];
+                    for(int moving=slab;moving<R;moving++){
+                        for(int col=0;col<C;col++){
+                            ColPrefix[col]+=matrix[moving][col];
+                        }
+                        ans+=SubArraySumEqualsTarget(ColPrefix,C,target);
+                    }
+                }
+                return ans;
+            }
+        }
+    }
+    //Replacement
+    class Solution{
+            public int characterReplacement(String s, int k)
+            {
+                // code here
+                int ans=Integer.MIN_VALUE;
+                for(char ch='A';ch<='Z';ch++){
+                    ans=Math.max(ans,solve(s,k,ch));
+                }
+                return ans;
+            }
+            public int solve(String s,int k,char ch){
+                int start=0,end=0,changes=0,ans=0,n=s.length();
+                while(end<n){
+                    if(s.charAt(end)!=ch){changes++;}
+                    end++;
+                    while(start<end&&changes>k){
+                        if(s.charAt(start)!=ch){changes--;}
+                        start++;
+                    }
+                    ans=Math.max(ans,end-start);
+                }
+                return ans;
+            }
+    }
+    //Rearrangement
+    class Solution{
+        
+    }
 
 
 

@@ -38,7 +38,150 @@ public class LoveBabbarDSASheet {
         // Median of 2 sorted arrays of different size	
     }
     class Matrix(10){}
-    class Strings(43){}
+    class Strings(43){
+        //Reverse a String
+        //Check whether a String is Palindrome or not
+        //Find Duplicate characters in a string	Link	NA
+        ////Why strings are immutable in Java?	
+        //Write a Code to check whether one string is a rotation of another
+        class Solution{
+            public static boolean areRotations(String s1, String s2 )
+            {
+                int l1=s1.length();
+                int l2=s2.length();
+                String base=s1+s1;
+                if(l1!=l2){return false;}
+                if(base.contains(s2)==true){return true;}
+                else return false;
+            }
+        }
+        ////Write a Program to check whether a string is a valid shuffle of two strings or not
+        class Solution{
+            static boolean f(String s1,String s2,String s){
+                int i=0,j=0,k=0;
+                int l1=s1.length(),l2=s2.length();l3=s3.length();
+                if(l1+l2!=l3){return false;}
+                while(k<l3){
+                    if(i<l1&&s1.charAt(i)==s.charAt(k)){i++;k++;}
+                    else if(j<l2&&s2.charAt(j)==s.charAt(k)){j++;k++;}
+                    else{return false;}
+                }
+                return true;
+            }
+        }
+        //Count and Say problem
+        class Solution{
+            static String lookandsay(int n) {
+                //your code here
+                if(n==1){return "1";}
+                if(n==2){return "11";}
+                String s="11";
+                for(int i=3;i<=n;i++){
+                    String t="";
+                    s+="&";
+                    int c=1;
+                    for(int j=1;j<s.length();j++){
+                        if(s.charAt(j)!=s.charAt(j-1)){
+                            t=t+Integer.toString(c);
+                            t=t+s.charAt(j-1);
+                            c=1;
+                        }
+                        else{c++;}
+                    }
+                    s=t;
+                }
+                return s;
+            }
+        }
+        //Write a program to find the longest Palindrome in a string.[ Longest palindromic Substring]
+        class Solution{
+            static String longestPalin(String S){
+                // code here
+                int l1=S.length();
+                int l,h,start=0,end=1;
+                for(int i=1;i<l1;i++){
+                    //Even Palindrome
+                    l=i-1;
+                    h=i;
+                    while(l>=0&&h<l1&&S.charAt(l)==S.charAt(h)){
+                        if(h-l+1>end){
+                            start=l;
+                            end=h-l+1;
+                        }
+                        l--;
+                        h++;
+                    }
+                    //Odd Substring
+                    l=i-1;
+                    h=i+1;
+                   
+                    while(l>=0&&h<l1&&S.charAt(l)==S.charAt(h)){
+                        if(h-l+1>end){
+                            start=l;
+                            end=h-l+1;
+                        }
+                        l--;
+                        h++;
+                    }
+                }
+                return S.substring(start,start+end);
+            }
+        }
+        //Find Longest Recurring Subsequence in String
+
+        ////Print all Subsequences of a string.	
+        class Solution{
+            public void f(int i,int n,String s,String temp){
+                if(i==n){
+                    System.out.println(temp);
+                    return ;
+                }
+                f(i+1,n,s,temp);
+                f(i+1,n,s,temp+s.charAt(i));
+                return ;
+            }
+        }
+        //Print all the permutations of the given string
+        class Solution{
+           
+        }
+        ////Split the Binary string into two substring with equal 0’s and 1’s	
+        //Word Wrap Problem [VERY IMP].
+        //EDIT Distance [Very Imp]
+        //Find next greater number with same set of digits. [Very Very IMP]
+        //Balanced Parenthesis problem.[Imp]
+        //Word break Problem[ Very Imp]
+        //Rabin Karp Algorithm
+        //KMP Algorithm
+        //Convert a Sentence into its equivalent mobile numeric keypad sequence.
+        //Minimum number of bracket reversals needed to make an expression balanced.
+        //Count All Palindromic Subsequence in a given String.
+        //Count of number of given string in 2D character array
+        //Search a Word in a 2D Grid of characters.
+        //Boyer Moore Algorithm for Pattern Searching.
+        //Converting Roman Numerals to Decimal
+        //Longest Common Prefix
+        //Number of flips to make binary string alternate
+        //Find the first repeated word in string.
+        //Minimum number of swaps for bracket balancing.
+        //Find the longest common subsequence between two strings.
+        //Program to generate all possible valid IP addresses from given  string.
+        //Write a program to find the smallest window that contains all characters of string itself.
+        //Rearrange characters in a string such that no two adjacent are same
+        //Minimum characters to be added at front to make string palindrome
+        //Given a sequence of words, print all anagrams together
+        //Find the smallest window in a string containing all characters of another string
+        //Recursively remove all adjacent duplicates
+        //String matching where one string contains wildcard characters
+        //Function to find Number of customers who could not get a computer	
+        //Transform One String to Another using Minimum Number of Given Operation
+        //Check if two given strings are isomorphic to each other
+        //Recursively print all sentences that can be formed from list of word lists	
+        //Function to check if two strings are rotations of each other or not.
+            
+    
+    
+    }
     class Searching and Sorting(36){}
     class Linked List(36){}
     class Bit Manipulation(10){

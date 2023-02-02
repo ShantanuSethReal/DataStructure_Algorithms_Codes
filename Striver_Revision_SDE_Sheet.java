@@ -280,6 +280,7 @@ public class Striver_Revision_SDE_Sheet {
     }
     class Day_8_{
         //N meetings in one room	
+        
 	    //Minimum number of platforms required for a railway	
 	    //Job sequencing Problem	
 	    //Fractional Knapsack Problem	
@@ -537,6 +538,7 @@ public class Striver_Revision_SDE_Sheet {
             }
         }
         // Median of 2 sorted arrays	
+
         // K-th element of two sorted arrays	
         // Allocate Minimum Number of Pages
         public class Solution {
@@ -619,8 +621,73 @@ public class Striver_Revision_SDE_Sheet {
     }
     class Day_12_{
         //Max heap, Min Heap Implementation (Only for interviews)	
-        //Kth Largest Element	
+        class Solution{
+        Min Heap Implementation
+        PriorityQueue<Integer> pQueue=new PriorityQueue<Integer>();
+        Max Heap Implementation
+        PriorityQueue<Integer> pQueue=new PriorityQueue<Integer>(Collections.reverseOrder());
+        }
+        //Kth Largest Element
+        class Solution{
+            public static int kthLargest(int[] arr,int l,int r,int k){ 
+                //Your code here
+                PriorityQueue<Integer> pq=new PriorityQueue<>();
+                for(int i=l;i<=r;i++){
+                    pq.add(arr[i]);
+                    if(pq.size()>k){
+                        pq.remove();
+                    }
+                }
+                return pq.peek();
+        }    
+        }	
         //Maximum Sum Combination	
+        public class Solution {
+            public class Pair{
+                int l;
+                int m;
+                Pair(int _l,int _m){
+                    this.l=_l;
+                    this.m=_m;
+                }
+            }
+            public class PairSum{
+                int sum;
+                int l;
+                int m;
+                PairSum(int _sum,int _l,int _m){
+                    this.sum=_sum;
+                    this.l=_l;
+                    this.m=_m;
+                }
+            }
+            public ArrayList<Integer> solve(ArrayList<Integer> A, ArrayList<Integer> B, int C) {
+            PriorityQueue<PairSum> pq=new PriorityQueue<>((p,q)-> q.sum-p.sum);
+            HashSet<Pair> hs=new HashSet<>();
+            int n=A.size();
+            Collections.sort(A);
+            Collections.sort(B);
+            int l=n-1,m=n-1;
+            pq.add(new PairSum(A.get(l)+B.get(m),l,m));
+            hs.add(new Pair(l,m));
+            ArrayList<Integer> ans=new ArrayList<>();
+            for(int i=0;i<C;i++){
+                PairSum curr=pq.remove();
+                ans.add(curr.sum);
+                int L=curr.l;
+                int M=curr.m;
+                if(l>=0&&m>=0&&!hs.contains(new Pair(L-1,M))){
+                    pq.add(new PairSum(A.get(L-1)+B.get(M),L-1,M));
+                    hs.add(new Pair(L-1,M));
+                }
+                if(l>=0&&m>=0&&!hs.contains(new Pair(L,M-1))){
+                    pq.add(new PairSum(A.get(L)+B.get(M-1),L,M-1));
+                    hs.add(new Pair(L,M-1));
+                }
+            }
+            return ans;
+            }
+        }    
         //Find Median from Data Stream	
         //Merge K sorted arrays	
         //K most frequent elements	
@@ -647,7 +714,8 @@ public class Striver_Revision_SDE_Sheet {
 	    //The Celebrity Problem	
     }
     class Day_15_{
-        //Reverse Words in a String	
+        //Reverse Words in a String
+
 	    //Longest Palindrome in a string	
 	    //Roman Number to Integer and vice versa	
 	    //Implement ATOI/STRSTR	
@@ -2693,5 +2761,62 @@ public class Striver_Revision_SDE_Sheet {
                 return dp[0]-1;
         }}	
 	    //Maximum profit in Job scheduling	
-    }
+        class Solution{
+            class jobComparator implements Comparator<Job> {
+                public int compare(Job j1, Job j2){
+                    if(j1.profit>j2.profit)return -1;
+                    if(j1.profit<j2.profit)return 1;
+                    return 0;
+                }
+            }
+            /*
+            class Job {
+                int id, profit, deadline;
+                Job(int x, int y, int z){
+                    this.id = x;
+                    this.deadline = y;
+                    this.profit = z; 
+                }
+            }
+                    }
+                }
+            }*/
+            class Solution
+            {
+                //Function to find the maximum profit and the number of jobs done.
+                int[] JobScheduling(Job arr[], int n)
+                {
+                    Arrays.sort(arr,new jobComparator());
+                    int res=0,count=0;
+                    int[] result=new int[n];
+                    boolean[] slot=new boolean[n];
+                    Arrays.fill(slot,false);
+                    for(int i=0;i<n;i++)
+                    { 
+                        for(int j=Integer.min(n, arr[i].deadline)-1;j>=0;j--) 
+                        { 
+                            if(slot[j]==false)
+                            { 
+                                result[j]=i; 
+                                slot[j]=true;
+                                break; 
+                            } 
+                        } 
+                    } 
+                    for(int i=0;i<n;i++)
+                    {
+                        if(slot[i]==true){
+                            count++;
+                            res+=arr[result[i]].profit;
+                        }
+                    }
+                    int[] ans=new int[2];
+                    ans[0]=count;
+                    ans[1]=res;
+                    return ans;
+                }
+            }
+        }
 }
+
+
