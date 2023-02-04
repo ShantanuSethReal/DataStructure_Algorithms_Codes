@@ -256,19 +256,201 @@ public class Striver_Revision_SDE_Sheet {
     }
     class Day_5_{
         //Reverse a LinkedList	
+        class Solution{
+            public ListNode reverseList(ListNode head) {
+                ListNode curr=head;
+                ListNode prev=null;
+                while(curr!=null){
+                    ListNode temp=curr.next;
+                    curr.next=prev;
+                    prev=curr;
+                    curr=temp;
+                }
+                return prev;   
+            }
+        }
 	    //Find the middle of LinkedList	
+        class Solution {
+            public ListNode middleNode(ListNode head) {
+               ListNode slow=head;
+               ListNode fast=head;
+               while(fast!=null&&fast.next!=null){
+                   slow=slow.next;
+                   fast=fast.next.next;
+               }
+                return slow;   
+            }
+        }
 	    //Merge two sorted Linked List (use method used in mergeSort)	
 	    //Remove N-th node from back of LinkedList	
 	    //Add two numbers as LinkedList	
-	    //Delete a given Node when a node is given.(0(1) solution)	
+        class Solution {
+            public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+                ListNode dummy=new ListNode();
+                ListNode temp=dummy;
+                int sum=0,carry=0;
+                while(l1!=null|| l2!=null || carry==1){
+                    if(l1!=null){
+                        sum+=l1.val;
+                        l1=l1.next;
+                    }
+                    if(l2!=null){
+                        sum+=l2.val;
+                        l2=l2.next;
+                    }
+                    sum+=carry;
+                    carry=sum/10;
+                    ListNode h=new ListNode(sum%10);
+                    temp.next=h;
+                    temp=h;
+                    sum=0;
+                }
+                return dummy.next;
+            }
+        }
+	    //Delete a given Node when a node is given.(0(1) solution)
+        class Solution {
+            public void deleteNode(ListNode node) {
+                if(node==null)return;
+                if(node.next!=null) {
+                    int nextValue=node.next.val;
+                    node.next=node.next.next;
+                    node.val=nextValue;
+                }
+            }
+        }	
     }
     class Day_6_{
         //Find intersection point of Y LinkedList	
 	    //Detect a cycle in Linked List	
+        class Solution{
+            static boolean cycleDetect(Node head) {
+                if(head==null) return false;
+                Node fast=head;
+                Node slow=head;
+                while(fast.next!=null&&fast.next.next!=null){
+                    fast=fast.next.next;
+                    slow=slow.next;
+                    if(fast==slow) return true;
+                }
+            return false;
+        }}
 	    //Reverse a LinkedList in groups of size k.	
-	    //Check if a LinkedList is palindrome or not.	
+        class Solution {
+            public ListNode reverseKGroup(ListNode head,int k){
+                if(head==null)return null;
+                ListNode curr=head;
+                ListNode nexN=null;
+                ListNode prev=null;
+                int count=0;
+                while(count<k&&curr!=null){
+                    nexN=curr.next;
+                    curr.next=prev;
+                    prev=curr;
+                    curr=nexN;
+                    count++;
+                }
+                if(nexN!=null)head.next=reverseKGroup(nexN,k);
+                return prev;
+            }
+        }
+	    //Check if a LinkedList is palindrome or not.
+        class Solution {
+            public boolean isPalindrome(ListNode head) {
+                ListNode slow=head,slowprev=head,fast=head;
+                while(fast!=null&&fast.next!=null){
+                    slowprev=slow;
+                    slow=slow.next;
+                    fast=fast.next.next;
+                }   
+                ListNode revHead=reverse(slowprev);
+                ListNode startForward=head,tailBackward=revHead;
+                while(startForward!=null){
+                    if(startForward.val!=tailBackward.val){return false;}
+                    else{startForward=startForward.next;tailBackward=tailBackward.next;}
+                    }
+                    return true;
+            }
+            public ListNode reverse(ListNode head){
+                ListNode prev=null;
+                ListNode nextN=head;
+                ListNode curr=head;
+                while(curr!=null){
+                    nextN=curr.next;
+                    curr.next=prev;
+                    prev=curr;
+                    curr=nextN;
+                }
+                return prev;
+            }
+        }		
 	    //Find the starting point of the Loop of LinkedList	
-	    //Flattening of a LinkedList	
+	    class Solution {
+            public ListNode detectCycle(ListNode head) {
+              ListNode slow=head;
+              ListNode fast=head;
+              int flag=0;
+              while(fast!=null&&fast.next!=null){
+                  slow=slow.next;
+                  fast=fast.next.next;
+                  if(slow==fast){
+                      flag=1;   
+                      break;
+                  }
+              }  
+              if(flag==0){
+                  return null;
+              }
+              ListNode first=head;
+              ListNode second=slow;
+              while(first!=second){
+                  first=first.next;
+                  second=second.next;
+              }
+              return first;
+            }
+        }	
+        //Flattening of a LinkedList	
+        class Solution{
+            class Node{
+            int data;
+            Node next;
+            Node bottom;
+                Node(int d){
+                    data=d;
+                    next=null;
+                    bottom=null;
+                }
+            }
+        Node flatten(Node root){
+                if(root==null||root.next==null)return root; 
+                root.next=flatten(root.next); 
+                root=mergeTwoLists(root,root.next);  
+                return root; 
+        }
+         Node mergeTwoLists(Node a,Node b){
+            
+            Node temp=new Node(0);
+            Node res=temp; 
+            
+            while(a!=null&&b!=null){
+                if(a.data<b.data){
+                    temp.bottom=a; 
+                    temp=temp.bottom; 
+                    a=a.bottom; 
+                }
+                else{
+                    temp.bottom=b;
+                    temp=temp.bottom; 
+                    b=b.bottom; 
+                }
+            }
+            
+            if(a!=null)temp.bottom = a; 
+            else temp.bottom=b;
+            return res.bottom; 
+        }
+    }
     }
     class Day_7_{
             //Rotate a LinkedList	
@@ -280,19 +462,137 @@ public class Striver_Revision_SDE_Sheet {
     }
     class Day_8_{
         //N meetings in one room	
-        
+        class Solution {
+            class meeting{
+                int start,end,pos;
+                meeting(int s,int e,int p){
+                    this.start=s;
+                    this.end=e;
+                    this.pos=p;
+                }
+            }
+            class meetingComparator implements Comparator<meeting>
+            {
+                @Override
+                public int compare(meeting o1,meeting o2) 
+                {
+                    if(o1.end<o2.end)return -1;
+                    else if(o1.end>o2.end)return 1;
+                    else if(o1.pos<o2.pos)return -1;
+                    else return 1; 
+                }
+            }
+            public static int maxMeetings(int start[], int end[], int n)
+            {
+                ArrayList<meeting> meet=new ArrayList<>();
+                for(int i=0;i<n;i++){meet.add(new meeting(start[i],end[i],i+1));}
+                meetingComparator mc=new meetingComparator();
+                Collections.sort(meet,mc);
+                ArrayList<Integer> ans=new ArrayList<>();
+                ans.add(meet.get(0).pos);
+                int limit=meet.get(0).end;
+                for(int i=1;i<n;i++){
+                    if(meet.get(i).start>limit){
+                        limit=meet.get(i).end;
+                        ans.add(meet.get(i).pos);
+                    }
+                }
+                return ans.size();
+            }
+        } 
 	    //Minimum number of platforms required for a railway	
-	    //Job sequencing Problem	
-	    //Fractional Knapsack Problem	
-	    //Greedy algorithm to find minimum number of coins	
+        class Solution{
+            static int findPlatform(int arr[],int dep[],int n){
+        // add your code here
+                Arrays.sort(arr);
+                Arrays.sort(dep);
+                int plat=1,res=1,i=1,j=0;
+                while(i<n&&j<n){
+                    if(arr[i]<=dep[j]){plat++;i++;}
+                    else if(arr[i]>dep[j]){plat--;j++;}
+                    if(res<plat){res=plat;}
+                }
+                    return res;
+                }
+            }
+        //Job sequencing Problem
+        class Solution{
+            //Function to find the maximum profit and the number of jobs done.
+            int[] JobScheduling(Job arr[], int n)
+            {
+                // Your code here
+                Arrays.sort(arr,(a,b)->(b.profit-a.profit));
+                int maxi=0;
+                for(int i=0;i<n;i++){maxi=Math.max(maxi,arr[i].deadline);}
+                int result[]=new int[maxi+1];
+                for(int j=0;j<maxi+1;j++){result[j]=-1;}
+                int profit=0,countJobs=0;
+                for(int k=0;k<n;k++){
+                    for(int m=arr[k].deadline;m>=1;m--){
+                        if(result[m]==-1){
+                            result[m]=k;
+                            countJobs++;
+                            profit+=arr[k].profit;
+                            break;
+                        }
+                    }
+                }
+                int fin[]={countJobs,profit};
+                return fin;
+            }
+    }	
+	    //Fractional Knapsack Problem 
+        class Solution{
+            class itemComparator implements Comparator<Item>{
+                @Override
+                public int compare(Item a,Item b){
+                    double r1=(double)a.value/(double)a.weight;
+                    double r2=(double)b.value/(double)b.weight;
+                    if(r1<r2){return 1;}
+                    else if(r1>r2){return -1;}
+                    else return 0;
+                }
+            }  
+            double fractionalKnapsack(int W, Item arr[], int n){
+                Arrays.sort(arr,new itemComparator());
+                int currWeight=0;
+                double maxProfit=0.0;
+                for(int i=0;i<n;i++){
+                    if(currWeight+arr[i].weight<=W){
+                        currWeight+=arr[i].weight;
+                        maxProfit+=arr[i].value;
+                    }
+                    else{
+                        int remain=W-currWeight;
+                        maxProfit+=((double)arr[i].value/(double)arr[i].weight)*(double)remain;
+                        break;
+                    }
+                }
+                return maxProfit;
+            }
+        }	
+	    //Greedy algorithm to find minimum number of coins
+        class Solution{
+            public static int findMinimumCoins(int V)
+                {
+                    // Write your code here.
+                ArrayList<Integer> ans=new ArrayList<>();
+                int coins[]={1,2,5,10,20,50,100,500,1000};
+                int n = coins.length;
+                for (int i=n-1;i>=0;i--){
+                    while(V>=coins[i]) {
+                        V-=coins[i];
+                        ans.add(coins[i]);
+                    }
+                }
+                return ans.size();    
+                }
+            }	
 	    //Activity Selection (it is the same as N meeting in one room)	
-    }
-    
-    
-    
+    }  
     class Day_9_Recursion{
-    // Subset Sums	-O(2^N+2^Nlog(2^N)),O(2^N)
-    class Solution{
+        // Subset Sums	-O(2^N+2^Nlog(2^N)),O(2^N)
+        class Solution{
         static void subsetSumsHelper(int ind,int sum,ArrayList<Integer> arr,int N,ArrayList<Integer> sumSubset) {
             if(ind==N){
                 sumSubset.add(sum);
@@ -308,8 +608,8 @@ public class Striver_Revision_SDE_Sheet {
             return sumSubset;
         }
     }
-	// Subset-II	
-    class Solution{
+        // Subset-II	
+        class Solution{
         //Brute force-O(2^N+mlogm(m=2^N)),O(mlogm)
         class Solution{
             static void printAns(List<String>ans){
@@ -361,8 +661,8 @@ public class Striver_Revision_SDE_Sheet {
                 }
             }
         }
-	// Combination sum-1
-    class Solution{
+        // Combination sum-1
+        class Solution{
         //Optimised-O(2^t*K),O()
         class Solution {
             private void findCombinations(int ind,int[] arr,int target,List<List<Integer>> ans,List<Integer>ds) {
@@ -384,8 +684,8 @@ public class Striver_Revision_SDE_Sheet {
             }
         }
     }	
-	// Combination sum-2
-    class Solution{
+        // Combination sum-2
+        class Solution{
         //Brute Using Set(O(2^t*K*log(s)))|O(2^N*k),O(k*x)
         //Optimised
         class Solution{
@@ -404,39 +704,368 @@ public class Striver_Revision_SDE_Sheet {
             }
          }
         }	
-	// Palindrome Partitioning	
-    class Solution{
-        //Optimised
+        // Palindrome Partitioning	
         class Solution{
-            public static List<List<String>> partition(String s){
-                List<List<String>> res=new ArrayList<>();
-                List<String> path=new ArrayList<>();
-                partitionHelper(0,s,path,res);
-                return res;
-            }
-            static void partitionHelper(int index,String s,List<String> path,List<List<String>> res) {
-                if(index==s.length()){
-                    res.add(new ArrayList<>(path));
-                    return;
+            //Optimised
+            class Solution{
+                public static List<List<String>> partition(String s){
+                    List<List<String>> res=new ArrayList<>();
+                    List<String> path=new ArrayList<>();
+                    partitionHelper(0,s,path,res);
+                    return res;
                 }
-                for (int i=index;i<s.length();++i) {
-                    if(isPalindrome(s, index,i)){
-                        path.add(s.substring(index,i+1));
-                        partitionHelper(i+1,s,path,res);
-                        path.remove(path.size()-1);
+                static void partitionHelper(int index,String s,List<String> path,List<List<String>> res) {
+                    if(index==s.length()){
+                        res.add(new ArrayList<>(path));
+                        return;
+                    }
+                    for (int i=index;i<s.length();++i) {
+                        if(isPalindrome(s, index,i)){
+                            path.add(s.substring(index,i+1));
+                            partitionHelper(i+1,s,path,res);
+                            path.remove(path.size()-1);
+                        }
+                    }
+                }
+                static boolean isPalindrome(String s,int start,int end){
+                    while(start<=end){
+                        if(s.charAt(start++)!=s.charAt(end--))
+                            return false;
+                    }
+                    return true;
+                }
+            }
+        }
+        // K-th permutation Sequence	
+    }
+    class Day_10_RecursionBackTracking{
+        //Print all permutations of a string/array	
+        class Solution{
+            //Extra Space Complexity-With HashMap
+            //TC=O(n!*n)SC-O(2n)
+            class Solution {
+                public List<List<Integer>> permute(int[] nums) {
+                    List<List<Integer>> ans=new ArrayList<>();
+                    List<Integer> ds=new ArrayList<>();
+                    int n=nums.length;
+                    boolean freq[]=new boolean[n];
+                    permuterecur(ans,ds,nums,n,freq);
+                    return ans;
+                }
+                public void permuterecur(List<List<Integer>> ans,List<Integer> ds,int []nums,int n,boolean freq[]){
+                    if(ds.size()==n){
+                        List<Integer> put=new ArrayList<>(ds);
+                        ans.add(put);
+                        return;
+                    }
+                    for(int i=0;i<n;i++){
+                        if(freq[i]==false){
+                            freq[i]=true;
+                            ds.add(nums[i]);
+                            permuterecur(ans,ds,nums,n,freq);
+                            ds.remove(ds.size()-1);
+                            freq[i]=false;
+                        }
                     }
                 }
             }
-            static boolean isPalindrome(String s,int start,int end){
-                while(start<=end){
-                    if(s.charAt(start++)!=s.charAt(end--))
+            //Optimised -Swapping
+            //TC=O(n!*n)SC-O(n)
+            class Solution {
+                private void recurPermute(int index,int[] nums,List<List<Integer>> ans){
+                    if(index==nums.length){
+                        // copy the ds to ans
+                        List<Integer> ds=new ArrayList<>();
+                        for(int i=0;i<nums.length;i++){ds.add(nums[i]);}
+                        ans.add(new ArrayList<>(ds));
+                        return;
+                    }
+                    for(int i=index;i<nums.length;i++){
+                        swap(i,index,nums);
+                        recurPermute(index+1,nums,ans);
+                        swap(i,index,nums);
+                    }
+                }
+                private void swap(int i,int j,int[] nums) {
+                    int t=nums[i];
+                    nums[i]=nums[j];
+                    nums[j]=t;
+                }
+                public List<List<Integer>> permute(int[] nums){
+                    List<List<Integer>> ans=new ArrayList<>();
+                    recurPermute(0,nums,ans);
+                    return ans;
+                }
+            };
+        }
+        //N queens Problem
+        class Solution{
+            public static List<List<String>> solveNQueens(int n){
+                char[][] board=new char[n][n];
+                for (int i=0;i<n;i++)
+                    for(int j=0;j<n;j++)
+                        board[i][j]='.';
+                List<List<String>> res=new ArrayList<List<String>>();
+                dfs(0,board,res);
+                return res;
+            }
+            static boolean validate(char[][] board,int row,int col){
+                int duprow=row;
+                int dupcol=col;
+                while(row>=0&&col>=0){
+                    if(board[row][col]=='Q')return false;
+                    row--;
+                    col--;
+                }
+                row=duprow;
+                col=dupcol;
+                while(col>=0){
+                    if(board[row][col]=='Q')return false;
+                    col--;
+                }
+                row=duprow;
+                col=dupcol;
+                while(col>=0&&row<board.length){
+                    if(board[row][col]=='Q')return false;
+                    col--;
+                    row++;
+                }
+                return true;
+            } 
+            static void dfs(int col,char[][] board,List<List<String>> res){
+                if(col==board.length){
+                    res.add(construct(board));
+                    return;
+                }
+        
+                for(int row=0;row<board.length;row++){
+                    if(validate(board,row,col)){
+                        board[row][col]='Q';
+                        dfs(col+1,board,res);
+                        board[row][col]='.';
+                    }
+                }
+            }
+            static List<String> construct(char[][] board){
+                List<String> res=new LinkedList<String>();
+                for(int i=0;i<board.length;i++){
+                    String s=new String(board[i]);
+                    res.add(s);
+                }
+                return res;
+            }
+        }	
+        //Sudoku Solver	
+        class Solution {
+            public void solveSudoku(char[][] board) {
+                solveSudokuUtil(board);
+            }
+            public boolean solveSudokuUtil(char board[][]){
+                for(int i=0;i<9;i++){
+                    for(int j=0;j<9;j++){
+                        if(board[i][j]=='.'){
+                            for(char c='1';c<='9';c++){
+                                if(isValid(board,i,j,c)){
+                                    board[i][j]=c;
+                                    if(solveSudokuUtil(board)==true){
+                                        return true;
+                                    }
+                                    else
+                                    board[i][j]='.';
+                                }
+                            }
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+            public boolean isValid(char board[][],int row,int col,char ch){
+                for(int i=0;i<9;i++){
+                    if(board[row][i]==ch){
                         return false;
+                    }
+                    if(board[i][col]==ch){
+                        return false;
+                    }
+                    if(board[3*(row/3)+(i/3)][3*(col/3)+i%3]==ch){
+                        return false;
+                    }
                 }
                 return true;
             }
         }
-    }
-	// K-th permutation Sequence	
+        //M coloring Problem
+        class Solution{
+            public boolean graphColoring(boolean graph[][], int m, int n) {
+                int color[]=new int[n];
+                for(int i=0;i<n;i++) 
+                {
+                    color[i] = 0;
+                }
+                if(graphColoringUtil(graph,m,color,0,n)==false){
+                    return false;
+                }
+                return true;
+            }
+            boolean graphColoringUtil(boolean graph[][],int m,int color[],int ind,int n){
+                if(ind==n) 
+                {return true;}
+                for(int c=1;c<=m;c++){
+                    if(isSafe(ind,graph,color,c,n)){
+                        color[ind]=c;
+                        if(graphColoringUtil(graph,m,color,ind+1,n) == true)
+                            return true;
+                        color[ind]=0;
+                    }
+                }
+                return false;
+            }
+            boolean isSafe(int ind,boolean graph[][],int color[],int c,int n){
+                for (int i=0;i<n;i++)
+                    if(graph[ind][i]&&c==color[i])
+                    {return false;}
+                return true;
+            }
+        }	
+        //Rat in a Maze	
+        class Solution {
+            public static void solve(int i,int j,int[][] m,int vis[][],ArrayList<String> ans,String move,int n){
+                if((i==n-1)&&(j==n-1)){
+                    ans.add(move);
+                    return;
+                }
+                if(i+1<n&&vis[i+1][j]==0&&m[i+1][j]==1){
+                    vis[i][j]=1;
+                    solve(i+1,j,m,vis,ans,move+"D",n);
+                    vis[i][j]=0;
+                }
+                if(j-1>=0&&vis[i][j-1]==0&&m[i][j-1]==1){
+                    vis[i][j]=1;
+                    solve(i,j-1,m,vis,ans,move+"L",n);
+                    vis[i][j]=0;
+                }
+                if(j+1<n&&vis[i][j+1]==0&&m[i][j+1]==1){
+                    vis[i][j]=1;
+                    solve(i,j+1,m,vis,ans,move+"R",n);
+                    vis[i][j]=0;
+                }
+                if(i-1>=0&&vis[i-1][j]==0&&m[i-1][j]==1){
+                    vis[i][j]=1;
+                    solve(i-1,j,m,vis,ans,move+"U",n);
+                    vis[i][j]=0;
+                }
+                 
+            }
+            public static ArrayList<String> findPath(int[][] m, int n) {
+                // Your code here
+                int vis[][]=new int[n][n];
+                for(int i=0;i<n;i++){
+                    for(int j=0;j<n;j++){
+                        vis[i][j]=0;
+                    }
+                }
+                ArrayList<String> ans=new ArrayList<>();
+                if(m[0][0]==1){
+                    solve(0,0,m,vis,ans,"",n);
+                }
+                return ans;
+            }
+        
+        //************Code 2*************Rat in a Maze*************************************************************************** */
+        class Solution {
+                public static void solve(int i,int j,int[][] m,int vis[][],ArrayList<String> ans,String move,int n,int dx[],int dy[]){
+                    if((i==n-1)&&(j==n-1)){
+                        ans.add(move);
+                        return;
+                    }
+                    String base="DLRU";
+                    for(int p=0;p<4;p++){
+                        int nexti=i+dx[p];
+                        int nextj=j+dy[p];
+                        if(nexti>=0&&nexti<n&&nextj>=0&&nextj<n&&vis[nexti][nextj]==0&&m[nexti][nextj]==1){
+                            vis[i][j]=1;
+                            solve(nexti,nextj,m,vis,ans,move+base.charAt(p),n,dx,dy);
+                            vis[i][j]=0;
+                        }
+                    }
+                     
+                }
+                public static ArrayList<String> findPath(int[][] m, int n) {
+                    // Your code here
+                    int vis[][]=new int[n][n];
+                    for(int i=0;i<n;i++){
+                        for(int j=0;j<n;j++){
+                            vis[i][j]=0;
+                        }
+                    }
+                    int dx[]={1,0,0,-1};
+                    int dy[]={0,-1,1,0};
+                    ArrayList<String> ans=new ArrayList<>();
+                    if(m[0][0]==1){
+                        solve(0,0,m,vis,ans,"",n,dx,dy);
+                    }
+                    return ans;
+                }
+                }
+            }
+        //Word Break (print all ways)
+        class Solution{
+            class Solution {
+                public boolean wordBreak(String s, List<String> wordDict) {
+                    int m=wordDict.size(),n=s.length();
+                    String dictionary[]=new String[m];
+                    int k=0;
+                    for(String temp: wordDict){dictionary[k++]=temp;}
+                    boolean wb[]=new boolean[n+1];
+                    return wordbreak(s,wb,n,dictionary);
+                }
+                public boolean wordbreak(String str,boolean wb[],int n,String dictionary[]){
+                    int y=str.length();
+                    if(y==0){return true;}
+                    for(int i=1;i<=n;i++){
+                        if(wb[i]==false&&check(str.substring(0,i),dictionary)==true){
+                            wb[i]=true;
+                        }
+                        if(wb[i]==true){
+                            if(i==n){return true;}
+                            for(int j=i+1;j<=n;j++){
+                                if(wb[j]==false&&check(str.substring(i,j),dictionary)==true){wb[j]=true;}
+                                if(j==n&&wb[j]==true){return true;}   
+                            }
+                        }
+                    }
+                    return false;
+                }
+                public boolean check(String s,String dictionary[]){
+                    for(String temp: dictionary){
+                        if(temp.equals(s)==true){return true;}
+                    }
+                    return false;
+                }
+            }
+            class Solution {
+                public List<String> wordBreak(String s, List<String> wordDict) {
+                    List<String> res=new ArrayList<>();
+                    int n=s.length();
+                    String ans="";
+                    wordBreakUtil(n,s,wordDict,ans,res);
+                    return res;
+                }
+            
+             
+              static void wordBreakUtil(int n,String s,List<String> dict,String ans,List<String> res){
+                    for(int i=1;i<=n;i++){
+                        String prefix=s.substring(0,i);
+                        if(dict.contains(prefix))
+                        {
+                            if(i==n){ans+=prefix;an.add(ans);return;}
+                            wordBreakUtil(n-i,s.substring(i,n),dict,ans+prefix+" ",res);
+                        }
+                    }
+                }
+            }
+        }	
     }
     class Day_11_BinarySearch{
         // The N-th root of an integer
@@ -541,7 +1170,7 @@ public class Striver_Revision_SDE_Sheet {
 
         // K-th element of two sorted arrays	
         // Allocate Minimum Number of Pages
-        public class Solution {
+        class Solution {
             public int books(ArrayList<Integer> A, int B) {
                 if(A.size()<B)
                     return -1;
@@ -585,7 +1214,7 @@ public class Striver_Revision_SDE_Sheet {
             }
         }	
         // Aggressive Cows	
-        class TUF {
+        class Solution {
             static boolean isPossible(int a[],int n,int cows,int minDist) {
                 int cntCows=1;
                 int lastPlacedCow=a[0];
