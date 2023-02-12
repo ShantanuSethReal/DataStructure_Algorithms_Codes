@@ -195,7 +195,7 @@ public class Striver_Revision_SDE_Sheet {
             }	
         }
 }
-	// Repeat and Missing Number	
+	    // Repeat and Missing Number	
         //Freq array-O(2N),O(N)
         //Maths solution-n,n^2;
         //XOR-Method
@@ -1323,11 +1323,125 @@ public class Striver_Revision_SDE_Sheet {
     }
     class Day_13_{
         //Implement Stack Using Arrays	
+        class Solution{
+            class stack {
+                int size=10000;
+                int arr[]=new int[size];
+                int top=-1;
+                void push(int x){
+                    top++;
+                    arr[top]=x;
+                }
+                int pop(){
+                    int x=arr[top];
+                    top--;
+                    return x;
+                }
+                int top(){
+                    return arr[top];
+                }
+                int size(){
+                    return top+1;
+                }
+            }
+        }
         //Implement Queue Using Arrays	
+        class Solution{
+            class Queue {
+                private int arr[];
+                private int start,end,currSize,maxSize;
+                public Queue(){
+                    arr=new int[16];
+                    start=-1;
+                    end=-1;
+                    currSize=0;
+                }
+                public Queue(int maxSize) {
+                    this.maxSize=maxSize;
+                    arr=new int[maxSize];
+                    start=-1;
+                    end=-1;
+                    currSize=0;
+                }
+                public void push(int newElement){
+                    if(currSize==maxSize){
+                        System.out.println("Queue is full\nExiting...");
+                        System.exit(1);
+                    }
+                    if(end==-1) {
+                        start=0;
+                        end=0;
+                    }else
+                        end=(end+1)%maxSize;
+                        arr[end]=newElement;
+                        System.out.println("The element pushed is " + newElement);
+                        currSize++;
+                }
+                public int pop(){
+                    if(start==-1){
+                        System.out.println("Queue Empty\nExiting...");
+                        System.exit(1);
+                    }
+                    int popped=arr[start];
+                    if(currSize==1){
+                        start=-1;
+                        end=-1;
+                    }else
+                        start=(start+1)%maxSize;
+                    currSize--;
+                    return popped;
+                }
+                public int top(){
+                    if(start ==-1){
+                        System.out.println("Queue is Empty");
+                        System.exit(1);
+                    }
+                    return arr[start];
+                }
+                public int size(){
+                    return currSize;
+                }
+            }
+        }
         //Implement Stack using Queue (using single queue)	
         //Implement Queue using Stack (0(1) amortized method)	
         //Check for balanced parentheses	
+        class Solution{
+            public static boolean isValid(String s){
+                    Stack<Character> st=new Stack<Character>();
+                    for(char it: s.toCharArray()){
+                        if(it=='('||it=='['||it=='{')
+                            st.push(it);
+                        else {
+                            if(st.isEmpty()) return false;
+                            char ch=st.pop(); 
+                            if((it==')'&&ch =='(')||(it==']'&&ch=='[')||(it =='}'&&ch=='{')) continue;
+                            else return false;
+                        }
+                    }
+                    return st.isEmpty();
+                }
+            }
         //Next Greater Element	
+        class Solution{
+            public static int[] nextGreaterElements(int[] nums){
+                int n=nums.length;
+                int nge[]=new int[n];
+                Stack<Integer> st=new Stack<>();
+                for(int i=2*n-1;i>=0;i--){
+                    while(st.isEmpty()==false&&st.peek()<=nums[i%n]) {
+                        st.pop();
+                    }
+        
+                    if(i<n){
+                        if(st.isEmpty()==false)nge[i]=st.peek();
+                        else nge[i]=-1;
+                    }
+                    st.push(nums[i%n]);
+                }
+                return nge;
+            }
+        }
         //Sort a Stack	  
     }
     class Day_14_{
@@ -1344,7 +1458,6 @@ public class Striver_Revision_SDE_Sheet {
     }
     class Day_15_{
         //Reverse Words in a String
-
 	    //Longest Palindrome in a string	
 	    //Roman Number to Integer and vice versa	
 	    //Implement ATOI/STRSTR	
@@ -3448,4 +3561,4 @@ public class Striver_Revision_SDE_Sheet {
         }
 }
 
-
+}
