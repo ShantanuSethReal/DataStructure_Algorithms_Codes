@@ -1,0 +1,8 @@
+Calculator {
+    The object of a JTextField class is a text component that allows the editing of a single line text. It inherits JTextComponent clas
+    JTextField(String text)	Creates a new TextField initialized with the specified text
+    The setLayout(...) method allows you to set the layout of the container, often a JPanel, to say FlowLayout, BorderLayout, GridLayout, null layout, or whatever layout desired
+     The setEditable() method has one Boolean parameter. If the parameter is false, then the user cannot type into the field. 
+     The addActionListener method takes the current class object as a parameter. The "this" key word simply means "this object I'm working in right now". If you are using netbeans, you can type "this" and put a period after it to see all the methods defined in "this" class. It should list all the methods that are defined in your class including any inherited methods.
+     The focusable flag indicates whether a component can gain the focus if it is requested to do so. The JPanel component is focusable by default, so nothing will be changed when you set it to true
+}

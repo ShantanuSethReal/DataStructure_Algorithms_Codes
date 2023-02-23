@@ -1,0 +1,67 @@
+BrickBreaker.java
+{
+    Java Swing
+    Jframe-The javax.swing.JFrame class is a type of container which inherits the java.awt.Frame class. JFrame works like the main window where components like labels, buttons, textfields are added to create a GUI.
+    //
+    setBounds-public void setBounds(int x,int y,int width,int height)
+    Moves and resizes this component. The new location of the top-left corner is specified by x and y, and the new size is specified by width and height.
+    This method changes layout-related information, and therefore, invalidates the component hierarchy.
+    The width or height values are automatically enlarged if either is less than the minimum size as specified by previous call to setMinimumSize.
+    The method changes the geometry-related data. Therefore, the native windowing system may ignore such requests, or it may modify the requested data, so that the Window object is placed and sized in a way that corresponds closely to the desktop settings.
+    //
+    setTitle-public void setTitle(String title)
+    Sets the title for this frame to the specified string.
+    //
+    setResizeable=public void setResizable(boolean resizable)
+    Sets whether this frame is resizable by the user.
+    //
+    setVisible-public void setVisible(boolean b)
+    Shows or hides this Window depending on the value of parameter b. if true, makes the Window visible, otherwise hides the Window. If the Window and/or its owner are not yet displayable, both are made displayable. The Window will be validated prior to being made visible. If the Window is already visible, this will bring the Window to the front.
+    If false, hides this Window, its subcomponents, and all of its owned children. The Window and its subcomponents can be made visible again with a call to #setVisible(true).
+    //
+    setDefaultCloseOperation-public void setDefaultCloseOperation(int operation)
+    Sets the operation that will happen by default when the user initiates a "close" on this frame. You must specify one of the following choices:
+}
+
+MapGenerator.java
+{
+    This Graphics2D class extends the Graphics class to provide more sophisticated control over geometry, coordinate transformations, color management, and text layout. 
+    public abstract void fillRect(int x,int y,int width,int height)
+    Fills the specified rectangle. The left and right edges of the rectangle are at x and x + width - 1. The top and bottom edges are at y and y + height - 1. The resulting rectangle covers an area width pixels wide by height pixels tall. The rectangle is filled using the graphics context's current color
+    setStroke-width of black line inside rectangle
+    public void drawRect(int x,int y,int width,int height)
+    Draws the outline of the specified rectangle. The left and right edges of the rectangle are at x and x + width. The top and bottom edges are at y and y + height. The rectangle is drawn using the graphics context's current color
+}
+
+GamePlay.java
+{   
+    The Java KeyListener is notified whenever you change the state of key. It is notified against KeyEvent. The KeyListener interface is found in java.awt.event package, and it has three methods.
+        Modifier and Type	Method and Description
+            void	keyPressed(KeyEvent e)
+                    Invoked when a key has been pressed.
+            void	keyReleased(KeyEvent e)
+                    Invoked when a key has been released.
+            void	keyTyped(KeyEvent e)
+                    Invoked when a key has been typed.
+
+    start()
+    Starts the Timer, causing it to start sending action events to its listeners.
+    public abstract void fillOval(int x,int y,int width,int height)
+    Fills an oval bounded by the specified rectangle with the current color.
+    public abstract void dispose()
+    Disposes of this graphics context and releases any system resources that it is using. A Graphics object cannot be used after disposehas been called.
+    The Java ActionListener is notified whenever you click on the button or menu item. It is notified against ActionEvent. The ActionListener interface is found in java.awt.event package. It has only one method: actionPerformed().
+    The repaint method is responsible for handling update to the paint cycle of the applet(Repaint()->Paint())
+    public class KeyEvent
+    extends InputEvent
+    An event which indicates that a keystroke occurred in a component.
+    getKeyCode()
+    Returns the integer keyCode associated with the key in this event.
+    setFocusTraversalKeysEnabled() decides whether or not focus traversal keys (TAB key, SHIFT+TAB, etc.) are allowed to be used when the current Component has focus.
+    The Java ActionListener is notified whenever you click on the button or menu item. It is notified against ActionEvent. The ActionListener interface is found in java.awt.event package. It has only one method: actionPerformed()
+    public class Timer extends Object implements Serializable
+    Fires one or more ActionEvents at specified intervals. An example use is an animation object that uses a Timer as the trigger for drawing its frames. 
+    Timers are constructed by specifying both a delay parameter and an ActionListener. The delay parameter is used to set both the initial delay and the delay between event firing, in milliseconds. Once the timer has been started, it waits for the initial delay before firing its first ActionEvent to registered listeners. After this first event, it continues to fire events every time the between-event delay has elapsed, until it is stopped.
+
+
+}
