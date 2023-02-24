@@ -3,4 +3,95 @@
     Setting Up Environment and Installations
 
     //Class-2
-    show databases
+    SHOW DATABASES;
+
+    USE {databasename};
+
+    SHOW TABLES;
+
+    CREATE DATABASE {databasename};
+
+    CREATE TABLE Persons (
+        PersonID int,
+        LastName varchar(255),
+        FirstName varchar(255),
+        Address varchar(255),
+        City varchar(255)
+    );
+
+    INSERT INTO Customers (CustomerName,ContactName,Address,City,PostalCode,Country) VALUES('Cardinal','Tom B. Erichsen''Skagen 21', 'Stavanger','4006','Norway');
+
+    //Class-3
+    ALTER TABLE Customers
+    ADD COLUMN Email varchar(255);
+
+    ALTER TABLE Customers
+    DROP COLUMN Email;
+
+    ALTER TABLE {table_name}
+    RENAME COLUMN {old_name} to {new_name};
+
+    ALTER TABLE {table_name}
+    MODIFY COLUMN {column_name} {datatype};
+
+    SELECT * FROM Customers LIMIT 3;
+
+    SELECT Name as FIRST_NAME from Customers;
+
+    SELECT * FROM Customers ORDER BY Country DESC;
+    SELECT * FROM Customers ORDER BY Country ASC;
+
+    SELECT * FROM Customers WHERE age>=20;
+    SELECT * FROM Customers WHERE age!=20;
+
+    SELECT * FROM Customers WHERE name LIKE 'a%';(%-matches any number of characters)
+    SELECT * FROM Customers WHERE name LIKE '_b%';(_-matches one character)
+    SQL is Case-Insensitive;
+    SELECT * FROM Customers WHERE length(name)=5;
+    SELECT concat(id,name) from CUSTOMER;
+    SELECT substring(name,2,5) from CUSTOMER;
+    SELECT upper(name) from CUSTOMER;
+    SELECT lower(name) from CUSTOMER;
+    SELECT * from Customers where substring(name,4,1)='h';
+    SELECT * from Customers where upper(substring(name,1,1))=substring(name,1,1);
+    SELECT * from Customers where binary name="Sachin";
+    SELECT reverse(name) from Customers;
+    SELECT replace(name,'i','y') from Customers;
+    SELECT * from Customers where name like'%a%a%' and notlike '%a%a%a';
+    SELECT * from Customers where length(name)-length(replace(name,a,''))=2;
+
+    //Class-4
+    SELECT count(player_id) from Cricket;
+    SELECT count(distinct player_id) from Cricket;
+    SELECT sum(player_id) from Cricket;
+    SELECT avg(player_id) from Cricket;
+    SELECT max(player_id) from Cricket;
+    SELECT min(player_id) from Cricket;
+
+    SELECT max(highest_score) from Player_info;
+    //2nd highest_score
+    SELECT * from Player_info where highest_score=(SELECT max(highest_score) from Player_info where highest_score not in(SELECT max(highest_score) from Player_info));
+    SELECT highest_score from Player_info ORDER BY highest_score DESC LIMIT 1,1;//Second highest_score
+
+
+    //Class-5
+    SELECT employees.name,departments.name FROM employees INNER JOIN departments ON employees.department_id=departments.id;
+    SELECT employees.name,departments.name FROM employees LEFT JOIN departments ON employees.department_id=departments.id;
+    SELECT employees.name,departments.name FROM employees RIGHT JOIN departments ON employees.department_id=departments.id;
+
+    SELECT employees.name,departments.name FROM employees LEFT JOIN departments ON employees.department_id=departments.id
+    UNION
+    SELECT employees.name,departments.name FROM employees RIGHT JOIN departments ON employees.department_id=departments.id;
+
+    //Chaining
+    SELECT * FROM Customers LEFT JOIN orders ON Customers.id=orders.Customer_id LEFT JOIN order_items ON order.id=order_items.order_id;
+
+
+
+
+
+
+
+    
+
+
