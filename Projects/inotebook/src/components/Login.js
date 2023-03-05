@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  localStorage.clear();
+  console.log(localStorage);
   const [credentials, setCredentials] = useState({ email: "", password: "" });
 
   const navigate = useNavigate();
@@ -34,7 +36,7 @@ const Login = () => {
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="email" className="form-label">
-            Email address
+            <h3>Email address</h3>
           </label>
           <input type="email" className="form-control" value={credentials.email} onChange={onChange} id="email" name="email" aria-describedby="emailHelp" />
           <div id="emailHelp" className="form-text">
@@ -43,7 +45,7 @@ const Login = () => {
         </div>
         <div className="mb-3">
           <label htmlFor="password" className="form-label">
-            Password
+            <h3>Password</h3>
           </label>
           <input type="password" className="form-control" value={credentials.password} onChange={onChange} name="password" id="password" />
         </div>

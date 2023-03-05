@@ -78,11 +78,17 @@ const Notes = () => {
       </div>
       <div className="container">
         <div className="row my-3">
-          <h2>You Notes</h2>
-          {/* <div className="container mx-2">{notes.length === 0 && "No notes to display"}</div> */}
-          {notes.map((note) => {
-            return <Noteitem key={note._id} updateNote={updateNote} note={note} />;
-          })}
+          <div>
+            <span style={{ fontSize: 28, fontWeight: "bold" }}>Your Notes&nbsp;&nbsp;&nbsp;</span>
+            <i class="fa-solid fa-window-restore fa-3x"></i>
+          </div>
+          <div className="row">
+            {notes.length > 0
+              ? notes.map((note) => {
+                  return <Noteitem key={note._id} updateNote={updateNote} note={note} />;
+                })
+              : ""}
+          </div>
         </div>
       </div>
     </>
