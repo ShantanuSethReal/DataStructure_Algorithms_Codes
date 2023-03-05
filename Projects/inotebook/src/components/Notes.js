@@ -80,7 +80,7 @@ const Notes = () => {
         <div className="row my-3">
           <div>
             <span style={{ fontSize: 28, fontWeight: "bold" }}>Your Notes&nbsp;&nbsp;&nbsp;</span>
-            <i class="fa-solid fa-window-restore fa-3x"></i>
+            <i className="fa-solid fa-window-restore fa-3x"></i>
           </div>
           <div className="row">
             {notes.length > 0

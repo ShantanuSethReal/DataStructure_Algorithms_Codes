@@ -8,6 +8,7 @@ const NoteState = (props) => {
   // Get all Notes
   const getNotes = async () => {
     // API Call
+    if(localStorage.getItem("token")!==null){
     const response = await fetch(`${host}/api/notes/fetchallnotes`, {
       method: "GET",
       headers: {
@@ -17,6 +18,7 @@ const NoteState = (props) => {
     });
     const json = await response.json();
     setNotes(json);
+  }
   };
 
   // Add a Note

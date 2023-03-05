@@ -23,7 +23,7 @@ const Login = () => {
       // Save the auth token and redirect
       localStorage.setItem("token", json.authtoken);
       //  history.push("/");
-      navigate("/");
+      navigate("/about");
     } else {
       alert("Invalid credentials");
     }

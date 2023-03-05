@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const AddNote = () => {
   const context = useContext(noteContext);
   const { addNote } = context;
-
+  
   const [note, setNote] = useState({ title: "", description: "", tag: "" });
 
   const handleClick = (e) => {
@@ -18,6 +18,7 @@ const AddNote = () => {
   };
   return (
     <div className="container my-3">
+      {localStorage.getItem("token")===null?<h4 style={{color: "gray"}}>Please Login to view your archived notes</h4>:""}
       <div className="d-flex justify-content-between bd-highlight mb-3">
         <div className="p-2 bd-highlight">
           <button type="button" className="btn btn-outline-success" style={{ fontSize: 28 }}>
