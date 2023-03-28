@@ -1244,8 +1244,10 @@ public class Striver_TreesPlayList {
     //**************L53.Largest BST in a BT********************/
     class Solution {
         class NodeValue {
-            public int maxNode, minNode, maxSize;
-            NodeValue(int minNode,int maxNode,int maxSize){
+            public int maxNode, 
+            public int minNode,
+            public int maxSize;
+            NodeValue(int maxNode,int minNode,int maxSize){
                 this.maxNode=maxNode;
                 this.minNode=minNode;
                 this.maxSize=maxSize;
@@ -1253,14 +1255,14 @@ public class Striver_TreesPlayList {
         }
         private NodeValue largestBSTSubtreeHelper(TreeNode root){
             if(root==null) {
-                return new NodeValue(Integer.MAX_VALUE,Integer.MIN_VALUE,0);
+                return new NodeValue(Integer.MIN_VALUE,Integer.MAX_VALUE,0);
             }
             NodeValue left = largestBSTSubtreeHelper(root.left);
             NodeValue right = largestBSTSubtreeHelper(root.right);
             if (left.maxNode < root.val && root.val < right.minNode) {
-                return new NodeValue(Math.min(root.val,left.minNode),Math.max(root.val,right.maxNode),left.maxSize+right.maxSize+1);
+                return new NodeValue(Math.max(root.val,right.maxNode), Math.min(root.val, left.minNode),left.maxSize+right.maxSize+1);
             }
-            return new NodeValue(Integer.MIN_VALUE,Integer.MAX_VALUE,Math.max(left.maxSize, right.maxSize));
+            return new NodeValue(Integer.MAX_VALUE,Integer.MIN_VALUE,Math.max(left.maxSize, right.maxSize));
         }
         public int largestBSTSubtree(TreeNode root) {
             return largestBSTSubtreeHelper(root).maxSize;

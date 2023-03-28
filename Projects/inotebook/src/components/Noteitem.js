@@ -13,21 +13,29 @@ const Noteitem = (props) => {
           {note.tag}
         </span>
         <div className="card-body">
-          <div className="d-flex align-items-center">
-            <h5 className="card-title">{note.title}</h5>
-            <i
-              className="far fa-trash-alt mx-2"
-              onClick={() => {
-                deleteNote(note._id);
-              }}
-            ></i>
-            <i
-              className="far fa-edit mx-2"
-              onClick={() => {
-                updateNote(note);
-              }}
-            ></i>
+          <div class="d-flex">
+            <div class="mr-auto p-2">
+              <h5 className="card-title">{note.title}</h5>
+            </div>
+            <div class="p-2">
+              {" "}
+              <i
+                className="far fa-trash-alt mx-2 "
+                onClick={() => {
+                  deleteNote(note._id);
+                }}
+              ></i>
+            </div>
+            <div class="p-2">
+              <i
+                className="far fa-edit mx-2"
+                onClick={() => {
+                  updateNote(note);
+                }}
+              ></i>
+            </div>
           </div>
+          {/* <div className="d-flex justify-content-between"></div> */}
           <p className="card-text">{note.description}</p>
           <div className="card-footer text-muted" style={{ textAlign: "center", fontSize: 12 }}>
             Created on {d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear()}

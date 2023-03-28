@@ -83,7 +83,7 @@ const Notes = () => {
             <i className="fa-solid fa-window-restore fa-3x"></i>
           </div>
           <div className="row">
-            {notes.length > 0
+            {notes.length > 0&&localStorage.getItem("token")!==null
               ? notes.map((note) => {
                   return <Noteitem key={note._id} updateNote={updateNote} note={note} />;
                 })

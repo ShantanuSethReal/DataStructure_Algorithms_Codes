@@ -1,3 +1,4 @@
+package Striver;
 //****************************Nth Root of an Integer***************************************** */
 public public class Solution {
 	public static double isMuliply(double mid,int n){

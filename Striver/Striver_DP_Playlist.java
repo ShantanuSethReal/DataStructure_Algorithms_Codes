@@ -8,7 +8,7 @@ class Solution{
         int n=3;
         vector<int> dp(n+1,-1);
         
-        dp[0]=1;
+        dp[0]=1;---------------------
         dp[1]=1;
         
         for(int i=2;i<=n;i++){
@@ -1983,3 +1983,65 @@ class Solution{
 }
 
 }
+//Format
+//************************ */
+public class Solution {
+    public static int findWays(int arr[], int k) {
+        // Write your code here..
+        int n=arr.length;
+        int dp[][]=new int[n+1][k+1];
+        for(int rows[]: dp){Arrays.fill(rows,0);}
+        for(int i=0;i<n;i++){dp[i][0]=1;}
+        if(arr[0]<k)dp[0][arr[0]]=1;
+
+        for(int ind=1;ind<n;ind++){
+            for(int target=0;target<=k;target++){
+                int notTake=dp[ind-1][target];
+                int take=0;
+                if(arr[ind]<=target){
+                    take=dp[ind-1][target-arr[ind]];
+                }
+                dp[ind][target]=take+notTake;
+            }
+        }
+        return dp[n-1][k];
+        //return f(n-1,k,arr,dp);
+    }
+    public static int f(int ind,int target,int arr[],int dp[][]){
+        if(target==0){return 1;}
+        if(ind==0){return arr[0]==target?1:0;}
+        if(dp[ind][target]!=-1){return dp[ind][target];}
+        int notTake=f(ind-1,target,arr,dp);
+        int take=0;
+        if(arr[ind]<=target){
+            take=f(ind-1,target-arr[ind],arr,dp);
+        }
+        return dp[ind][target]=take+notTake;
+    }
+}
+int dp[][]=new int[][];
+for(int rows[]: dp){Arrays.fill(rows,-1);}
+return f();
+
+if(){}
+if(dp[ind][target]!=-1){return dp[ind][target];}
+int notTake=f();
+int take=0;
+if(){
+    take=f()
+}
+return dp[][]=
+
+
+
+
+
+
+
+
+
+
+
+
+
+
